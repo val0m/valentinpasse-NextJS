@@ -1,0 +1,188 @@
+[
+    {        
+      "label": "C#",
+      "description": null,
+      "category": "Technlology",
+      "position": 1
+    },
+    {        
+      "label": ".NET",
+      "description": "Core / MVC / WebForm",
+      "category": "Technlology",
+      "position": 2
+    },
+    {        
+      "label": "Blazor",
+      "description": null,
+      "category": "Technlology",
+      "position": 3
+    },
+    {        
+      "label": "Azure",
+      "description": "Service bus / App services / Azure functions / Storage Account / Monitoring / App Insight / ...",
+      "category": "Technlology",
+      "position": 4
+    },
+    {        
+      "label": "Entity Framework, LINQ, ...",
+      "description": null,
+      "category": "Technlology",
+      "position": 5
+    },
+    {        
+      "label": "Packages Nuget",
+      "description": null,
+      "category": "Technlology",
+      "position": 6
+    },
+    {        
+      "label": "Xamarin Forms",
+      "description": null,
+      "category": "Technlology",
+      "position": 7
+    },
+    {        
+      "label": "SSIS / SSRS",
+      "description": "SQL Server Integration Services / SQL Server Reporting Services",
+      "category": "Technlology",
+      "position": 8
+    },
+    {        
+      "label": "Bases du Web",
+      "description": "HTML5 / CSS3",
+      "category": "Other",
+      "position": 1
+    },
+    {        
+      "label": "Javascript",
+      "description": "Jquery / VueJS / React / TabAjax",
+      "category": "Other",
+      "position": 2
+    },
+    {        
+      "label": "Architectures",
+      "description": "Design patterns / CQRS / DDD",
+      "category": "Other",
+      "position": 3
+    },
+    {        
+      "label": "Gestion de projet / Equipe",
+      "description": "Agile (Scrum) / Cycle en V / Scrum Master / Reviewer",
+      "category": "Other",
+      "position": 4
+    },
+    {        
+      "label": "SQL Server",
+      "description": null,
+      "category": "Database",
+      "position": 1
+    },
+    {        
+      "label": "MySQL",
+      "description": null,
+      "category": "Database",
+      "position": 2
+    },
+    {        
+      "label": "Firebase",
+      "description": null,
+      "category": "Database",
+      "position": 3
+    },
+    {        
+      "label": "Visual Studio",
+      "description": "IDE / Code",
+      "category": "Software",
+      "position": 1
+    },
+    {        
+      "label": "Microsoft Azure",
+      "description": null,
+      "category": "Software",
+      "position": 2
+    },
+    {        
+      "label": "Azure Devops / TFS / Github",
+      "description": null,
+      "category": "Software",
+      "position": 3
+    },
+    {        
+      "label": "Teams",
+      "description": null,
+      "category": "Software",
+      "position": 4
+    },
+    {        
+      "label": "Microsoft Office",
+      "description": null,
+      "category": "Software",
+      "position": 5
+    },
+    {        
+      "label": "Suite Adobe",
+      "description": "Photoshop / InDesign",
+      "category": "Software",
+      "position": 6
+    },
+    {        
+      "label": "Qlik Sense",
+      "description": null,
+      "category": "Software",
+      "position": 7
+    },
+    {        
+      "label": "SSMS / Report Builder",
+      "description": null,
+      "category": "Software",
+      "position": 8
+    },
+    {        
+      "label": "Windows",
+      "description": null, 
+      "category": "OperatingSystem",
+      "position": 1
+    },
+    {        
+      "label": "Mac OS",
+      "description": null, 
+      "category": "OperatingSystem",
+      "position": 2
+    },
+    {        
+      "label": "Linux",
+      "description": null, 
+      "category": "OperatingSystem",
+      "position": 3
+    },
+    {        
+      "label": "Esprit d'équipe",
+      "description": null, 
+      "category": "Qualification",
+      "position": 1
+    },
+    {        
+      "label": "Autodidacte",
+      "description": null, 
+      "category": "Qualification",
+      "position": 2
+    },
+    {        
+      "label": "Dynamique",
+      "description": null, 
+      "category": "Qualification",
+      "position": 3
+    },
+    {        
+      "label": "Méthodique",
+      "description": null, 
+      "category": "Qualification",
+      "position": 4
+    },
+    {        
+      "label": "Autonome",
+      "description": null, 
+      "category": "Qualification",
+      "position": 5
+    }
+]
