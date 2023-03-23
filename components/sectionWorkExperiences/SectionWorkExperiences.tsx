@@ -4,63 +4,32 @@ import React from 'react';
 // Images
 
 // CSS Module
-import styles from "./SectionSkills.module.scss"
+import styles from "./SectionWorkExperiences.module.scss"
 
 // Data
-import skillsData from "../../public/data/skills.json";
-import { json } from 'stream/consumers';
+// import skillsData from "../../public/data/skills.json";
 
-export function SectionSkills () {
-  interface Skill {
-    label: string;
-    description: string;
-    category: SkillCategory;
-    position: number;
-  }
+export function SectionWorkExperiences () {
+//   interface Skill {
+//     label: string;
+//     description: string;
+//     category: SkillCategory;
+//     position: number;
+//   }
 
-  enum SkillCategory {
-    Technlology = "Technologie Microsoft",
-    Database = "Base de donnée",
-    Other = "Autre",
-    Software = "Logiciel",
-    OperatingSystem = "Système d'exploitation",
-    Qualification = "Compétence"
-  }
+//   enum SkillCategory {
+//     Technlology = "Technologie Microsoft",
+//     Database = "Base de donnée",
+//     Other = "Autre",
+//     Software = "Logiciel",
+//     OperatingSystem = "Système d'exploitation",
+//     Qualification = "Compétence"
+//   }
 
-//   const skills: Array<Skill> = JSON.parse(skillsData); // converrt to skill
-
-  const categories = Object.values(SkillCategory);
+//   const skills = skillsData; // converrt to skill
 
   return (
-    <section id="skills" className="content-section text-center">
-        <div className='skills-section'>
-            <div className='skills-container'>
-                <h2>Skills</h2>
-                <div className="row pr-2">
-                          
-                    {categories.map((value, index) => {
-                    return (
-                        <div key={index} className="col-md-4 col-sm-6 col-xs-12">
-                            <div className="bloc-title-skills">
-                                <div className="title-skills"><span className="label label-primary">{value}</span></div>
-                            </div>
-                            {skillsData.filter((item) => item.category == value).map((skill, indexSkill) => {
-                            return (      
-                                <div key={indexSkill}>                
-                                    <span className="label-progress">{skill.label}</span>
-                                    {/* <div className="progress">
-                                        <div className="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                            90%
-                                            <span className="sr-only">90% Complete</span>
-                                        </div>
-                                    </div> */}
-                                </div>          
-                            )})}
-                        </div>
-                    )})}
-                </div>
-            </div>
-        </div>
+    <section id="workExperiences" className="content-section text-center">
         {/* <div className="skills-section">
             <div className="skills-container">
                 <h2>Skills</h2>
