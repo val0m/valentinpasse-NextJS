@@ -20,11 +20,11 @@ export default function Home() {
       <div className={styles.container}>
         <main className={styles.main}>
           <h1 className={styles.title}>
-            Développeur Full stack <a href="https://nextjs.org">.NET</a>
+            Développeur full-stack <a href="https://valentin-passe.com">.NET</a>
           </h1>
 
           <p className={styles.description}>
-            Portfolio de <code className={styles.code}>Valentin PASSE</code>
+            Site de <code className={styles.code}>Valentin PASSE</code>
           </p>
 
           <Hr />
