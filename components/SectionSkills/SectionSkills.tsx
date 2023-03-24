@@ -28,7 +28,7 @@ export function SectionSkills () {
   }
 
 //   const skills: Array<Skill> = JSON.parse(skillsData); // converrt to skill
-
+  const skills = skillsData;
   const categories = Object.values(SkillCategory);
 
   return (
@@ -48,6 +48,12 @@ export function SectionSkills () {
                             return (      
                                 <div key={indexSkill}>                
                                     <span className="label-progress">{skill.label}</span>
+                                    <div className="progress">
+                                        <div className="progress-bar progress-bar-striped active" role="progressbar" style={{width:'90%'}}>
+                                            90%
+                                            <span className="sr-only">90% Complete</span>
+                                        </div>
+                                    </div> 
                                     {/* <div className="progress">
                                         <div className="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
                                             90%

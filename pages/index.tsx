@@ -20,12 +20,12 @@ export default function Home() {
 
         <main className={styles.main}>
           <h1 className={styles.title}>
-            Welcome to <a href="https://nextjs.org">Next.js!</a>
+            Développeur Full stack <a href="https://nextjs.org">.NET</a>
           </h1>
 
           <p className={styles.description}>
-            Get started by editing{' '}
-            <code className={styles.code}>pages/index.tsx</code>
+            Portfolio de {' '}
+            <code className={styles.code}>Valentin PASSÉ</code>
           </p>
 
           <SectionResume />
