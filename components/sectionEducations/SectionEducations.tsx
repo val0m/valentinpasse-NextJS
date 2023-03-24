@@ -4,7 +4,7 @@ import React from 'react';
 // Images
 
 // CSS Module
-import styles from "./SectionEducations.module.scss"
+import styles from "./sectionEducations.module.scss"
 
 // Data
 // import skillsData from "../../public/data/skills.json";

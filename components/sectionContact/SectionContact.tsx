@@ -4,7 +4,7 @@ import React from 'react';
 // Images
 
 // CSS Module
-import styles from "./SectionContact.module.scss"
+import styles from "./sectionContact.module.scss"
 
 // Data
 // import skillsData from "../../public/data/skills.json";

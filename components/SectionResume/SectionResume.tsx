@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Profile from '../../public/images/resume/valentin-passe.webp';
 
 // CSS Module
-import styles from "./SectionResume.module.scss"
+import styles from "./sectionResume.module.scss"
 
 export function SectionResume () {
   return (

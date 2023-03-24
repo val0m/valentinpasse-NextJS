@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/sectionContact/index.jsx", "components/sectionEducations/index.jsx", "components/sectionProjects/index.jsx", "components/sectionResume/index.jsx", "components/layout/index.jsx", "components/headerCustom/Index.jsx", "components/footerCustom/index.jsx", "components/sectionSkills/index.jsx", "components/sectionWorkExperiences/index.jsx"],
   "exclude": ["node_modules"]
 }

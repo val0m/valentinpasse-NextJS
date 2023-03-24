@@ -3,13 +3,13 @@
 // import Image from 'next/image'
 
 // Components
-import Layout from "../components/layout/Layout";
-import { Hr } from "../components/hr/Hr";
-import { SectionResume } from "../components/sectionResume/SectionResume";
-import { SectionSkills } from "../components/sectionSkills/SectionSkills";
-import { SectionWorkExperiences } from "../components/sectionWorkExperiences/SectionWorkExperiences";
-import { SectionEducations } from "../components/sectionEducations/SectionEducations";
-import { SectionProjects } from "../components/sectionProjects/SectionProjects";
+import { Layout } from "../components/layout";
+import { Hr } from "../components/hr";
+import { SectionResume } from "../components/sectionResume";
+import { SectionSkills } from "../components/sectionSkills";
+import { SectionWorkExperiences } from "../components/sectionWorkExperiences";
+import { SectionEducations } from "../components/sectionEducations";
+import { SectionProjects } from "../components/sectionProjects";
 
 //CSS Module
 import styles from "../styles/Home.module.css";

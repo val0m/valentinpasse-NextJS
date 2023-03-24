@@ -7,7 +7,7 @@ import Image from 'next/image';
 import LogoHeader from '../../public/images/header/logo.webp';
 
 // CSS Module
-import styles from "./FooterCustom.module.scss"
+import styles from "./footerCustom.module.scss"
 // import { fontWeight } from '@mui/system';
 
 

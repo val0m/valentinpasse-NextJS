@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import Logo from '../../public/images/header/logo.webp';
 
 // CSS Module
-import styles from "./HeaderCustom.module.scss"
+import styles from "./headerCustom.module.scss"
 
 export function HeaderCustom () {
   interface Item {
@@ -30,7 +30,7 @@ export function HeaderCustom () {
       route: '#WorkExperience',
     },
     {
-      label: 'Apprentissages',
+      label: 'Formations',
       route: '#Educations',
     },
     {

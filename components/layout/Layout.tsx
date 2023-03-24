@@ -8,11 +8,11 @@ import { AppProps } from 'next/app';
 // import { Analytics } from '@vercel/analytics/react';
 
 // Components
-import { HeaderCustom } from '../headerCustom/HeaderCustom';
-import { FooterCustom } from '../footerCustom/FooterCustom';
+import { HeaderCustom } from '../headerCustom';
+import { FooterCustom } from '../footerCustom';
 
 //CSS Module
-import styles from "./Layout.module.scss";
+import styles from "./layout.module.scss";
 import Image from "next/image";
 
 type LayoutProps = {
@@ -20,7 +20,7 @@ type LayoutProps = {
     title?: string;
 };
 
-export default function Layout ({
+export function Layout ({
     children,
     title = 'Développeur informatique .NET - Valentin PASSE'
     } : LayoutProps) 
