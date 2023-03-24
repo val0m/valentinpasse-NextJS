@@ -8,8 +8,8 @@ import { AppProps } from 'next/app';
 // import { Analytics } from '@vercel/analytics/react';
 
 // Components
-import { HeaderCustom } from '../headerCustom';
-import { FooterCustom } from '../footerCustom';
+import { HeaderCustom } from '../headerCustom/headerCustom';
+import { FooterCustom } from '../footerCustom/footerCustom';
 
 //CSS Module
 import styles from "./layout.module.scss";
