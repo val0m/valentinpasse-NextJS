@@ -16,8 +16,6 @@ export function SectionResume () {
             <div className="resume-container">
                 <h2>A propos de moi</h2>
 
-
-
                 <div className="row resume-complete">
                     <div className="col-sm-3 information-container">
                         <div className="resume-img">
@@ -34,8 +32,6 @@ export function SectionResume () {
                         </div>
                     </div>
                 </div>
-
-
 
             </div>
         </div>
