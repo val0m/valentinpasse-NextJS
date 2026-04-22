@@ -17,7 +17,7 @@ function HeroHeadline() {
 function HeroProofPoints() {
   const points = [
     "+10 ans d'expérience Fullstack .NET",
-    "Expertise IA appliquée pour accélérer la livraison produit",
+    "Expertise IA appliquée aux entreprises",
     "Disponible pour missions freelance",
   ];
 
