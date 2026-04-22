@@ -1,0 +1,171 @@
+.section {
+  width: 100%;
+  padding: 5rem 1.25rem;
+  background:
+    linear-gradient(160deg, rgba(15, 23, 42, 0.02) 0%, rgba(226, 232, 240, 0.45) 100%),
+    #ffffff;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.header {
+  max-width: 760px;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(1.95rem, 2.5vw, 2.6rem);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0.85rem 0 0;
+  color: #334155;
+  line-height: 1.65;
+  font-size: 1.02rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.1rem;
+  border-radius: 18px;
+  border: 1px solid #d8e2f0;
+  background: #f8fbff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+  animation: reveal 0.45s ease both;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.cardTitle {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.05rem;
+}
+
+.block {
+  border-left: 3px solid #0ea5e9;
+  padding-left: 0.55rem;
+}
+
+.blockLabel {
+  margin: 0;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.blockText {
+  margin: 0.25rem 0 0;
+  color: #475569;
+  line-height: 1.6;
+  font-size: 0.93rem;
+}
+
+.capabilities {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #1e293b;
+  display: grid;
+  gap: 0.32rem;
+}
+
+.capabilities li {
+  font-size: 0.9rem;
+}
+
+.cardAction {
+  margin-top: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.62rem 0.9rem;
+  transition: transform 0.16s ease, opacity 0.16s ease;
+}
+
+.cardAction:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.cardAction:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+.fallback {
+  margin-top: 1rem;
+  color: #475569;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    padding: 3.5rem 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    animation-delay: 0s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+
+  .cardAction {
+    transition: none;
+  }
+
+  .cardAction:hover {
+    transform: none;
+  }
+}

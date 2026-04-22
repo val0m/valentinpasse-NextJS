@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Conception et cadrage de solution",
+    "clientProblem": "Vous avez une idée claire du besoin métier, mais la trajectoire technique manque de structure pour lancer le projet sereinement.",
+    "businessOutcome": "Vous obtenez une feuille de route priorisée, des choix techniques justifiés et un plan de livraison réaliste.",
+    "capabilities": [
+      "Ateliers de cadrage",
+      "Choix d'architecture .NET",
+      "Découpage en lots livrables"
+    ],
+    "ctaTarget": "#contact"
+  },
+  {
+    "title": "Développement Fullstack .NET",
+    "clientProblem": "Votre produit doit évoluer vite sans sacrifier la qualité du code ni la maintenabilité de la solution.",
+    "businessOutcome": "Vous accélérez la mise en production avec une implémentation robuste, testable et alignée sur les usages terrain.",
+    "capabilities": [
+      "API et back-end .NET",
+      "Interfaces web Blazor",
+      "Qualité et performance applicative"
+    ],
+    "ctaTarget": "#contact"
+  },
+  {
+    "title": "Optimisation et intégration IA pragmatique",
+    "clientProblem": "Vos équipes perdent du temps sur des tâches répétitives et cherchent des gains rapides sans complexité excessive.",
+    "businessOutcome": "Vous améliorez l'efficacité opérationnelle grâce à des automatisations utiles et une intégration IA adaptée au contexte.",
+    "capabilities": [
+      "Audit de workflows",
+      "Automatisation ciblée",
+      "Accompagnement à l'adoption"
+    ],
+    "ctaTarget": "#contact"
+  }
+]

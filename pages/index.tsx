@@ -8,6 +8,7 @@ import { Hr } from "../components/hr";
 import { HeroSection } from "../components/heroSection";
 import { SectionContact } from "../components/sectionContact";
 import { SectionResume } from "../components/sectionResume";
+import { SectionServices } from "../components/sectionServices";
 import { SectionSkills } from "../components/sectionSkills";
 import { SectionWorkExperiences } from "../components/sectionWorkExperiences";
 import { SectionEducations } from "../components/sectionEducations";
@@ -24,6 +25,8 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.main}>
             <SectionResume />
+            <Hr />
+            <SectionServices />
             <Hr />
             <SectionSkills />
             <Hr />

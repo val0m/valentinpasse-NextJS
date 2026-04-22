@@ -22,6 +22,10 @@ export function HeaderCustom () {
       route: '#about',
     },
     {
+      label: 'Services',
+      route: '#services',
+    },
+    {
       label: 'Compétences',
       route: '#Skills',
     },
