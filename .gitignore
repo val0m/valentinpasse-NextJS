@@ -18,6 +18,7 @@
 # misc
 .DS_Store
 *.pem
+docs/
 
 # debug
 npm-debug.log*
@@ -34,3 +35,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.vscode/mcp.json
+.vscode/settings.json
