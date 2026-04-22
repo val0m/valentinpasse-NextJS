@@ -27,29 +27,48 @@ export function HeaderCustom () {
     },
     {
       label: 'Compétences',
-      route: '#Skills',
+      route: '#skills',
     },
     {
       label: 'Expériences professionnelles',
-      route: '#WorkExperience',
+      route: '#workExperiences',
     },
     {
       label: 'Formations',
-      route: '#Educations',
+      route: '#educations',
     },
     {
       label: 'Projets',
-      route: '#Projects',
+      route: '#projects',
     },
     {
       label: 'Contact',
-      route: '#Contact',
+      route: '#contact',
     },
   ];
 
   const router = useRouter();
+  const [activeHash, setActiveHash] = React.useState<string>('');
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const updateHash = () => {
+      setActiveHash(window.location.hash || '');
+    };
+
+    updateHash();
+    window.addEventListener('hashchange', updateHash);
+
+    return () => {
+      window.removeEventListener('hashchange', updateHash);
+    };
+  }, []);
+
   function getSelectedCss(currentRoute: string): string {
-    return currentRoute === router.route ? 'selected' : '';
+    return currentRoute === activeHash ? 'selected' : '';
   }
 
   function forceMenuToClosed(): void {

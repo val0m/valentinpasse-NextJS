@@ -42,8 +42,8 @@ export function SectionServices() {
         </header>
 
         <div className={styles.grid}>
-          {services.map((service) => (
-            <article key={service.title} className={styles.card}>
+          {services.map((service, serviceIndex) => (
+            <article key={`${service.title}-${serviceIndex}`} className={styles.card}>
               <h3 className={styles.cardTitle}>{service.title}</h3>
 
               <div className={styles.block}>
@@ -57,8 +57,8 @@ export function SectionServices() {
               </div>
 
               <ul className={styles.capabilities}>
-                {service.capabilities.map((capability) => (
-                  <li key={`${service.title}-${capability}`}>{capability}</li>
+                {service.capabilities.map((capability, capabilityIndex) => (
+                  <li key={`${service.title}-${capability}-${capabilityIndex}`}>{capability}</li>
                 ))}
               </ul>
 
