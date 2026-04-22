@@ -2,7 +2,6 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 // Images
 import Logo from '../../public/images/header/logo.webp';
@@ -47,7 +46,6 @@ export function HeaderCustom () {
     },
   ];
 
-  const router = useRouter();
   const [activeHash, setActiveHash] = React.useState<string>('');
 
   React.useEffect(() => {

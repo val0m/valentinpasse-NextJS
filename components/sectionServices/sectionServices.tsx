@@ -1,32 +1,10 @@
 import React from "react";
 import styles from "./sectionServices.module.scss";
 import servicesData from "../../public/data/services.json";
-
-type ServiceOffer = {
-  title: string;
-  clientProblem: string;
-  businessOutcome: string;
-  capabilities: string[];
-  ctaTarget: string;
-};
-
-function sanitizeServices(items: ServiceOffer[]): ServiceOffer[] {
-  return items.filter((item) => {
-    if (!item?.title?.trim()) {
-      return false;
-    }
-    if (!item.clientProblem?.trim() || !item.businessOutcome?.trim()) {
-      return false;
-    }
-    if (!Array.isArray(item.capabilities) || item.capabilities.length < 2) {
-      return false;
-    }
-    return !!item.ctaTarget?.trim();
-  });
-}
+import { sanitizeServices } from "./sectionServices.extensions";
 
 export function SectionServices() {
-  const services = sanitizeServices(servicesData as ServiceOffer[]);
+  const services = sanitizeServices(servicesData);
 
   return (
     <section id="services" className={styles.section} aria-labelledby="services-title">
