@@ -19,7 +19,7 @@ export function HeaderCustom () {
   const items: Item[] = [
     {
       label: 'A propos de moi',
-      route: '#Resume',
+      route: '#about',
     },
     {
       label: 'Compétences',
