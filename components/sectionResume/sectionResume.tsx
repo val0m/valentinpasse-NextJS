@@ -1,40 +1,93 @@
-// Libs
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
-// Images
-import Profile from '../../public/images/resume/valentin-passe.webp';
+import Profile from "../../public/images/resume/valentin-passe.webp";
 
-// CSS Module
-import styles from "./sectionResume.module.scss"
+import styles from "./sectionResume.module.scss";
 
-export function SectionResume () {
+type Highlight = {
+  title: string;
+  description: string;
+};
+
+const highlights: Highlight[] = [
+  {
+    title: "Livraison end-to-end",
+    description:
+      "Du cadrage fonctionnel au delivery, je pilote des applications web robustes avec une approche orientee resultat.",
+  },
+  {
+    title: "Polyvalence Fullstack .NET",
+    description:
+      "Je relie back-end .NET, front-end React/Blazor et architecture API pour accelerer la mise en production.",
+  },
+  {
+    title: "Vision produit & metier",
+    description:
+      "Je transforme des besoins business en solutions lisibles, maintenables et utiles pour vos utilisateurs finaux.",
+  },
+];
+
+export function SectionResume() {
   return (
-    
-    <section id="resume" className="content-section text-center">
-        <div className="resume-section">
-            <div className="resume-container">
-                <h2>A propos de moi</h2>
-
-                <div className="row resume-complete">
-                    <div className="col-sm-3 information-container">
-                        <div className="resume-img">
-                          <Image src={Profile} height={200} alt="Image Valentin PASSE"></Image>
-                        </div>
-                    </div>
-                    <div className="col-sm-7 personnal-container">
-                        <div className="resume-personnal">
-                            <span className="hidden-lg hidden-md hidden-sm separator"></span>
-                              Ayant acquis précédemment plusieurs expériences dans le développement web, je possède de véritables atouts pour la programmation. Je suis autodidacte, autonome et je dispose d’un bon sens du travail en équipe.<br /><br />
-                              Rigoureux et méthodique, je suis passionné de nouvelles technologies, ce qui me permet de rester à jour sur les dernières nouveautés pour en apprendre davantage et proposer mes meilleurs services.<br /><br />
-                              Je reste à votre disposition si mon profil vous intéresse grâce à la section <a href="#contact">Contact</a>.
-                            <span className="hidden-lg hidden-md hidden-sm separator"></span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <section id="about" className={styles.section} aria-labelledby="about-title">
+      <div className={styles.container}>
+        <div className={styles.portraitColumn}>
+          <div className={styles.portraitFrame}>
+            <Image
+              src={Profile}
+              alt="Portrait de Valentin Passe"
+              className={styles.portrait}
+              sizes="(max-width: 900px) 240px, 300px"
+              priority={false}
+            />
+          </div>
         </div>
+
+        <div className={styles.contentColumn}>
+          <h2 id="about-title" className={styles.title}>
+            A propos
+          </h2>
+          <p className={styles.lead}>
+            Ingenieur Fullstack .NET freelance, j&apos;accompagne les entreprises
+            qui veulent livrer plus vite des produits web fiables, lisibles et
+            orientés impact.
+          </p>
+
+          <div className={styles.summary}>
+            <p>
+              J&apos;interviens sur l&apos;ensemble de la chaine de valeur: conception,
+              implementation, qualite et mise en production. Mon objectif est
+              de proposer une execution claire, sans dette inutile, avec une
+              vraie logique de resultat.
+            </p>
+            <p>
+              Mon approche combine rigueur technique, communication simple et
+              affinite IA pragmatique pour booster l&apos;efficacite des equipes,
+              sans complexifier l&apos;experience utilisateur.
+            </p>
+          </div>
+
+          <h3 className={styles.highlightsTitle}>Pourquoi collaborer avec moi</h3>
+          <ul className={styles.highlightsList}>
+            {highlights.map((item) => (
+              <li key={item.title} className={styles.highlightCard}>
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.actions}>
+            <a href="#projects" className={styles.primaryAction}>
+              Voir mes projets
+            </a>
+            <a href="#contact" className={styles.secondaryAction}>
+              Me contacter
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
