@@ -14,15 +14,15 @@ const highlights: Highlight[] = [
   {
     title: "Livraison end-to-end",
     description:
-      "Du cadrage fonctionnel au delivery, je pilote des applications web robustes avec une approche orientee resultat.",
+      "Du cadrage métier au delivery, je pilote des applications web robustes, lisibles et orientées impact.",
   },
   {
     title: "Polyvalence Fullstack .NET",
     description:
-      "Je relie back-end .NET, front-end React/Blazor et architecture API pour accelerer la mise en production.",
+      "Je relie back-end .NET, front-end Blazor et architecture API pour accélérer la mise en production.",
   },
   {
-    title: "Vision produit & metier",
+    title: "Vision produit & métier",
     description:
       "Je transforme des besoins business en solutions lisibles, maintenables et utiles pour vos utilisateurs finaux.",
   },
@@ -46,25 +46,25 @@ export function SectionResume() {
 
         <div className={styles.contentColumn}>
           <h2 id="about-title" className={styles.title}>
-            A propos
+            À propos
           </h2>
           <p className={styles.lead}>
-            Ingenieur Fullstack .NET freelance, j&apos;accompagne les entreprises
+            Ingénieur Fullstack .NET freelance, j&apos;accompagne les entreprises
             qui veulent livrer plus vite des produits web fiables, lisibles et
             orientés impact.
           </p>
 
           <div className={styles.summary}>
             <p>
-              J&apos;interviens sur l&apos;ensemble de la chaine de valeur: conception,
-              implementation, qualite et mise en production. Mon objectif est
-              de proposer une execution claire, sans dette inutile, avec une
-              vraie logique de resultat.
+              J&apos;interviens sur l&apos;ensemble de la chaîne de valeur : conception,
+              implémentation, qualité et mise en production. Mon objectif est
+              de proposer une exécution claire, sans dette inutile, avec une
+              vraie logique de résultat.
             </p>
             <p>
-              Mon approche combine rigueur technique, communication simple et
-              affinite IA pragmatique pour booster l&apos;efficacite des equipes,
-              sans complexifier l&apos;experience utilisateur.
+              Mon approche combine rigueur technique, communication directe et
+              intégration IA pragmatique aux workflows pour booster l&apos;efficacité des équipes,
+              sans complexifier l&apos;expérience utilisateur.
             </p>
           </div>
 
