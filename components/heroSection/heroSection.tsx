@@ -8,7 +8,7 @@ function HeroHeadline() {
     <div className={styles.headline}>
       <h1 className={styles.name}>Valentin Passe</h1>
       <p className={styles.tagline}>
-        Développeur Fullstack&nbsp;.NET&nbsp;·&nbsp;Freelance&nbsp;·&nbsp;Affinité&nbsp;IA
+        Développeur Fullstack&nbsp;.NET&nbsp;·&nbsp;Freelance&nbsp;·&nbsp;Solutions IA stratégiques
       </p>
     </div>
   );
@@ -16,8 +16,8 @@ function HeroHeadline() {
 
 function HeroProofPoints() {
   const points = [
-    "+5 ans d'expérience Fullstack .NET",
-    "Affinité IA & LLM intégrée aux projets",
+    "+10 ans d'expérience Fullstack .NET",
+    "Expertise IA appliquée pour accélérer la livraison produit",
     "Disponible pour missions freelance",
   ];
 
@@ -49,15 +49,6 @@ function HeroActionGroup() {
         aria-label="Voir les projets de Valentin Passe"
       >
         Voir mes projets
-      </a>
-      <a
-        href="/images/resume/cv.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${styles.btn} ${styles.btnOutline}`}
-        aria-label="Télécharger le CV de Valentin Passe (PDF)"
-      >
-        Télécharger le CV
       </a>
     </div>
   );
