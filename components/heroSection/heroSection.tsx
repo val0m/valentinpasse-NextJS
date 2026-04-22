@@ -75,7 +75,7 @@ export function HeroSection() {
         <HeroHeadline />
         <p className={styles.promise}>
           Je conçois des applications web robustes, du back&#8209;end&nbsp;.NET
-          à l&apos;interface React/Blazor.
+          à l&apos;interface Blazor.
         </p>
         <HeroProofPoints />
         <HeroActionGroup />
