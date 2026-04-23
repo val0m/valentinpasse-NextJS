@@ -4,12 +4,15 @@ module.exports = {
   roots: ["<rootDir>/components"],
   testMatch: ["**/*.test.ts", "**/*.test.tsx"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
-  globals: {
-    "ts-jest": {
-      tsconfig: {
-        jsx: "react",
-        esModuleInterop: true,
+  transform: {
+    "^.+\\.(ts|tsx)$": [
+      "ts-jest",
+      {
+        tsconfig: {
+          jsx: "react",
+          esModuleInterop: true,
+        },
       },
-    },
+    ],
   },
 };

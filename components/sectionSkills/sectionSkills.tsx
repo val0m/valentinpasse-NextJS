@@ -26,8 +26,8 @@ export function SectionSkills() {
               <p className={styles.cardSupport}>{category.supportText}</p>
 
               <ul className={styles.skillsList}>
-                {category.skills.map((skill, index) => (
-                  <li key={`${category.id}-${skill.label}-${index}`} className={styles.skillItem}>
+                {category.skills.map((skill) => (
+                  <li key={`${category.id}-${skill.label}`} className={styles.skillItem}>
                     <p className={styles.skillLabel}>{skill.label}</p>
                     {skill.description ? (
                       <p className={styles.skillDescription}>{skill.description}</p>
