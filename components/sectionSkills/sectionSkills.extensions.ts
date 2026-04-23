@@ -12,6 +12,14 @@ export type SkillCategory = {
   skills: SkillItem[];
 };
 
+export type SkillsLocale = "fr" | "en";
+
+export type SkillsSectionMetadata = {
+  title: string;
+  subtitle: string;
+  fallback: string;
+};
+
 type RawSkill = {
   label?: unknown;
   description?: unknown;
@@ -56,6 +64,25 @@ const CATEGORY_ORDER: Array<{
     sourceCategories: ["operatingsystem", "qualification"],
   },
 ];
+
+const SECTION_METADATA: Record<SkillsLocale, SkillsSectionMetadata> = {
+  fr: {
+    title: "Compétences",
+    subtitle:
+      "Une expertise Fullstack .NET complétée par des compétences front-end, cloud, data et delivery pour des projets concrets.",
+    fallback: "Les compétences sont en cours de mise à jour.",
+  },
+  en: {
+    title: "Skills",
+    subtitle:
+      "Fullstack .NET expertise supported by front-end, cloud, data, and delivery capabilities for concrete projects.",
+    fallback: "Skills are currently being updated.",
+  },
+};
+
+export function resolveSkillsSectionMetadata(locale: SkillsLocale): SkillsSectionMetadata {
+  return SECTION_METADATA[locale] || SECTION_METADATA.fr;
+}
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;

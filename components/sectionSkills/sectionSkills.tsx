@@ -1,9 +1,15 @@
 import React from "react";
 import styles from "./sectionSkills.module.scss";
 import skillsData from "../../public/data/skills.json";
-import { normalizeSkills } from "./sectionSkills.extensions";
+import {
+  normalizeSkills,
+  resolveSkillsSectionMetadata,
+  SkillsLocale,
+} from "./sectionSkills.extensions";
 
 export function SectionSkills() {
+  const locale: SkillsLocale = "fr";
+  const metadata = resolveSkillsSectionMetadata(locale);
   const categories = normalizeSkills(skillsData);
 
   return (
@@ -11,12 +17,9 @@ export function SectionSkills() {
       <div className={styles.container}>
         <header className={styles.header}>
           <h2 id="skills-title" className={styles.title}>
-            Compétences
+            {metadata.title}
           </h2>
-          <p className={styles.subtitle}>
-            Une expertise Fullstack .NET complétée par des compétences front-end,
-            cloud, data et delivery pour des projets concrets.
-          </p>
+          <p className={styles.subtitle}>{metadata.subtitle}</p>
         </header>
 
         <div className={styles.grid}>
@@ -39,11 +42,7 @@ export function SectionSkills() {
           ))}
         </div>
 
-        {categories.length === 0 ? (
-          <p className={styles.fallback}>
-            Les compétences sont en cours de mise à jour.
-          </p>
-        ) : null}
+        {categories.length === 0 ? <p className={styles.fallback}>{metadata.fallback}</p> : null}
       </div>
     </section>
   );
