@@ -24,37 +24,10 @@ const NAV_ITEMS: NavigationItem[] = [
   { id: "contact", label: "Contact", route: "#contact" },
 ];
 
-const CV_FILE_PATH = "/cv/valentin-passe-cv.pdf";
-
 export function HeaderCustom() {
   const [activeSectionId, setActiveSectionId] = React.useState<string>("hero");
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
-  const [cvAvailable, setCvAvailable] = React.useState<boolean>(true);
   const [notice, setNotice] = React.useState<string>("");
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    let cancelled = false;
-
-    fetch(CV_FILE_PATH, { method: "HEAD" })
-      .then((response) => {
-        if (!cancelled) {
-          setCvAvailable(response.ok);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setCvAvailable(false);
-        }
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   React.useEffect(() => {
     if (typeof window === "undefined") {
@@ -125,24 +98,6 @@ export function HeaderCustom() {
     setIsMenuOpen(false);
   };
 
-  const handleCvAction = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    if (cvAvailable) {
-      setNotice("");
-      setIsMenuOpen(false);
-      return;
-    }
-
-    event.preventDefault();
-    setNotice("Le CV n'est pas disponible en telechargement pour le moment. Vous pouvez me contacter directement.");
-    const contact = document.getElementById("contact");
-    if (contact) {
-      contact.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.history.replaceState(null, "", "#contact");
-      setActiveSectionId("contact");
-    }
-    setIsMenuOpen(false);
-  };
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Navigation principale">
@@ -186,14 +141,6 @@ export function HeaderCustom() {
           <div className={styles.ctaGroup}>
             <a href="#contact" className={styles.contactCta} onClick={(event) => handleAnchorNavigation(event, "#contact", "contact")}>
               Me contacter
-            </a>
-            <a
-              href={cvAvailable ? CV_FILE_PATH : "#contact"}
-              className={styles.cvCta}
-              onClick={handleCvAction}
-              download={cvAvailable ? "CV-Valentin-Passe.pdf" : undefined}
-            >
-              CV
             </a>
           </div>
         </div>

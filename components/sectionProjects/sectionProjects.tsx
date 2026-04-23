@@ -107,7 +107,7 @@ export function SectionProjects() {
             Discuter de votre projet
           </a>
           <a href="#contact" className={styles.secondaryCta}>
-            Demander le CV
+            Demander un echange
           </a>
         </div>
       </div>

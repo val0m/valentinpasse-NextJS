@@ -98,8 +98,7 @@
 	gap: 0.5rem;
 }
 
-.contactCta,
-.cvCta {
+.contactCta {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -108,18 +107,9 @@
 	font-size: 0.86rem;
 	font-weight: 700;
 	text-decoration: none;
-}
-
-.contactCta {
 	color: #ffffff;
 	background: #0f172a;
 	border: 1px solid #0f172a;
-}
-
-.cvCta {
-	color: #0f172a;
-	background: #ffffff;
-	border: 1px solid #cbd5e1;
 }
 
 .notice {
@@ -134,7 +124,6 @@
 .menuToggle:focus-visible,
 .navLink:focus-visible,
 .contactCta:focus-visible,
-.cvCta:focus-visible,
 .brand:focus-visible {
 	outline: 2px solid #0f172a;
 	outline-offset: 2px;
@@ -178,11 +167,10 @@
 
 	.ctaGroup {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr;
 	}
 
-	.contactCta,
-	.cvCta {
+	.contactCta {
 		width: 100%;
 		min-height: 42px;
 	}
