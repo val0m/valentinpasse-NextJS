@@ -2,26 +2,9 @@ import React from "react";
 import styles from "./sectionServices.module.scss";
 import servicesData from "../../public/data/services.json";
 import { sanitizeServices } from "./sectionServices.extensions";
-import { TrustSignals } from "../trustSignals";
 
 export function SectionServices() {
   const services = sanitizeServices(servicesData);
-  const serviceTrustSignals = [
-    {
-      label: "Services relies a des besoins metier",
-      supportingText:
-        "Chaque offre formule un probleme, un resultat attendu et une trajectoire de livraison.",
-      ctaLabel: "Voir les missions associees",
-      ctaTarget: "#experience",
-    },
-    {
-      label: "Parcours conversion sans friction",
-      supportingText:
-        "Depuis chaque service, l'acces a la prise de contact reste direct.",
-      ctaLabel: "Me contacter",
-      ctaTarget: "#contact",
-    },
-  ];
 
   return (
     <section id="services" className={styles.section} aria-labelledby="services-title">
@@ -74,12 +57,6 @@ export function SectionServices() {
             contacter directement via la section contact.
           </p>
         ) : null}
-
-        <TrustSignals
-          title="Preuves de fiabilite"
-          items={serviceTrustSignals}
-          placement="services"
-        />
       </div>
     </section>
   );

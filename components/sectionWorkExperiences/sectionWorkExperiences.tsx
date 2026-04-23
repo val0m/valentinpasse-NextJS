@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./sectionWorkExperiences.module.scss";
-import { TrustSignals } from "../trustSignals";
 
 type ExperienceEntry = {
   roleTitle: string;
@@ -64,23 +63,6 @@ const ENTRIES: ExperienceEntry[] = [
 ];
 
 export function SectionWorkExperiences() {
-  const experienceTrustSignals = [
-    {
-      label: "Continuite de missions depuis 2015",
-      supportingText:
-        "Historique long sur des contextes variés, avec une attention constante a la fiabilite de service.",
-      ctaLabel: "Voir le parcours de formation",
-      ctaTarget: "#educations",
-    },
-    {
-      label: "Double mission active depuis 2023",
-      supportingText:
-        "Capacite a gerer des priorites paralleles tout en gardant un niveau de qualite stable.",
-      ctaLabel: "Discuter de votre besoin",
-      ctaTarget: "#contact",
-    },
-  ];
-
   return (
     <section id="experience" className={styles.section} aria-labelledby="experience-title">
       <div className={styles.container}>
@@ -117,12 +99,6 @@ export function SectionWorkExperiences() {
         <a href="#educations" className={styles.educationCta}>
           Voir le parcours de formation
         </a>
-
-        <TrustSignals
-          title="Ce que ce parcours garantit"
-          items={experienceTrustSignals}
-          placement="experience"
-        />
       </div>
     </section>
   );

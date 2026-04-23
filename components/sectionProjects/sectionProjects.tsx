@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./sectionProjects.module.scss";
-import { TrustSignals } from "../trustSignals";
 
 type ProjectEntry = {
   title: string;
@@ -53,23 +52,6 @@ const PROJECTS: ProjectEntry[] = [
 ];
 
 export function SectionProjects() {
-  const projectTrustSignals = [
-    {
-      label: "Resultats relies a des contextes reels",
-      supportingText:
-        "Chaque projet expose contexte, contribution et impact pour faciliter une evaluation concrete.",
-      ctaLabel: "Demander un echange cible",
-      ctaTarget: "#contact",
-    },
-    {
-      label: "Technologies explicites",
-      supportingText:
-        "Les stacks affichees sont alignees avec les sections competences et experience.",
-      ctaLabel: "Verifier les competences",
-      ctaTarget: "#skills",
-    },
-  ];
-
   return (
     <section id="projects" className={styles.section} aria-labelledby="projects-title">
       <div className={styles.container}>
@@ -128,12 +110,6 @@ export function SectionProjects() {
             Demander le CV
           </a>
         </div>
-
-        <TrustSignals
-          title="Elements de decision"
-          items={projectTrustSignals}
-          placement="projects"
-        />
       </div>
     </section>
   );

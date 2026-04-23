@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./heroSection.module.scss";
-import { TrustSignals } from "../trustSignals";
 
 // ── Sub-components ──────────────────────────────────────────────────────────
 
@@ -70,23 +69,6 @@ function HeroVisual() {
 // ── Main component ───────────────────────────────────────────────────────────
 
 export function HeroSection() {
-  const heroTrustSignals = [
-    {
-      label: "Deux missions freelance en parallele depuis 2023",
-      supportingText:
-        "SMEG et Groupe C8G: un rythme durable de delivery sur des contextes differents.",
-      ctaLabel: "Voir les experiences",
-      ctaTarget: "#experience",
-    },
-    {
-      label: "Parcours continu depuis 2015",
-      supportingText:
-        "Plus de 10 ans de realisations .NET, du backend critique aux interfaces metier.",
-      ctaLabel: "Voir les projets",
-      ctaTarget: "#projects",
-    },
-  ];
-
   return (
     <section className={styles.hero} aria-label="Introduction">
       <div className={styles.content}>
@@ -97,12 +79,6 @@ export function HeroSection() {
         </p>
         <HeroProofPoints />
         <HeroActionGroup />
-        <TrustSignals
-          title="Signaux de confiance"
-          items={heroTrustSignals}
-          placement="hero"
-          compact
-        />
       </div>
       <HeroVisual />
     </section>
