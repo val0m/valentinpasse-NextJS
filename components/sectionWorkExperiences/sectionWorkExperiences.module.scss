@@ -1,0 +1,155 @@
+.section {
+	width: 100%;
+	padding: 5rem 1.25rem;
+	background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+}
+
+.container {
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+.header {
+	max-width: 760px;
+	margin-bottom: 2rem;
+}
+
+.title {
+	margin: 0;
+	color: #0f172a;
+	font-size: clamp(1.95rem, 2.5vw, 2.6rem);
+	letter-spacing: -0.02em;
+}
+
+.subtitle {
+	margin: 0.85rem 0 0;
+	color: #334155;
+	line-height: 1.65;
+	font-size: 1.02rem;
+}
+
+.timeline {
+	position: relative;
+	display: grid;
+	gap: 1rem;
+}
+
+.timeline::before {
+	content: "";
+	position: absolute;
+	left: 0.62rem;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: linear-gradient(180deg, #0f172a 0%, #64748b 100%);
+}
+
+.card {
+	position: relative;
+	margin-left: 2rem;
+	border: 1px solid #d7e0f1;
+	border-radius: 16px;
+	background: #ffffff;
+	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+	padding: 1rem 1.05rem;
+}
+
+.card::before {
+	content: "";
+	position: absolute;
+	left: -1.8rem;
+	top: 1.15rem;
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	background: #0f172a;
+}
+
+.period {
+	margin: 0;
+	color: #0f172a;
+	font-weight: 700;
+	font-size: 0.9rem;
+}
+
+.role {
+	margin: 0.3rem 0 0;
+	color: #0f172a;
+	font-size: 1.05rem;
+}
+
+.organization {
+	margin: 0.2rem 0 0.7rem;
+	color: #334155;
+	font-weight: 500;
+}
+
+.blockLabel {
+	margin: 0.6rem 0 0;
+	color: #0f172a;
+	font-weight: 700;
+	font-size: 0.86rem;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+.blockText {
+	margin: 0.25rem 0 0;
+	color: #475569;
+	line-height: 1.6;
+	font-size: 0.93rem;
+}
+
+.techList {
+	margin: 0.75rem 0 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+}
+
+.techItem {
+	border-radius: 999px;
+	border: 1px solid #d6dfef;
+	background: #f8fbff;
+	color: #1e293b;
+	padding: 0.25rem 0.6rem;
+	font-size: 0.82rem;
+}
+
+.educationCta {
+	margin-top: 1.2rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+	background: #0f172a;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 600;
+	padding: 0.65rem 0.95rem;
+}
+
+.educationCta:hover,
+.educationCta:focus-visible {
+	opacity: 0.95;
+}
+
+@media (max-width: 700px) {
+	.section {
+		padding: 3.5rem 1rem;
+	}
+
+	.timeline::before {
+		display: none;
+	}
+
+	.card {
+		margin-left: 0;
+	}
+
+	.card::before {
+		display: none;
+	}
+}
