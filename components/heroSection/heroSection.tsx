@@ -70,7 +70,7 @@ function HeroVisual() {
 
 export function HeroSection() {
   return (
-    <section className={styles.hero} aria-label="Introduction">
+    <section id="hero" className={styles.hero} aria-label="Introduction">
       <div className={styles.content}>
         <HeroHeadline />
         <p className={styles.promise}>

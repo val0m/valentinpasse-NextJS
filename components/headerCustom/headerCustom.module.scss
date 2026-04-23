@@ -1,0 +1,203 @@
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	border-bottom: 1px solid #e2e8f0;
+	background: rgba(255, 255, 255, 0.96);
+	backdrop-filter: saturate(145%) blur(9px);
+}
+
+.nav {
+	max-width: 1180px;
+	margin: 0 auto;
+	padding: 0.75rem 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	color: #0f172a;
+	text-decoration: none;
+}
+
+.brandText {
+	font-size: 0.95rem;
+	letter-spacing: 0.01em;
+	white-space: nowrap;
+}
+
+.menuToggle {
+	display: none;
+	width: 42px;
+	height: 42px;
+	border: 1px solid #cbd5e1;
+	border-radius: 10px;
+	background: #ffffff;
+	padding: 0.5rem;
+	cursor: pointer;
+}
+
+.menuToggle span {
+	display: block;
+	width: 100%;
+	height: 2px;
+	margin: 5px 0;
+	background: #0f172a;
+	border-radius: 999px;
+}
+
+.navPanel {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-left: auto;
+}
+
+.navList {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.navLink {
+	display: inline-flex;
+	align-items: center;
+	border-radius: 8px;
+	padding: 0.5rem 0.62rem;
+	color: #334155;
+	font-size: 0.9rem;
+	text-decoration: none;
+	border: 1px solid transparent;
+}
+
+.navLink:hover {
+	color: #0f172a;
+	background: #f1f5f9;
+}
+
+.navLinkActive {
+	color: #0f172a;
+	background: #ecf4ff;
+	border-color: #c8ddff;
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.ctaGroup {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.contactCta,
+.cvCta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9px;
+	padding: 0.56rem 0.76rem;
+	font-size: 0.86rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.contactCta {
+	color: #ffffff;
+	background: #0f172a;
+	border: 1px solid #0f172a;
+}
+
+.cvCta {
+	color: #0f172a;
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+}
+
+.notice {
+	margin: 0;
+	min-height: 1.1rem;
+	color: #7c2d12;
+	font-size: 0.82rem;
+	max-width: 1180px;
+	padding: 0 1.25rem 0.45rem;
+}
+
+.menuToggle:focus-visible,
+.navLink:focus-visible,
+.contactCta:focus-visible,
+.cvCta:focus-visible,
+.brand:focus-visible {
+	outline: 2px solid #0f172a;
+	outline-offset: 2px;
+}
+
+@media (max-width: 1060px) {
+	.menuToggle {
+		display: inline-block;
+	}
+
+	.navPanel {
+		position: absolute;
+		top: calc(100% + 1px);
+		left: 0;
+		right: 0;
+		display: none;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.8rem;
+		background: #ffffff;
+		border-bottom: 1px solid #e2e8f0;
+		padding: 0.9rem 1.2rem 1rem;
+	}
+
+	.navPanelOpen {
+		display: flex;
+	}
+
+	.navList {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.2rem;
+	}
+
+	.navLink {
+		width: 100%;
+		justify-content: center;
+		font-size: 0.95rem;
+		padding: 0.68rem 0.8rem;
+	}
+
+	.ctaGroup {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.contactCta,
+	.cvCta {
+		width: 100%;
+		min-height: 42px;
+	}
+}
+
+@media (max-width: 600px) {
+	.brandText {
+		display: none;
+	}
+
+	.nav {
+		padding: 0.64rem 0.9rem;
+	}
+
+	.notice {
+		padding: 0 0.9rem 0.45rem;
+	}
+}

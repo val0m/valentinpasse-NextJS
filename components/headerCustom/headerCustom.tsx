@@ -1,6 +1,5 @@
 // Libs
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 
 // Images
@@ -9,109 +8,200 @@ import Logo from '../../public/images/header/logo.webp';
 // CSS Module
 import styles from "./headerCustom.module.scss"
 
-export function HeaderCustom () {
-  interface Item {
-    label: string;
-    route: string;
-  }
+type NavigationItem = {
+  id: string;
+  label: string;
+  route: string;
+};
 
-  const items: Item[] = [
-    {
-      label: 'A propos de moi',
-      route: '#about',
-    },
-    {
-      label: 'Services',
-      route: '#services',
-    },
-    {
-      label: 'Compétences',
-      route: '#skills',
-    },
-    {
-      label: 'Expériences professionnelles',
-      route: '#experience',
-    },
-    {
-      label: 'Formations',
-      route: '#educations',
-    },
-    {
-      label: 'Projets',
-      route: '#projects',
-    },
-    {
-      label: 'Contact',
-      route: '#contact',
-    },
-  ];
+const NAV_ITEMS: NavigationItem[] = [
+  { id: "hero", label: "Accueil", route: "#hero" },
+  { id: "about", label: "A propos", route: "#about" },
+  { id: "services", label: "Services", route: "#services" },
+  { id: "skills", label: "Competences", route: "#skills" },
+  { id: "experience", label: "Experience", route: "#experience" },
+  { id: "projects", label: "Projets", route: "#projects" },
+  { id: "contact", label: "Contact", route: "#contact" },
+];
 
-  const [activeHash, setActiveHash] = React.useState<string>('');
+const CV_FILE_PATH = "/cv/valentin-passe-cv.pdf";
+
+export function HeaderCustom() {
+  const [activeSectionId, setActiveSectionId] = React.useState<string>("hero");
+  const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+  const [cvAvailable, setCvAvailable] = React.useState<boolean>(true);
+  const [notice, setNotice] = React.useState<string>("");
 
   React.useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
 
-    const updateHash = () => {
-      setActiveHash(window.location.hash || '');
-    };
+    let cancelled = false;
 
-    updateHash();
-    window.addEventListener('hashchange', updateHash);
+    fetch(CV_FILE_PATH, { method: "HEAD" })
+      .then((response) => {
+        if (!cancelled) {
+          setCvAvailable(response.ok);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setCvAvailable(false);
+        }
+      });
 
     return () => {
-      window.removeEventListener('hashchange', updateHash);
+      cancelled = true;
     };
   }, []);
 
-  function getSelectedCss(currentRoute: string): string {
-    return currentRoute === activeHash ? 'selected' : '';
-  }
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
 
-  function forceMenuToClosed(): void {
-    var navbarContent = document.getElementById('menuValentinPasse');
-    if (navbarContent) {
-      if (navbarContent.classList.contains('show')) {
-        navbarContent.classList.remove('show');
-      }
+    const ids = NAV_ITEMS.map((item) => item.id);
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section !== null);
+
+    if (sections.length === 0) {
+      return;
     }
-    var navbarContent = document.getElementById('togglerMenuValentinPasse');
-    if (navbarContent) {
-      if (!navbarContent.classList.contains('collapsed')) {
-        navbarContent.classList.add('collapsed');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((left, right) => right.intersectionRatio - left.intersectionRatio);
+
+        if (visible.length > 0) {
+          setActiveSectionId(visible[0].target.id);
+        }
+      },
+      {
+        root: null,
+        threshold: [0.25, 0.5, 0.75],
+        rootMargin: "-20% 0px -60% 0px",
       }
-      if (navbarContent.hasAttribute('aria-expanded')) {
-        navbarContent.setAttribute('aria-expanded', 'false');
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    const updateFromHash = () => {
+      const hashId = window.location.hash.replace("#", "");
+      if (hashId && ids.includes(hashId)) {
+        setActiveSectionId(hashId);
       }
+    };
+
+    updateFromHash();
+    window.addEventListener("hashchange", updateFromHash);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("hashchange", updateFromHash);
+    };
+  }, []);
+
+  const handleAnchorNavigation = (event: React.MouseEvent<HTMLAnchorElement>, route: string, id: string) => {
+    if (typeof window === "undefined") {
+      return;
     }
-  }
+
+    event.preventDefault();
+    const target = document.querySelector(route);
+    if (!target) {
+      setNotice("La section demandee est temporairement indisponible. Vous pouvez continuer votre navigation.");
+      setIsMenuOpen(false);
+      return;
+    }
+
+    setNotice("");
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", route);
+    setActiveSectionId(id);
+    setIsMenuOpen(false);
+  };
+
+  const handleCvAction = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (cvAvailable) {
+      setNotice("");
+      setIsMenuOpen(false);
+      return;
+    }
+
+    event.preventDefault();
+    setNotice("Le CV n'est pas disponible en telechargement pour le moment. Vous pouvez me contacter directement.");
+    const contact = document.getElementById("contact");
+    if (contact) {
+      contact.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", "#contact");
+      setActiveSectionId("contact");
+    }
+    setIsMenuOpen(false);
+  };
 
   return (
-    <header>
-      <nav className="navbar sticky-top navbar-expand-md bg-white border-bottom">
-        <div className="container-fluid">
-          <Link href="/" className="nav-brand d-flex">
-              <Image src={Logo} width={50} height={60} alt="Logo Valentin PASSE"></Image>
-              <span className="align-self-center h5 ps-2 mb-0"><b>VALENTIN</b> PASSE</span>
-          </Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuValentinPasse" aria-controls="menuValentinPasse" aria-expanded="false" aria-label="Toggle navigation" id="togglerMenuValentinPasse">
-            <i className="fa-solid fa-bars"></i>
-          </button>
+    <header className={styles.header}>
+      <nav className={styles.nav} aria-label="Navigation principale">
+        <a href="#hero" className={styles.brand} onClick={(event) => handleAnchorNavigation(event, "#hero", "hero")}>
+          <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" />
+          <span className={styles.brandText}><strong>VALENTIN</strong> PASSE</span>
+        </a>
 
-          <div className="collapse navbar-collapse" id="menuValentinPasse">
-            <ul className="navbar-nav ms-auto text-center mr-2">
-              {items.map((i) => (
-                <li className="nav-item my-auto" onClick={forceMenuToClosed} key={i.label}>
-                  <Link href={i.route} className={`nav-link ${getSelectedCss(i.route)}`}>
-                    {i.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <button
+          type="button"
+          className={styles.menuToggle}
+          aria-expanded={isMenuOpen}
+          aria-controls="portfolio-navigation"
+          aria-label="Ouvrir ou fermer le menu"
+          onClick={() => setIsMenuOpen((previous) => !previous)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <div
+          id="portfolio-navigation"
+          className={`${styles.navPanel} ${isMenuOpen ? styles.navPanelOpen : ""}`.trim()}
+        >
+          <ul className={styles.navList}>
+            {NAV_ITEMS.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={item.route}
+                  className={`${styles.navLink} ${activeSectionId === item.id ? styles.navLinkActive : ""}`.trim()}
+                  aria-current={activeSectionId === item.id ? "page" : undefined}
+                  onClick={(event) => handleAnchorNavigation(event, item.route, item.id)}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.ctaGroup}>
+            <a href="#contact" className={styles.contactCta} onClick={(event) => handleAnchorNavigation(event, "#contact", "contact")}>
+              Me contacter
+            </a>
+            <a
+              href={cvAvailable ? CV_FILE_PATH : "#contact"}
+              className={styles.cvCta}
+              onClick={handleCvAction}
+              download={cvAvailable ? "CV-Valentin-Passe.pdf" : undefined}
+            >
+              CV
+            </a>
           </div>
         </div>
       </nav>
+
+      <p className={styles.notice} role="status" aria-live="polite">
+        {notice}
+      </p>
     </header>
   );
-  }
+}
