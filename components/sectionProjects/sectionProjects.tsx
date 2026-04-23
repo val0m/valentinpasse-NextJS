@@ -93,7 +93,7 @@ export function SectionProjects() {
                   className={styles.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Voir le lien public pour ${project.title}`}
+                  aria-label={`Voir le site de ${project.title} (lien externe)`}
                 >
                   Voir un lien public
                 </a>
@@ -106,8 +106,8 @@ export function SectionProjects() {
           <a href="#contact" className={styles.primaryCta}>
             Discuter de votre projet
           </a>
-          <a href="/images/resume/valentin-passe.webp" className={styles.secondaryCta} target="_blank" rel="noopener noreferrer">
-            Consulter le CV
+          <a href="#contact" className={styles.secondaryCta}>
+            Demander le CV
           </a>
         </div>
       </div>
