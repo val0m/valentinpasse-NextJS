@@ -2,9 +2,9 @@
 	width: 100%;
 	padding: 5rem 1.25rem;
 	background:
-		radial-gradient(circle at 20% 20%, rgba(15, 23, 42, 0.03) 0%, transparent 45%),
-		linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-}
+          radial-gradient(circle at 10% 12%, rgba(14, 165, 233, 0.10), transparent 34%),
+          radial-gradient(circle at 88% 82%, rgba(15, 23, 42, 0.08), transparent 30%),
+          #f8fbfc;
 
 .container {
 	max-width: 1140px;
@@ -41,11 +41,10 @@
 	flex-direction: column;
 	gap: 0.8rem;
 	padding: 1.1rem;
-	border-radius: 16px;
-	border: 1px solid #dbe4f3;
-	background: #ffffff;
-	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-}
+  border-radius: 16px;
+  border: 1px solid #dbe4f3;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 
 .cardTitle {
 	margin: 0;
@@ -65,29 +64,27 @@
 	padding: 0;
 	list-style: none;
 	display: grid;
-	gap: 0.45rem;
+  gap: 0.45rem;
 }
 
 .skillItem {
-	border-radius: 10px;
-	background: #f8fbff;
-	border: 1px solid #e0e8f6;
-	padding: 0.6rem 0.65rem;
-}
+  border-radius: 10px;
+  background: #f8fbff;
+  border: 1px solid #e0e8f6;
+  padding: 0.6rem 0.65rem;
 
 .skillLabel {
 	margin: 0;
-	color: #14213d;
-	font-weight: 600;
-	font-size: 0.9rem;
+  color: #14213d;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .skillDescription {
-	margin: 0.32rem 0 0;
-	color: #475569;
-	line-height: 1.5;
-	font-size: 0.84rem;
-}
+  margin: 0.32rem 0 0;
+  color: #475569;
+  line-height: 1.5;
+  font-size: 0.84rem;
 
 .fallback {
 	margin-top: 1rem;

@@ -30,7 +30,7 @@ export function HeaderCustom () {
     },
     {
       label: 'Expériences professionnelles',
-      route: '#workExperiences',
+      route: '#experience',
     },
     {
       label: 'Formations',

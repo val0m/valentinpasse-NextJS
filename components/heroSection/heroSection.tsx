@@ -37,14 +37,14 @@ function HeroActionGroup() {
   return (
     <div className={styles.actionGroup} role="group" aria-label="Actions principales">
       <a
-        href="mailto:contact@valentin-passe.com"
+        href="mailto:passe.valentin@gmail.com"
         className={`${styles.btn} ${styles.btnPrimary}`}
         aria-label="Envoyer un e-mail à Valentin Passe"
       >
         Me contacter
       </a>
       <a
-        href="#sectionProjects"
+        href="#projects"
         className={`${styles.btn} ${styles.btnOutline}`}
         aria-label="Voir les projets de Valentin Passe"
       >

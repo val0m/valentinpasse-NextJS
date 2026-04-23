@@ -23,6 +23,19 @@
   color: #334155;
 }
 
+.inquiryList {
+  margin: 1.25rem auto 0;
+  max-width: 680px;
+  text-align: left;
+  display: grid;
+  gap: 0.45rem;
+  color: #1f2937;
+}
+
+.inquiryItem {
+  line-height: 1.55;
+}
+
 .actions {
   margin-top: 1.75rem;
   display: flex;
@@ -41,6 +54,7 @@
   text-decoration: none;
   font-weight: 600;
   transition: transform 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
 }
 
 .primaryAction {
@@ -52,6 +66,29 @@
   background-color: #ffffff;
   color: #0f172a;
   border: 1px solid #cbd5e1;
+}
+
+.emailText {
+  margin: 1rem 0 0;
+  color: #334155;
+}
+
+.emailText a {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.meta {
+  margin: 0.35rem 0 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.feedback {
+  min-height: 1.2rem;
+  margin: 0.7rem 0 0;
+  color: #0f766e;
+  font-size: 0.9rem;
 }
 
 .primaryAction:hover,
@@ -75,5 +112,21 @@
   .primaryAction:hover,
   .secondaryAction:hover {
     transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 3.5rem 1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .inquiryList {
+    margin-top: 1rem;
+    padding-left: 1.1rem;
   }
 }

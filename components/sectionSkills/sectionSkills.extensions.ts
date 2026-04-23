@@ -37,7 +37,7 @@ const CATEGORY_ORDER: Array<{
     id: "fullstack-dotnet",
     label: "Fullstack .NET",
     supportText: "Le socle principal pour concevoir, livrer et faire évoluer des applications robustes.",
-    sourceCategories: ["Technology", "Technlology"],
+    sourceCategories: ["Technology"],
   },
   {
     id: "frontend-architecture",
