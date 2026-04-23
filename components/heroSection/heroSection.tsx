@@ -44,7 +44,7 @@ function HeroActionGroup() {
         Me contacter
       </a>
       <a
-        href="#sectionProjects"
+        href="#projects"
         className={`${styles.btn} ${styles.btnOutline}`}
         aria-label="Voir les projets de Valentin Passe"
       >
