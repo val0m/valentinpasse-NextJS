@@ -1,50 +1,50 @@
 [
-    {        
+    {
       "label": "C#",
       "description": null,
-      "category": "Technlology",
+      "category": "Technology",
       "position": 1
     },
-    {        
+    {
       "label": ".NET",
       "description": "Core / MVC / WebForm",
-      "category": "Technlology",
+      "category": "Technology",
       "position": 2
     },
-    {        
+    {
       "label": "Blazor",
       "description": null,
-      "category": "Technlology",
+      "category": "Technology",
       "position": 3
     },
-    {        
+    {
       "label": "Azure",
       "description": "Service bus / App services / Azure functions / Storage Account / Monitoring / App Insight / ...",
-      "category": "Technlology",
+      "category": "Technology",
       "position": 4
     },
-    {        
+    {
       "label": "Entity Framework, LINQ, ...",
       "description": null,
-      "category": "Technlology",
+      "category": "Technology",
       "position": 5
     },
-    {        
+    {
       "label": "Packages Nuget",
       "description": null,
-      "category": "Technlology",
+      "category": "Technology",
       "position": 6
     },
-    {        
+    {
       "label": "Xamarin Forms",
       "description": null,
-      "category": "Technlology",
+      "category": "Technology",
       "position": 7
     },
-    {        
+    {
       "label": "SSIS / SSRS",
       "description": "SQL Server Integration Services / SQL Server Reporting Services",
-      "category": "Technlology",
+      "category": "Technology",
       "position": 8
     },
     {        

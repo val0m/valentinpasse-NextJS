@@ -29,31 +29,31 @@ const CATEGORY_ORDER: Array<{
     id: "fullstack-dotnet",
     label: "Fullstack .NET",
     supportText: "Le socle principal pour concevoir, livrer et faire évoluer des applications robustes.",
-    sourceCategories: ["Technlology"],
+    sourceCategories: ["Technology"],
   },
   {
     id: "frontend-architecture",
     label: "Front-end & Architecture",
     supportText: "Interfaces web, structuration technique et choix d'architecture orientés usage.",
-    sourceCategories: ["Other"],
+    sourceCategories: ["other"],
   },
   {
     id: "data-cloud",
     label: "Data & Cloud",
     supportText: "Persistance, services cloud et outils pour des solutions prêtes à l'exploitation.",
-    sourceCategories: ["Database"],
+    sourceCategories: ["database"],
   },
   {
     id: "delivery-tooling",
     label: "Delivery & Outils",
     supportText: "Environnement de production, collaboration d'équipe et suivi du delivery.",
-    sourceCategories: ["Software"],
+    sourceCategories: ["software"],
   },
   {
     id: "environment-collaboration",
     label: "Environnements & Qualités humaines",
     supportText: "Capacité à intervenir dans des contextes variés avec autonomie et esprit d'équipe.",
-    sourceCategories: ["OperatingSystem", "Qualification"],
+    sourceCategories: ["operatingsystem", "qualification"],
   },
 ];
 
@@ -90,13 +90,15 @@ export function normalizeSkills(items: unknown): SkillCategory[] {
     }
 
     const rawSkill = item as RawSkill;
-    const sourceCategory = isNonEmptyString(rawSkill.category) ? rawSkill.category : null;
+    const sourceCategory = isNonEmptyString(rawSkill.category)
+      ? rawSkill.category.trim().toLowerCase()
+      : null;
     if (!sourceCategory) {
       return;
     }
 
     const targetCategory = CATEGORY_ORDER.find((category) =>
-      category.sourceCategories.includes(sourceCategory)
+      category.sourceCategories.some((cat) => cat.toLowerCase() === sourceCategory)
     );
     if (!targetCategory) {
       return;
