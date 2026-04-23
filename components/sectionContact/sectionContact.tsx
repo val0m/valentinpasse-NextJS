@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./sectionContact.module.scss";
+import { TrustSignals } from "../trustSignals";
 
 const CONTACT_EMAIL = "passe.valentin@gmail.com";
 
@@ -11,6 +12,20 @@ const INQUIRY_TYPES = [
 
 export function SectionContact() {
   const [feedback, setFeedback] = useState<string>("");
+  const contactTrustSignals = [
+    {
+      label: "Point d'entree unique et clair",
+      supportingText:
+        "Email direct, copie rapide et possibilite de cadrer le besoin des le premier message.",
+    },
+    {
+      label: "Alignement avec le reste du portfolio",
+      supportingText:
+        "Les missions, stacks et types d'accompagnement presentes en amont convergent vers cette prise de contact.",
+      ctaLabel: "Relire les projets",
+      ctaTarget: "#projects",
+    },
+  ];
 
   const handleCopyEmail = async () => {
     if (typeof navigator === "undefined" || !navigator.clipboard) {
@@ -69,6 +84,12 @@ export function SectionContact() {
           Email direct: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </p>
         <p className={styles.meta}>Nice, Provence-Alpes-Côte d'Azur · LinkedIn disponible sur demande</p>
+        <TrustSignals
+          title="Avant de me contacter"
+          items={contactTrustSignals}
+          placement="contact"
+          compact
+        />
         <p className={styles.feedback} role="status" aria-live="polite">
           {feedback}
         </p>

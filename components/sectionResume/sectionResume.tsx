@@ -4,6 +4,7 @@ import Image from "next/image";
 import Profile from "../../public/images/resume/valentin-passe.webp";
 
 import styles from "./sectionResume.module.scss";
+import { TrustSignals } from "../trustSignals";
 
 type Highlight = {
   title: string;
@@ -29,6 +30,23 @@ const highlights: Highlight[] = [
 ];
 
 export function SectionResume() {
+  const aboutTrustSignals = [
+    {
+      label: "Positionnement freelance + culture delivery",
+      supportingText:
+        "Experience combinee CDI et missions independantes pour s'adapter vite aux contraintes reelles.",
+      ctaLabel: "Explorer les services",
+      ctaTarget: "#services",
+    },
+    {
+      label: "Approche orientee resultat",
+      supportingText:
+        "Les objectifs de livraison et la lisibilite du produit guident les choix techniques.",
+      ctaLabel: "Voir des preuves en projets",
+      ctaTarget: "#projects",
+    },
+  ];
+
   return (
     <section id="about" className={styles.section} aria-labelledby="about-title">
       <div className={styles.container}>
@@ -77,6 +95,8 @@ export function SectionResume() {
               </li>
             ))}
           </ul>
+
+          <TrustSignals title="Reassurance" items={aboutTrustSignals} placement="about" compact />
 
           <div className={styles.actions}>
             <a href="#projects" className={styles.primaryAction}>
