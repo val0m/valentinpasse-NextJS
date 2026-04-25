@@ -1,25 +1,27 @@
 import React from "react";
+import Image from "next/image";
+import Profile from "../../public/images/resume/valentin-passe.webp";
+import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
 import styles from "./heroSection.module.scss";
 
-// ── Sub-components ──────────────────────────────────────────────────────────
+type HeroSectionProps = {
+  locale?: PortfolioLocale;
+};
 
-function HeroHeadline() {
+function HeroHeadline({ locale = "fr" }: HeroSectionProps) {
+  const content = getPortfolioContent(locale).hero;
+
   return (
     <div className={styles.headline}>
-      <h1 className={styles.name}>Valentin Passe</h1>
-      <p className={styles.tagline}>
-        Développeur Fullstack&nbsp;.NET&nbsp;·&nbsp;Freelance&nbsp;·&nbsp;Solutions IA stratégiques
-      </p>
+      <p className={styles.eyebrow}>{content.eyebrow}</p>
+      <h1 className={styles.name}>{content.name}</h1>
+      <p className={styles.tagline}>{content.tagline}</p>
     </div>
   );
 }
 
-function HeroProofPoints() {
-  const points = [
-    "+10 ans d'expérience Fullstack .NET",
-    "Expertise IA appliquée aux entreprises",
-    "Disponible pour missions freelance",
-  ];
+function HeroProofPoints({ locale = "fr" }: HeroSectionProps) {
+  const points = getPortfolioContent(locale).hero.proofPoints;
 
   return (
     <ul className={styles.proofPoints} aria-label="Points clés">
@@ -33,23 +35,40 @@ function HeroProofPoints() {
   );
 }
 
-function HeroActionGroup() {
+function HeroActionGroup({ locale = "fr" }: HeroSectionProps) {
+  const content = getPortfolioContent(locale).hero;
+
   return (
     <div className={styles.actionGroup} role="group" aria-label="Actions principales">
       <a
-        href="mailto:passe.valentin@gmail.com"
+        href={content.primaryAction.href}
         className={`${styles.btn} ${styles.btnPrimary}`}
-        aria-label="Envoyer un e-mail à Valentin Passe"
+        aria-label={content.primaryAction.label}
       >
-        Me contacter
+        {content.primaryAction.label}
       </a>
       <a
-        href="#projects"
+        href={content.secondaryAction.href}
         className={`${styles.btn} ${styles.btnOutline}`}
-        aria-label="Voir les projets de Valentin Passe"
+        aria-label={content.secondaryAction.label}
       >
-        Voir mes projets
+        {content.secondaryAction.label}
       </a>
+    </div>
+  );
+}
+
+function HeroMetrics({ locale = "fr" }: HeroSectionProps) {
+  const metrics = getPortfolioContent(locale).hero.metrics;
+
+  return (
+    <div className={styles.metrics}>
+      {metrics.map((metric) => (
+        <article key={`${metric.value}-${metric.label}`} className={styles.metricCard}>
+          <p className={styles.metricValue}>{metric.value}</p>
+          <p className={styles.metricLabel}>{metric.label}</p>
+        </article>
+      ))}
     </div>
   );
 }
@@ -57,8 +76,20 @@ function HeroActionGroup() {
 function HeroVisual() {
   return (
     <div className={styles.visual} aria-hidden="true">
-      <div className={styles.avatar}>
-        <span className={styles.initials}>VP</span>
+      <div className={styles.visualCard}>
+        <div className={styles.portraitShell}>
+          <Image
+            src={Profile}
+            alt="Portrait de Valentin Passe"
+            className={styles.portrait}
+            sizes="(max-width: 900px) 240px, 360px"
+            priority
+          />
+        </div>
+        <div className={styles.floatingPanel}>
+          <p className={styles.floatingLabel}>Delivery focus</p>
+          <p className={styles.floatingValue}>Architecture .NET, Blazor, IA utile</p>
+        </div>
       </div>
       <div className={styles.ring} />
       <div className={styles.ring2} />
@@ -66,19 +97,17 @@ function HeroVisual() {
   );
 }
 
-// ── Main component ───────────────────────────────────────────────────────────
+export function HeroSection({ locale = "fr" }: HeroSectionProps) {
+  const content = getPortfolioContent(locale).hero;
 
-export function HeroSection() {
   return (
     <section id="hero" className={styles.hero} aria-label="Introduction">
       <div className={styles.content}>
-        <HeroHeadline />
-        <p className={styles.promise}>
-          Je conçois des applications web robustes, du back&#8209;end&nbsp;.NET
-          à l&apos;interface Blazor.
-        </p>
-        <HeroProofPoints />
-        <HeroActionGroup />
+        <HeroHeadline locale={locale} />
+        <p className={styles.promise}>{content.promise}</p>
+        <HeroProofPoints locale={locale} />
+        <HeroActionGroup locale={locale} />
+        <HeroMetrics locale={locale} />
       </div>
       <HeroVisual />
     </section>

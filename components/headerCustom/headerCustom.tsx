@@ -1,40 +1,30 @@
-// Libs
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
+import Logo from "../../public/images/header/logo.webp";
+import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
+import styles from "./headerCustom.module.scss";
 
-// Images
-import Logo from '../../public/images/header/logo.webp';
-
-// CSS Module
-import styles from "./headerCustom.module.scss"
-
-type NavigationItem = {
-  id: string;
-  label: string;
-  route: string;
+type HeaderCustomProps = {
+  locale: PortfolioLocale;
 };
 
-const NAV_ITEMS: NavigationItem[] = [
-  { id: "hero", label: "Accueil", route: "#hero" },
-  { id: "about", label: "A propos", route: "#about" },
-  { id: "services", label: "Services", route: "#services" },
-  { id: "skills", label: "Competences", route: "#skills" },
-  { id: "experience", label: "Experience", route: "#experience" },
-  { id: "projects", label: "Projets", route: "#projects" },
-  { id: "contact", label: "Contact", route: "#contact" },
-];
-
-export function HeaderCustom() {
+export function HeaderCustom({ locale }: HeaderCustomProps) {
+  const content = getPortfolioContent(locale);
+  const navItems = content.navigation.items.map((item) => ({
+    ...item,
+    route: `#${item.id}`,
+  }));
   const [activeSectionId, setActiveSectionId] = React.useState<string>("hero");
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const [notice, setNotice] = React.useState<string>("");
+  const otherLocaleHref = `${locale === "fr" ? "/en" : "/"}#${activeSectionId || "hero"}`;
 
   React.useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
 
-    const ids = NAV_ITEMS.map((item) => item.id);
+    const ids = navItems.map((item) => item.id);
     const sections = ids
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
@@ -103,7 +93,10 @@ export function HeaderCustom() {
       <nav className={styles.nav} aria-label="Navigation principale">
         <a href="#hero" className={styles.brand} onClick={(event) => handleAnchorNavigation(event, "#hero", "hero")}>
           <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" />
-          <span className={styles.brandText}><strong>VALENTIN</strong> PASSE</span>
+          <span className={styles.brandText}>
+            <span className={styles.brandTitle}>Valentin Passe</span>
+            <span className={styles.brandSubtitle}>Fullstack .NET</span>
+          </span>
         </a>
 
         <button
@@ -111,7 +104,7 @@ export function HeaderCustom() {
           className={styles.menuToggle}
           aria-expanded={isMenuOpen}
           aria-controls="portfolio-navigation"
-          aria-label="Ouvrir ou fermer le menu"
+          aria-label={locale === "fr" ? "Ouvrir ou fermer le menu" : "Open or close menu"}
           onClick={() => setIsMenuOpen((previous) => !previous)}
         >
           <span />
@@ -124,7 +117,7 @@ export function HeaderCustom() {
           className={`${styles.navPanel} ${isMenuOpen ? styles.navPanelOpen : ""}`.trim()}
         >
           <ul className={styles.navList}>
-            {NAV_ITEMS.map((item) => (
+            {navItems.map((item) => (
               <li key={item.id}>
                 <a
                   href={item.route}
@@ -138,9 +131,20 @@ export function HeaderCustom() {
             ))}
           </ul>
 
-          <div className={styles.ctaGroup}>
-            <a href="#contact" className={styles.contactCta} onClick={(event) => handleAnchorNavigation(event, "#contact", "contact")}>
-              Me contacter
+          <div className={styles.utilityGroup}>
+            <a
+              href={otherLocaleHref}
+              className={styles.localeSwitch}
+              aria-label={content.navigation.localeSwitcherLabel}
+            >
+              {content.switchLocaleLabel}
+            </a>
+            <a
+              href="#contact"
+              className={styles.contactCta}
+              onClick={(event) => handleAnchorNavigation(event, "#contact", "contact")}
+            >
+              {content.navigation.ctaLabel}
             </a>
           </div>
         </div>

@@ -1,32 +1,23 @@
-// Libs
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import { Manrope, Space_Grotesk } from "next/font/google";
+import "../styles/globals.css";
 
-// Components
-// import Layout from '../components/layout/Layout';
-import { useEffect } from 'react';
+const bodyFont = Manrope({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 
-//CSS Module
-import '../styles/globals.css'
-import 'bootstrap/dist/css/bootstrap.css'
+const displayFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export default function App({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    require('../node_modules/bootstrap/dist/js/bootstrap.bundle.js');
-  }, []);
-
-  return <Component {...pageProps} />
+  return (
+    <div className={`${bodyFont.variable} ${displayFont.variable}`}>
+      <Component {...pageProps} />
+    </div>
+  );
 }
-
-// export default function App({ Component, pageProps }: AppProps) {
-// useEffect(() => {
-//   require('../node_modules/bootstrap/dist/js/bootstrap.bundle.js');
-// }, []);
-
-//   return (
-//     <>
-//       <Layout>
-//           <Component {...pageProps} />
-//       </Layout>
-//     </>
-//   );
-// }

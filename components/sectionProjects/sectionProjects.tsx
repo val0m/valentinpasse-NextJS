@@ -1,71 +1,26 @@
 import React from "react";
+import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
 import styles from "./sectionProjects.module.scss";
 
-type ProjectEntry = {
-  title: string;
-  summary: string;
-  context: string;
-  contribution: string;
-  outcome: string;
-  tags: string[];
-  publicLink?: string;
+type SectionProjectsProps = {
+  locale?: PortfolioLocale;
 };
 
-const PROJECTS: ProjectEntry[] = [
-  {
-    title: "Astreinte et interventions (SMEG)",
-    summary:
-      "Solution métier pour piloter appels d'astreinte, urgences et interventions sur usages bureau et mobile.",
-    context:
-      "Environnement opérationnel exigeant, avec contraintes de disponibilité et qualité de service continue.",
-    contribution:
-      "Conception et développement Fullstack sur socle .NET 7 / ABP, avec architecture orientée domaine.",
-    outcome:
-      "Digitalisation des processus terrain et meilleure réactivité des équipes dans les situations critiques.",
-    tags: [".NET", "C#", "ABP", "DDD", "Azure", "MongoDB"],
-  },
-  {
-    title: "Plateforme backend avec composante IA (TidyUp)",
-    summary:
-      "Base applicative pour le rangement, classement et la recherche de contenus numériques à forte valeur.",
-    context:
-      "Besoin d'une fondation backend robuste pour supporter l'évolution des fonctionnalités IA dans le temps.",
-    contribution:
-      "Développement backend en .NET MVC / .NET Core, structuration des flux techniques et de la persistance.",
-    outcome:
-      "Socle technique pérenne facilitant la montée en capacité produit et la fiabilité des traitements.",
-    tags: [".NET MVC", ".NET Core", "C#", "SQL", "Architecture"],
-  },
-  {
-    title: "Applications internes d'entreprise",
-    summary:
-      "Plusieurs projets internes menés sur des cycles longs pour soutenir les besoins métiers quotidiens.",
-    context:
-      "Contexte multi-applications avec enjeux de maintenabilité, performance et évolution progressive.",
-    contribution:
-      "Développement backend/fullstack, maintenance évolutive et amélioration continue de la qualité de delivery.",
-    outcome:
-      "Fiabilisation des processus internes et meilleure continuité de service pour les utilisateurs métiers.",
-    tags: [".NET", "Blazor", "Entity Framework", "SQL Server", "Delivery"],
-    publicLink: "https://c8g.fr",
-  },
-];
+export function SectionProjects({ locale = "fr" }: SectionProjectsProps) {
+  const content = getPortfolioContent(locale).projects;
 
-export function SectionProjects() {
   return (
     <section id="projects" className={styles.section} aria-labelledby="projects-title">
       <div className={styles.container}>
         <header className={styles.header}>
           <h2 id="projects-title" className={styles.title}>
-            Projets
+            {content.title}
           </h2>
-          <p className={styles.subtitle}>
-            Des cas concrets qui montrent comment je transforme un contexte métier en livraison utile.
-          </p>
+          <p className={styles.subtitle}>{content.subtitle}</p>
         </header>
 
         <div className={styles.grid}>
-          {PROJECTS.map((project) => (
+          {content.items.map((project) => (
             <article key={project.title} className={styles.card}>
               <h3 className={styles.cardTitle}>{project.title}</h3>
               <p className={styles.summary}>{project.summary}</p>
@@ -95,7 +50,7 @@ export function SectionProjects() {
                   rel="noopener noreferrer"
                   aria-label={`Voir le site de ${project.title} (lien externe)`}
                 >
-                  Voir un lien public
+                  {locale === "fr" ? "Voir un lien public" : "View public link"}
                 </a>
               ) : null}
             </article>
@@ -104,10 +59,10 @@ export function SectionProjects() {
 
         <div className={styles.ctaRow}>
           <a href="#contact" className={styles.primaryCta}>
-            Discuter de votre projet
+            {content.primaryAction.label}
           </a>
           <a href="#contact" className={styles.secondaryCta}>
-            Demander un echange
+            {content.secondaryAction.label}
           </a>
         </div>
       </div>

@@ -1,26 +1,42 @@
 .section {
   width: 100%;
-  padding: 4rem 1.5rem;
-  background-color: #f8fafc;
+  padding: 6rem 1.5rem;
+  background:
+    radial-gradient(circle at 20% 16%, rgba(47, 107, 255, 0.16), transparent 24%),
+    radial-gradient(circle at 82% 14%, rgba(198, 139, 89, 0.14), transparent 20%),
+    linear-gradient(180deg, #09111b 0%, #0d1724 100%);
 }
 
 .container {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
   text-align: center;
+  padding: 2rem;
+  border-radius: 32px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(9, 17, 27, 0.58);
+  box-shadow: 0 30px 80px rgba(2, 8, 23, 0.24);
 }
 
 .title {
   margin: 0;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  color: #0f172a;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  color: #f8fafc;
 }
 
 .description {
   margin: 1rem auto 0;
   max-width: 680px;
-  line-height: 1.6;
-  color: #334155;
+  line-height: 1.75;
+  color: rgba(226, 232, 240, 0.82);
+}
+
+.responsePromise {
+  margin: 0.8rem auto 0;
+  max-width: 620px;
+  color: #bfd7ff;
+  font-weight: 600;
 }
 
 .inquiryList {
@@ -28,12 +44,16 @@
   max-width: 680px;
   text-align: left;
   display: grid;
-  gap: 0.45rem;
-  color: #1f2937;
+  gap: 0.65rem;
+  color: #f8fafc;
 }
 
 .inquiryItem {
-  line-height: 1.55;
+  line-height: 1.6;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .actions {
@@ -49,8 +69,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.7rem 1.1rem;
-  border-radius: 8px;
+  min-height: 50px;
+  padding: 0.82rem 1.15rem;
+  border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
   transition: transform 0.15s ease, opacity 0.15s ease;
@@ -58,36 +79,36 @@
 }
 
 .primaryAction {
-  background-color: #0f172a;
-  color: #ffffff;
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 45%, #f5d0a9 100%);
+  color: #09111b;
 }
 
 .secondaryAction {
-  background-color: #ffffff;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+	background-color: rgba(255, 255, 255, 0.08);
+	color: #f8fafc;
+	border: 1px solid rgba(148, 163, 184, 0.22);
 }
 
 .emailText {
   margin: 1rem 0 0;
-  color: #334155;
+  color: rgba(226, 232, 240, 0.78);
 }
 
 .emailText a {
-  color: #0f172a;
+  color: #f8fafc;
   font-weight: 600;
 }
 
 .meta {
   margin: 0.35rem 0 0;
-  color: #475569;
+	color: rgba(226, 232, 240, 0.6);
   font-size: 0.95rem;
 }
 
 .feedback {
   min-height: 1.2rem;
   margin: 0.7rem 0 0;
-  color: #0f766e;
+	color: #93c5fd;
   font-size: 0.9rem;
 }
 
@@ -99,7 +120,7 @@
 
 .primaryAction:focus-visible,
 .secondaryAction:focus-visible {
-  outline: 2px solid #0f172a;
+  outline: 2px solid #bfdbfe;
   outline-offset: 2px;
 }
 
@@ -117,7 +138,11 @@
 
 @media (max-width: 640px) {
   .section {
-    padding: 3.5rem 1rem;
+    padding: 4rem 1rem;
+  }
+
+  .container {
+    padding: 1.3rem;
   }
 
   .actions {

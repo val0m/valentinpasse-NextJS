@@ -1,6 +1,9 @@
-// CSS Module
-import styles from "./hr.module.css"
+import styles from "./hr.module.css";
 
 export function Hr() {
-    return <div className={styles.hr}></div>
+    return (
+        <div className={styles.hr} aria-hidden="true">
+            <span className={styles.dot} />
+        </div>
+    );
 }

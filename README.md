@@ -1,34 +1,135 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Valentin Passe Portfolio
 
-## Getting Started
+Static-first portfolio built with Next.js and TypeScript for Valentin Passe, Fullstack .NET engineer. The site is designed as a premium one-page experience with bilingual French and English routes, anchored navigation, editorial content, and section-based storytelling.
 
-First, run the development server:
+## Stack
+
+- Next.js pages router
+- React 19
+- TypeScript
+- Sass Modules
+- next/font/google for typography
+- Jest for unit tests
+
+## Current Scope
+
+The active product scope includes:
+- hero section
+- about section
+- services section
+- skills section
+- work experience section
+- education section
+- projects section
+- contact section
+- one-page navigation
+- bilingual experience with French and English pages
+- premium visual redesign with gradients, glass effects, and restrained motion
+
+Removed from the active backlog:
+- CV download
+- standalone conversion reassurance feature
+
+## Routes
+
+- `/` French version
+- `/en` English version
+
+The language switch preserves the current section anchor when possible so visitors keep their browsing context while changing language.
+
+## Content Architecture
+
+Localized content is centralized in `content/portfolioContent.ts`.
+
+This file acts as the source of truth for:
+- metadata
+- navigation labels
+- hero copy and actions
+- about content
+- services
+- experience entries
+- education entries
+- projects
+- contact copy
+- footer labels
+
+The shared one-page composition lives in `components/homePage/homePage.tsx`, which renders the same section structure for both locales.
+
+## Project Structure
+
+```text
+components/
+  homePage/                  Shared one-page composition root
+  layout/                    Shell, metadata, header, footer
+  heroSection/               Intro section and key actions
+  sectionResume/             About section
+  sectionServices/           Services section
+  sectionSkills/             Skills section and normalization helpers
+  sectionWorkExperiences/    Experience section
+  sectionEducations/         Education section
+  sectionProjects/           Projects section
+  sectionContact/            Contact section
+content/
+  portfolioContent.ts        Localized portfolio content
+docs/
+  specs/                     Feature specifications still in scope
+  user-stories/              Matching user stories
+  implementation-overview.md High-level implementation summary
+pages/
+  index.tsx                  French route
+  en.tsx                     English route
+  _app.tsx                   Global fonts and app wrapper
+  _document.tsx              Locale-aware document lang
+styles/
+  globals.css                Design tokens and global styles
+  Home.module.css            Main page layout spacing
+```
+
+## Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build for production:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Run tests:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+npm run test
+```
 
-## Learn More
+## Implementation Notes
 
-To learn more about Next.js, take a look at the following resources:
+- The site uses static content instead of a runtime i18n library.
+- French is the default locale and English is exposed through a dedicated `/en` page.
+- Section anchors are shared across locales to keep navigation and language switching predictable.
+- Styling relies on CSS variables in `styles/globals.css` and section-level Sass modules.
+- Typography is loaded through `next/font/google` with Manrope for body text and Space Grotesk for display text.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `docs/specs/` contains the technical specifications for the remaining features in scope.
+- `docs/user-stories/` contains the corresponding product intent and acceptance criteria.
+- `docs/implementation-overview.md` summarizes the delivered architecture and current scope.
 
-## Deploy on Vercel
+## Quality Checks
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Recommended validation flow after changes:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+npm run build
+npm run test
+```

@@ -1,76 +1,57 @@
-// Libs
 import PropTypes from "prop-types";
 import Head from "next/head";
-import React, {ReactNode} from 'react';
-import { useEffect } from 'react';
-import { useRouter } from "next/router";
-import { AppProps } from 'next/app';
-// import { Analytics } from '@vercel/analytics/react';
-
-// Components
-import { HeaderCustom } from '../headerCustom';
-import { FooterCustom } from '../footerCustom';
-
-//CSS Module
+import React, { ReactNode } from "react";
+import { HeaderCustom } from "../headerCustom";
+import { FooterCustom } from "../footerCustom";
+import { PortfolioLocale } from "../../content/portfolioContent";
 import styles from "./layout.module.scss";
-import Image from "next/image";
 
 type LayoutProps = {
     children: ReactNode;
+    locale: PortfolioLocale;
     title?: string;
+    description?: string;
 };
 
-export function Layout ({
+export function Layout({
     children,
-    title = 'Développeur informatique .NET - Valentin PASSE'
-    } : LayoutProps) 
-{    
+    locale,
+    title = "Valentin PASSE | Freelance Fullstack .NET",
+    description = "Portfolio de Valentin PASSE, freelance Fullstack .NET.",
+}: LayoutProps) {
+    const ogLocale = locale === "en" ? "en_US" : "fr_FR";
+
     return (
-        <div className={styles["main-container"]}>
+        <div className={styles.mainContainer}>
             <Head>
                 <meta charSet="utf-8" />
-                <meta name="acharSet=thor" content="Valentin PASSE" />
                 <meta name="author" content="Valentin PASSE" />
                 <meta name="copyright" content="Portfolio of Valentin PASSE" />
-                <meta name="keywords" content="Valentin Passé, Valentin Passe, Portfolio, Web Developer, Développeur Web, Informatique, Web, .Net, C#, NextJS, Developer .Net, Backend, Frontend, freelance, autoentrepreneur" />
-                <meta name="description" content="Portfolio de Valentin PASSE. Développeur Web spécialisé dans la technologie Microsoft et les nouvelles technologies." />
+                <meta
+                    name="keywords"
+                    content="Valentin Passe, Portfolio, Fullstack .NET, Blazor, C#, Azure, freelance, software delivery"
+                />
+                <meta name="description" content={description} />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta name="robots" content="Valentin Passé, Valentin Passe, Portfolio, Web Developer, Développeur Web, Web, Développeur informatique" />
-
-                <meta itemProp="name" content="Valentin PASSE - Portfolio professionnel - Développeur informatique" />
-                <meta itemProp="description" content="Porfolio de Valentin PASSE, développeur web en auto-entrepreneur." />
-                <meta itemProp="image" content="https://valentin-passe.com" />
-                
-                <meta property="og:title" content="Valentin PASSE - Portfolio professionnel - Développeur informatique" />
-                <meta property="og:description" content="Porfolio de Valentin PASSE, développeur web en auto-entrepreneur." />
-                <meta property="og:image" content="https://valentin-passe.com/assets/images/home/image1.webp" />
-                <meta property="og:url" content="https://valentin-passe.com" />
-                <meta property="og:site_name" content="Développeur .NET - Valentin PASSE" />
-                <meta property="og:locale" content="fr_FR" />
+                <meta name="robots" content="index,follow" />
+                <meta itemProp="name" content={title} />
+                <meta itemProp="description" content={description} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="og:site_name" content="Valentin PASSE" />
+                <meta property="og:locale" content={ogLocale} />
                 <meta property="og:type" content="website" />
-
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <meta name="robots" content="Valentin Passé, Valentin Passe, Portfolio, Web Developer, Développeur Web, Web" />
-                <meta name="author" content="Passé Valentin" />
-
                 <title>{title}</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <HeaderCustom />
-            <main>
-                {children}
-                {/* <Analytics /> */}
-            </main>
-
-            <FooterCustom />            
+            <HeaderCustom locale={locale} />
+            <div className={styles.content}>{children}</div>
+            <FooterCustom locale={locale} />
         </div>
-    )
+    );
 }
 
 Layout.propTypes = {
-    /**
-     * page content
-     */
     children: PropTypes.node.isRequired,
-}
+};
