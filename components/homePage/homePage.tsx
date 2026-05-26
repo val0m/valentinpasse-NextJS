@@ -17,10 +17,16 @@ type HomePageProps = {
 };
 
 export function HomePage({ locale }: HomePageProps) {
-  const content = getPortfolioContent(locale);
+  const content = React.useMemo(() => getPortfolioContent(locale), [locale]);
+  const canonicalPath = locale === "en" ? "/en" : "/";
 
   return (
-    <Layout locale={locale} title={content.meta.title} description={content.meta.description}>
+    <Layout
+      locale={locale}
+      title={content.meta.title}
+      description={content.meta.description}
+      canonicalPath={canonicalPath}
+    >
       <main className={styles.page}>
         <HeroSection locale={locale} />
         <div className={styles.container}>

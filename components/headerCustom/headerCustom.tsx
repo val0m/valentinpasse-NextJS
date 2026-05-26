@@ -9,11 +9,12 @@ type HeaderCustomProps = {
 };
 
 export function HeaderCustom({ locale }: HeaderCustomProps) {
-  const content = getPortfolioContent(locale);
-  const navItems = content.navigation.items.map((item) => ({
-    ...item,
-    route: `#${item.id}`,
-  }));
+  const content = React.useMemo(() => getPortfolioContent(locale), [locale]);
+  const navItems = React.useMemo(
+    () => content.navigation.items.map((item) => ({ ...item, route: `#${item.id}` })),
+    [content.navigation.items]
+  );
+  const navItemIds = React.useMemo(() => navItems.map((item) => item.id), [navItems]);
   const [activeSectionId, setActiveSectionId] = React.useState<string>("hero");
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
   const [notice, setNotice] = React.useState<string>("");
@@ -24,7 +25,7 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
       return;
     }
 
-    const ids = navItems.map((item) => item.id);
+    const ids = navItemIds;
     const sections = ids
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
@@ -66,7 +67,7 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
       observer.disconnect();
       window.removeEventListener("hashchange", updateFromHash);
     };
-  }, []);
+  }, [navItemIds]);
 
   const handleAnchorNavigation = (event: React.MouseEvent<HTMLAnchorElement>, route: string, id: string) => {
     if (typeof window === "undefined") {
@@ -76,7 +77,11 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
     event.preventDefault();
     const target = document.querySelector(route);
     if (!target) {
-      setNotice("La section demandee est temporairement indisponible. Vous pouvez continuer votre navigation.");
+      setNotice(
+        locale === "en"
+          ? "The requested section is temporarily unavailable. You can continue browsing."
+          : "La section demandée est temporairement indisponible. Vous pouvez continuer votre navigation."
+      );
       setIsMenuOpen(false);
       return;
     }
