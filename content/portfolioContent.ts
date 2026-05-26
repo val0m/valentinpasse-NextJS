@@ -140,10 +140,10 @@ export type PortfolioContent = {
 
 const NAV_IDS: Array<{ id: string; fr: string; en: string }> = [
   { id: "hero", fr: "Accueil", en: "Home" },
-  { id: "about", fr: "A propos", en: "About" },
+  { id: "about", fr: "À propos", en: "About" },
   { id: "services", fr: "Services", en: "Services" },
-  { id: "skills", fr: "Competences", en: "Skills" },
-  { id: "experience", fr: "Experience", en: "Experience" },
+  { id: "skills", fr: "Compétences", en: "Skills" },
+  { id: "experience", fr: "Expérience", en: "Experience" },
   { id: "projects", fr: "Projets", en: "Projects" },
   { id: "contact", fr: "Contact", en: "Contact" },
 ];
@@ -157,7 +157,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     meta: {
       title: "Valentin PASSE | Freelance Fullstack .NET",
       description:
-        "Portfolio one-page de Valentin PASSE, freelance Fullstack .NET a Nice. Delivery produit, architecture applicative et integration IA pragmatique.",
+        "Portfolio one-page de Valentin PASSE, freelance Fullstack .NET à Nice. 10+ ans de delivery logiciel, architecture applicative et intégration IA pragmatique.",
     },
     navigation: {
       items: NAV_IDS.map((item) => ({ id: item.id, label: item.fr })),
@@ -165,138 +165,203 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       localeSwitcherLabel: "Basculer la langue du portfolio",
     },
     hero: {
-      eyebrow: "Freelance Fullstack .NET | Nice, remote, hybride, sur site",
+      eyebrow: "Freelance Fullstack .NET · Nice · Remote, hybride, sur site",
       name: "Valentin Passe",
-      tagline: "Je conçois des produits web fiables, lisibles et rapides a faire evoluer.",
+      tagline: "Je conçois des produits web fiables, lisibles et rapides à faire évoluer.",
       promise:
-        "J'interviens sur le cadrage, le developpement fullstack .NET, la qualite de delivery et l'integration IA utile pour accelerer les equipes sans ajouter de dette inutile.",
+        "Autodidacte avec 10+ ans de delivery .NET, j'interviens du cadrage à la mise en production : architecture applicative, développement fullstack et intégration IA utile pour accélérer les équipes sans dette inutile.",
       proofPoints: [
-        "Double experience CDI et freelance pour arbitrer vite entre vision produit et contraintes de livraison.",
-        "Expertise .NET, Blazor, architecture applicative et contextes metier exigeants.",
-        "Approche directe, orientee resultat, avec attention forte a la lisibilite du code et a l'usage final.",
+        "10+ ans d'expérience en développement web et applicatif, alternant CDI et freelance.",
+        "Expertise .NET (Core, MVC, Blazor, MAUI), architecture Clean / DDD / CQRS et cloud Azure.",
+        "Veille active sur l'IA et intégration concrète des outils dans le quotidien de développement.",
       ],
       metrics: [
         { value: "10+", label: "ans de delivery logiciel" },
-        { value: "2", label: "missions freelance en parallele depuis 2023" },
-        { value: ".NET", label: "socle principal pour construire et faire evoluer" },
+        { value: "2", label: "missions freelance en parallèle depuis 2023" },
+        { value: ".NET", label: "socle principal, du legacy au .NET 10" },
       ],
       primaryAction: { label: "Discuter de votre besoin", href: "#contact" },
       secondaryAction: { label: "Voir les projets", href: "#projects" },
     },
     about: {
-      title: "A propos",
+      title: "À propos",
       lead:
-        "Ingenieur Fullstack .NET freelance, j'aide les entreprises a transformer un besoin metier en produit web robuste et exploitable.",
+        "Ingénieur Fullstack .NET freelance, j'aide les entreprises à transformer un besoin métier en produit web robuste, lisible et exploitable dans la durée.",
       paragraphs: [
-        "J'interviens sur toute la chaine de valeur: cadrage, architecture, implementation, qualite et mise en production. Mon objectif est simple: livrer vite, proprement, et sans sacrifier la maintenabilite.",
-        "Mon positionnement combine rigueur technique, vision produit et integration IA pragmatique. J'aime les solutions claires, utiles et compréhensibles par l'equipe qui devra ensuite les faire vivre.",
+        "J'interviens sur toute la chaîne de valeur : cadrage, architecture, implémentation, qualité et mise en production. L'objectif est simple — livrer vite, proprement, sans sacrifier la maintenabilité.",
+        "Autodidacte de formation et de tempérament, j'allie autonomie, rigueur et travail collaboratif. Ma passion pour les nouvelles technologies — et en particulier l'IA — me pousse à intégrer en continu les outils qui apportent une valeur concrète aux équipes.",
       ],
       highlights: [
         {
-          title: "Execution end-to-end",
-          description: "Du besoin initial a la livraison, je garde un cap de resultat et une vision d'ensemble sur le produit.",
+          title: "Exécution end-to-end",
+          description:
+            "Du cahier des charges à la mise en production, je garde un cap de résultat et une vision d'ensemble sur le produit.",
         },
         {
-          title: "Fullstack .NET assume",
-          description: "Back-end, API, front Blazor et architecture applicative pour eviter les zones mortes entre couches.",
+          title: "Fullstack .NET assumé",
+          description:
+            "Back-end, API, front Blazor, mobile MAUI et architecture applicative pour éviter les zones mortes entre couches.",
         },
         {
           title: "Pragmatique sur l'IA",
-          description: "J'integre l'IA quand elle simplifie vraiment un workflow, pas pour ajouter une couche de complexite de plus.",
+          description:
+            "J'intègre l'IA quand elle simplifie vraiment un workflow, pas pour ajouter une couche de complexité de plus.",
         },
       ],
-      principles: ["Concevoir", "Livrer", "Fiabiliser", "Faire evoluer"],
+      principles: ["Concevoir", "Livrer", "Fiabiliser", "Faire évoluer"],
       primaryAction: { label: "Explorer les projets", href: "#projects" },
       secondaryAction: { label: "Me contacter", href: "#contact" },
     },
     services: {
       title: "Services",
       subtitle:
-        "Trois modes d'intervention pour structurer une roadmap, renforcer un produit existant ou accelerer des gains concrets avec l'IA.",
+        "Trois modes d'intervention pour structurer une roadmap, renforcer un produit existant ou accélérer des gains concrets avec l'IA.",
       items: [
         {
           title: "Cadrage et trajectoire technique",
           clientProblem:
-            "Le besoin est clair cote metier, mais la solution manque encore de structure technique pour demarrer sans dispersion.",
+            "Le besoin est clair côté métier, mais la solution manque encore de structure technique pour démarrer sans dispersion.",
           businessOutcome:
-            "Vous obtenez des choix d'architecture argumentes, un decoupage livrable et une trajectoire de delivery credible.",
-          capabilities: ["Ateliers de cadrage", "Architecture .NET", "Roadmap priorisee"],
+            "Vous obtenez des choix d'architecture argumentés, un découpage livrable et une trajectoire de delivery crédible.",
+          capabilities: ["Ateliers de cadrage", "Architecture .NET / Clean", "Roadmap priorisée"],
           ctaTarget: "#contact",
         },
         {
-          title: "Developpement Fullstack .NET",
+          title: "Développement Fullstack .NET",
           clientProblem:
-            "Le produit doit evoluer vite sans degrader la lisibilite du code, la performance ou la capacite a maintenir dans le temps.",
+            "Le produit doit évoluer vite sans dégrader la lisibilité du code, la performance ou la capacité à maintenir dans le temps.",
           businessOutcome:
-            "Vous accelerez la mise en production avec une implementation robuste, comprehensible et alignee sur les usages terrain.",
-          capabilities: ["API et back-end .NET", "Interfaces Blazor", "Qualite et performance"],
+            "Vous accélérez la mise en production avec une implémentation robuste, compréhensible et alignée sur les usages terrain.",
+          capabilities: ["API et back-end .NET", "Interfaces Blazor / MAUI", "Qualité et performance"],
           ctaTarget: "#contact",
         },
         {
           title: "Automatisation et IA utile",
           clientProblem:
-            "Les equipes perdent du temps sur des operations repetitives et cherchent des gains rapides sans projet usine a gaz.",
+            "Les équipes perdent du temps sur des opérations répétitives et cherchent des gains rapides sans projet usine à gaz.",
           businessOutcome:
-            "Vous ciblez des automatisations a fort effet utile avec une integration IA sobre, mesurable et adaptee au contexte.",
-          capabilities: ["Audit de workflows", "Automatisations ciblees", "Accompagnement a l'adoption"],
+            "Vous ciblez des automatisations à fort effet utile avec une intégration IA sobre, mesurable et adaptée au contexte.",
+          capabilities: ["Audit de workflows", "Automatisations ciblées", "Accompagnement à l'adoption"],
           ctaTarget: "#contact",
         },
       ],
     },
     experience: {
-      title: "Experience",
+      title: "Expérience",
       subtitle:
-        "Des missions menees dans la duree, avec des environnements operationnels exigeants et une attention constante a la valeur livree.",
+        "Plus de 10 ans de delivery, du stage initial aux missions freelance actuelles — en CDI comme en indépendant, sur des contextes opérationnels exigeants.",
       entries: [
         {
-          roleTitle: "Ingenieur Developpement Fullstack .NET",
-          organizationLabel: "SMEG, Monaco",
-          period: "Nov. 2023 - Aujourd'hui",
+          roleTitle: "Développeur Full-Stack .NET",
+          organizationLabel: "SMEG · Monaco · Freelance",
+          period: "Nov. 2024 — Aujourd'hui",
           context:
-            "Solution de gestion des appels d'astreinte, urgences et interventions pour des usages bureau et mobile.",
+            "Solution de gestion des appels d'astreinte, d'urgence et d'interventions (bureau et mobile). Mission d'architecture et de refonte du socle applicatif, avec définition d'une cible modulaire et d'un template projet réutilisable. POC mobile MAUI pour valider le socle et formaliser les contraintes terrain. Conception du portail client Nexio (particuliers et professionnels).",
           valueDelivered:
-            "Conception et livraison d'un systeme fiable pour des situations critiques, avec une meilleure reactivite terrain.",
-          tech: [".NET 7", "C#", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "Redis", "MongoDB"],
+            "Socle technique modulaire livré, POC mobile validé, portail client mis en service. Réactivité accrue des équipes sur les situations critiques.",
+          tech: [
+            ".NET 8/9/10",
+            "C#",
+            "Clean Architecture",
+            "DDD",
+            "MAUI",
+            "AWS",
+            "Docker",
+            "Azure DevOps",
+            "PostgreSQL",
+          ],
         },
         {
-          roleTitle: "Ingenieur Developpement Fullstack .NET",
-          organizationLabel: "Groupe C8G",
-          period: "Juin 2023 - Aujourd'hui",
+          roleTitle: "Développeur Back-end .NET",
+          organizationLabel: "TidyUp Technologies · Valbonne · Freelance",
+          period: "Juin 2023 — Oct. 2023",
           context:
-            "Developpement de solutions web metier pour soutenir les usages internes et la rapidite d'execution des equipes.",
+            "Conception et développement d'une solution innovante de rangement, classement et recherche de contenus numériques avec composante IA (back-end).",
           valueDelivered:
-            "Mise en production de fonctionnalites fullstack qui fluidifient le delivery et la maintenabilite des produits.",
-          tech: [".NET", "Blazor", "Entity Framework", "Azure", "Vue.js"],
+            "Socle backend durable structuré pour accompagner l'évolution produit et la fiabilité des traitements à fort volume.",
+          tech: [
+            ".NET 7",
+            "C#",
+            "ABP Framework",
+            "DDD",
+            "Azure",
+            "Docker",
+            "RabbitMQ",
+            "Redis",
+            "MongoDB",
+            "PostgreSQL",
+          ],
         },
         {
-          roleTitle: "Developpeur Back-end .NET",
-          organizationLabel: "TidyUp Technologies",
-          period: "Juin 2023 - Oct. 2023",
+          roleTitle: "Développeur Back-end .NET",
+          organizationLabel: "Ubaldi · Carros · CDI",
+          period: "Avr. 2021 — Juin 2023",
           context:
-            "Plateforme de classement et recherche de contenus numeriques avec composante IA.",
+            "Conception et développement de plusieurs projets internes côté back-end. Participation à la migration de plusieurs applications vers le Cloud Azure et à la mise en place d'une approche DDD pour accompagner la croissance.",
           valueDelivered:
-            "Construction d'un socle backend durable pour accompagner l'evolution produit et la fiabilite des traitements.",
-          tech: [".NET MVC", ".NET Core", "C#", "Xamarin Forms", "SQL"],
+            "Fiabilisation du delivery backend, montée en maturité architecture (DDD) et garantie de la qualité via les revues de code en équipe Agile.",
+          tech: [
+            ".NET 6 et antérieurs",
+            "C#",
+            "Blazor",
+            "Entity Framework",
+            "Azure Cloud",
+            "Vue.js",
+            "Bootstrap",
+            "Azure DevOps",
+            "SQL Server",
+          ],
         },
         {
-          roleTitle: "Developpeur Back-end .NET",
-          organizationLabel: "UBALDI.com",
-          period: "Avr. 2021 - Juin 2023",
+          roleTitle: "Développeur Fullstack .NET",
+          organizationLabel: "Régie Eau d'Azur · Nice · CDI",
+          period: "Sept. 2015 — Avr. 2021",
           context:
-            "Contribution a plusieurs projets internes avec des enjeux de continuite de service et de performance applicative.",
+            "Développement de multiples solutions applicatives internes .NET, prises en charge de bout en bout : cahier des charges, documentation technique, estimations, développement BDD et applications, recettes techniques et métiers, démos. Développement d'une bibliothèque JavaScript allégée pour améliorer l'ergonomie des applications.",
           valueDelivered:
-            "Fiabilisation du delivery backend et amelioration continue des processus techniques internes.",
-          tech: [".NET", "C#", "API", "SQL Server"],
+            "Industrialisation progressive du parc applicatif, montée en qualité de service utilisateurs et capitalisation via une bibliothèque JS interne réutilisable.",
+          tech: [
+            ".NET MVC 4.7",
+            ".NET Core 3.1/5",
+            "C#",
+            "Blazor",
+            "Xamarin Forms",
+            "Entity Framework",
+            "SCSS",
+            "jQuery",
+            "SSIS",
+            "SQL Server",
+            "TFS",
+          ],
         },
         {
-          roleTitle: "Developpeur Fullstack .NET",
-          organizationLabel: "Regie Eau d'Azur",
-          period: "Sept. 2015 - Avr. 2021",
+          roleTitle: "Développeur Fullstack .NET",
+          organizationLabel: "Beyond IT (B-Network) · Cannes · Apprentissage",
+          period: "Sept. 2014 — Sept. 2015",
           context:
-            "Realisation de solutions applicatives internes sur un cycle long dans des contextes metier varies.",
+            "Conception de plusieurs applications web .NET (WebForm) : analyse des besoins, rédaction du cahier des charges, développement, tests, déploiement et démo.",
           valueDelivered:
-            "Industrialisation progressive des applications et renforcement de la qualite de service pour les utilisateurs finaux.",
-          tech: [".NET", "C#", "SQL", "Architecture applicative"],
+            "Première expérience long format en alternance — autonomie sur le cycle complet de petites applications WebForm en environnement professionnel.",
+          tech: [
+            "ASP.NET WebForm",
+            "C#",
+            "Entity Framework",
+            "HTML/CSS",
+            "JavaScript",
+            "jQuery",
+            "Ajax",
+            "Bootstrap",
+          ],
+        },
+        {
+          roleTitle: "Développeur Back-end PHP",
+          organizationLabel: "Pascal Coste (siège) · Nice · Stage",
+          period: "Janv. 2014 — Mars 2014",
+          context:
+            "Conception d'un site web de partage de fichiers statistiques (back-end). Rédaction d'un cahier des charges fonctionnel pour une solution ERP. Participation à plusieurs audits.",
+          valueDelivered:
+            "Première confrontation au cycle complet d'un projet web et à l'analyse fonctionnelle côté éditeur.",
+          tech: ["PHP", "HTML/CSS", "JavaScript", "jQuery", "Ajax", "Bootstrap", "MVC"],
         },
       ],
       educationCta: "Voir le parcours de formation",
@@ -304,103 +369,110 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     education: {
       title: "Formation",
       subtitle:
-        "Un socle academique solide, complete par une veille continue et une montee en competences pilotee par les besoins terrain.",
+        "Un socle académique en alternance, complété par une veille continue et une montée en compétences pilotée par les besoins terrain.",
       entries: [
         {
-          period: "2014 - 2015",
-          title: "Licence Professionnelle IDSE",
+          period: "2014 — 2015",
+          title: "Licence Professionnelle SIL — IDSE (Alternance)",
           institution: "IUT Nice Sophia Antipolis",
           description:
-            "Specialisation en ingenierie logicielle et systemes informatiques, avec une orientation forte vers le developpement applicatif.",
+            "Systèmes Informatiques et Logiciels, spécialité Informatique Distribuée et Systèmes d'Information pour l'Entreprise. Année réalisée en apprentissage chez Beyond IT.",
         },
         {
-          period: "2012 - 2014",
-          title: "BTS SIO",
-          institution: "Lycee Honore d'Estienne d'Orves",
+          period: "2012 — 2014",
+          title: "BTS SIO — SLAM",
+          institution: "Lycée Honoré d'Estienne d'Orves, Nice",
           description:
-            "Formation structurante en developpement, bases de donnees et culture projet, ensuite appliquee sur des contextes metier varies.",
+            "Services Informatiques aux Organisations, option Solutions Logicielles et Applications Métiers — socle structurant en développement, bases de données et culture projet.",
+        },
+        {
+          period: "2008 — 2011",
+          title: "Baccalauréat",
+          institution: "Lycée Jules Ferry, Cannes",
+          description: "Diplôme du secondaire, point de départ d'un parcours autodidacte continu autour du développement logiciel.",
         },
       ],
       continuousLearningTitle: "Apprentissage continu",
       continuousLearningText:
-        "Au-dela du cursus initial, je maintiens une veille active sur l'ecosysteme .NET, l'architecture applicative, le cloud Microsoft et l'integration pragmatique de l'IA.",
+        "Au-delà du cursus initial, je maintiens une veille active sur l'écosystème .NET, l'architecture applicative, le cloud Azure et l'intégration pragmatique de l'IA dans les outils de développement.",
     },
     projects: {
       title: "Projets",
       subtitle:
-        "Quelques cas concrets pour montrer comment je transforme un contexte technique ou metier en resultat exploitable.",
+        "Quelques cas concrets pour illustrer comment je transforme un contexte technique ou métier en résultat exploitable.",
       items: [
         {
-          title: "Astreinte et interventions",
+          title: "Astreinte temps réel — bureau et mobile",
           summary:
-            "Solution metier pour piloter appels d'astreinte, urgences et interventions sur usages bureau et mobile.",
+            "Solution métier pour piloter appels d'astreinte, urgences et interventions sur usages bureau et mobile MAUI.",
           context:
-            "Environnement operationnel exigeant, avec fortes contraintes de disponibilite et qualite de service continue.",
+            "Environnement opérationnel exigeant chez SMEG Monaco, avec fortes contraintes de disponibilité, qualité de service continue et contraintes mobiles (réseau, mises à jour, synchro données).",
           contribution:
-            "Conception et developpement Fullstack sur socle .NET 7 et ABP, avec architecture orientee domaine.",
+            "Architecture cible modulaire, template projet réutilisable, POC mobile MAUI pour valider le socle et formalisation des contraintes terrain.",
           outcome:
-            "Digitalisation des processus terrain et meilleure reactivite des equipes dans les situations critiques.",
-          tags: [".NET", "C#", "ABP", "DDD", "Azure", "MongoDB"],
+            "Digitalisation des processus d'astreinte et meilleure réactivité des équipes dans les situations critiques.",
+          tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
-          title: "Plateforme backend avec composante IA",
+          title: "Nexio — Portail client particuliers et pros",
           summary:
-            "Base applicative pour le rangement, le classement et la recherche de contenus numeriques a forte valeur.",
+            "Portail web de gestion des demandes et du suivi client pour particuliers et professionnels SMEG.",
           context:
-            "Besoin d'une fondation backend solide pour accompagner dans le temps les evolutions produit et les usages IA.",
+            "Refonte d'un parcours client multi-cibles avec besoin de cohérence d'expérience entre profils particuliers et professionnels.",
           contribution:
-            "Developpement backend en .NET MVC et .NET Core, structuration des flux techniques et de la persistance.",
+            "Conception et développement fullstack du portail, analyses fonctionnelles, documentation technique et coordination des évolutions.",
           outcome:
-            "Socle technique durable facilitant la montee en capacite produit et la fiabilite des traitements.",
-          tags: [".NET MVC", ".NET Core", "C#", "SQL", "Architecture"],
+            "Portail client unifié en production, autonomisant les clients dans le suivi de leurs demandes.",
+          tags: [".NET", "C#", "Blazor", "Azure DevOps", "PostgreSQL"],
         },
         {
-          title: "Applications internes d'entreprise",
+          title: "Plateforme IA — gestion de contenus numériques",
           summary:
-            "Plusieurs projets internes menes sur des cycles longs pour soutenir les besoins metiers quotidiens.",
+            "Socle backend d'une solution innovante de rangement, classement et recherche de contenus numériques avec composante IA.",
           context:
-            "Contexte multi-applications avec enjeux de maintenabilite, performance et evolution progressive.",
+            "Besoin d'une fondation backend solide pour accompagner dans le temps les évolutions produit et les traitements IA sur des volumes croissants.",
           contribution:
-            "Developpement backend/fullstack, maintenance evolutive et amelioration continue de la qualite de delivery.",
+            "Développement backend en .NET 7 sur framework ABP, structuration des flux techniques (RabbitMQ, Redis, MongoDB) et de la persistance.",
           outcome:
-            "Fiabilisation des processus internes et meilleure continuite de service pour les utilisateurs metiers.",
-          tags: [".NET", "Blazor", "Entity Framework", "SQL Server", "Delivery"],
-          publicLink: "https://c8g.fr",
+            "Socle technique durable facilitant la montée en capacité produit et la fiabilité des traitements IA.",
+          tags: [".NET 7", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
         },
       ],
       primaryAction: { label: "Discuter de votre projet", href: "#contact" },
-      secondaryAction: { label: "Demander un echange", href: "#contact" },
+      secondaryAction: { label: "Demander un échange", href: "#contact" },
     },
     contact: {
       title: "Contact",
       description:
-        "Parlez-moi de ce que vous souhaitez livrer. Je reviens rapidement avec un regard concret sur le besoin, les contraintes et la meilleure trajectoire de mise en oeuvre.",
+        "Parlez-moi de ce que vous souhaitez livrer. Je reviens rapidement avec un regard concret sur le besoin, les contraintes et la meilleure trajectoire de mise en œuvre.",
       inquiryTypes: [
-        "Creation ou refonte d'application web .NET",
+        "Création ou refonte d'application web .NET",
         "Renfort Fullstack sur produit existant",
-        "Audit technique, cadrage ou acceleration de delivery",
+        "Audit technique, cadrage ou accélération de delivery",
       ],
       primaryActionLabel: "Me contacter",
       copyActionLabel: "Copier l'adresse e-mail",
-      copySuccess: "Adresse e-mail copiee.",
-      copyUnavailable: "Copie non disponible. Utilisez l'adresse e-mail affichee ci-dessous.",
+      copySuccess: "Adresse e-mail copiée.",
+      copyUnavailable: "Copie non disponible. Utilisez l'adresse e-mail affichée ci-dessous.",
       copyError: "Impossible de copier l'adresse automatiquement. Copiez-la manuellement.",
       emailLabel: "Email direct",
-      meta: "Nice, Provence-Alpes-Cote d'Azur | Remote, hybride et sur site",
-      responsePromise: "Reponse rapide, echange simple et pas de tunnel inutile.",
+      meta: "Nice (06200), Provence-Alpes-Côte d'Azur · Remote, hybride et sur site",
+      responsePromise: "Réponse rapide, échange simple et pas de tunnel inutile.",
     },
     footer: {
       baseline: "Freelance Fullstack .NET pour des produits web fiables, lisibles et utiles.",
-      availability: "Disponible pour des missions structurelles, des renforts ciblés et des interventions a fort impact.",
+      availability:
+        "Disponible pour des missions structurantes, des renforts ciblés et des interventions à fort impact.",
       navigationTitle: "Navigation",
       links: [
         { label: "Accueil", href: "#hero" },
+        { label: "À propos", href: "#about" },
         { label: "Services", href: "#services" },
         { label: "Projets", href: "#projects" },
         { label: "Contact", href: "#contact" },
       ],
       contactTitle: "Contact",
-      rights: "© 2026 Valentin PASSE. Tous droits reserves.",
+      rights: "© 2026 Valentin PASSE. Tous droits réservés.",
     },
   },
   en: {
@@ -409,7 +481,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     meta: {
       title: "Valentin PASSE | Fullstack .NET Freelancer",
       description:
-        "One-page portfolio of Valentin PASSE, Fullstack .NET freelancer based in Nice. Product delivery, application architecture, and pragmatic AI integration.",
+        "One-page portfolio of Valentin PASSE, Fullstack .NET freelancer based in Nice. 10+ years of software delivery, application architecture, and pragmatic AI integration.",
     },
     navigation: {
       items: NAV_IDS.map((item) => ({ id: item.id, label: item.en })),
@@ -417,20 +489,20 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       localeSwitcherLabel: "Switch portfolio language",
     },
     hero: {
-      eyebrow: "Fullstack .NET freelancer | Nice, remote, hybrid, on-site",
+      eyebrow: "Fullstack .NET freelancer · Nice · Remote, hybrid, on-site",
       name: "Valentin Passe",
       tagline: "I design reliable web products that stay readable and easy to evolve.",
       promise:
-        "I work across scoping, fullstack .NET development, delivery quality, and useful AI integration to help teams move faster without creating unnecessary technical debt.",
+        "Self-taught engineer with 10+ years of .NET delivery, I work across scoping, application architecture, fullstack development, and useful AI integration to help teams move faster without creating unnecessary debt.",
       proofPoints: [
-        "A mix of employee and freelance experience to balance product direction with delivery constraints.",
-        "Hands-on expertise in .NET, Blazor, application architecture, and demanding business environments.",
-        "Direct, outcome-driven execution with strong focus on code clarity and end-user value.",
+        "10+ years of web and application development experience, alternating employee and freelance positions.",
+        "Hands-on expertise in .NET (Core, MVC, Blazor, MAUI), Clean / DDD / CQRS architecture, and Azure cloud.",
+        "Active watch on AI tooling and concrete integration into day-to-day development practice.",
       ],
       metrics: [
         { value: "10+", label: "years of software delivery" },
         { value: "2", label: "parallel freelance engagements since 2023" },
-        { value: ".NET", label: "core stack to build and scale with confidence" },
+        { value: ".NET", label: "core stack, from legacy to .NET 10" },
       ],
       primaryAction: { label: "Discuss your needs", href: "#contact" },
       secondaryAction: { label: "View projects", href: "#projects" },
@@ -438,23 +510,26 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     about: {
       title: "About",
       lead:
-        "As a freelance Fullstack .NET engineer, I help companies turn business needs into robust and usable web products.",
+        "As a freelance Fullstack .NET engineer, I help companies turn business needs into robust, readable and long-lasting web products.",
       paragraphs: [
-        "I work across the whole value chain: scoping, architecture, implementation, quality, and production delivery. The objective is straightforward: ship quickly, cleanly, and without sacrificing maintainability.",
-        "My positioning combines technical rigor, product thinking, and pragmatic AI integration. I value solutions that remain clear, useful, and understandable for the team that will evolve them afterwards.",
+        "I work across the whole value chain: scoping, architecture, implementation, quality, and production delivery. The objective is simple — ship quickly, cleanly, and without sacrificing maintainability.",
+        "Self-taught by training and temperament, I combine autonomy, rigor, and collaborative work. My passion for new technologies — especially AI — pushes me to continuously integrate the tools that bring real value to the teams I work with.",
       ],
       highlights: [
         {
           title: "End-to-end execution",
-          description: "From early needs to release, I keep a result-oriented mindset and a clear product overview.",
+          description:
+            "From early scoping to production release, I keep a result-oriented mindset and a clear product overview.",
         },
         {
           title: "Strong fullstack .NET focus",
-          description: "Back-end, APIs, Blazor front-end, and application architecture to avoid dead zones between layers.",
+          description:
+            "Back-end, APIs, Blazor front-end, MAUI mobile, and application architecture to avoid dead zones between layers.",
         },
         {
           title: "Pragmatic AI integration",
-          description: "I use AI when it genuinely simplifies a workflow, not as a decorative layer that adds complexity.",
+          description:
+            "I use AI when it genuinely simplifies a workflow, not as a decorative layer that adds complexity.",
         },
       ],
       principles: ["Design", "Ship", "Stabilize", "Evolve"],
@@ -469,10 +544,10 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           title: "Scoping and technical direction",
           clientProblem:
-            "The business need is clear, but the solution still lacks enough technical structure to start with confidence.",
+            "The business need is clear, but the solution still lacks the technical structure required to start with confidence.",
           businessOutcome:
             "You get clear architecture decisions, a deliverable rollout plan, and a realistic delivery path.",
-          capabilities: ["Scoping workshops", ".NET architecture", "Prioritized roadmap"],
+          capabilities: ["Scoping workshops", ".NET / Clean architecture", "Prioritized roadmap"],
           ctaTarget: "#contact",
         },
         {
@@ -481,7 +556,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
             "Your product must evolve quickly without hurting code clarity, performance, or long-term maintainability.",
           businessOutcome:
             "You speed up production delivery with an implementation that is robust, readable, and aligned with real usage.",
-          capabilities: [".NET APIs and back-end", "Blazor interfaces", "Quality and performance"],
+          capabilities: [".NET APIs and back-end", "Blazor / MAUI interfaces", "Quality and performance"],
           ctaTarget: "#contact",
         },
         {
@@ -498,57 +573,119 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     experience: {
       title: "Experience",
       subtitle:
-        "Long-running delivery work in demanding environments, with constant attention to reliability, readability, and business value.",
+        "Over 10 years of delivery, from initial internship to current freelance engagements — alternating employee and freelance positions in demanding operational environments.",
       entries: [
         {
-          roleTitle: "Fullstack .NET Development Engineer",
-          organizationLabel: "SMEG, Monaco",
-          period: "Nov. 2023 - Present",
+          roleTitle: "Full-Stack .NET Developer",
+          organizationLabel: "SMEG · Monaco · Freelance",
+          period: "Nov. 2024 — Present",
           context:
-            "On-call management, emergency, and intervention platform for office and mobile usage.",
+            "On-call, emergency and intervention management platform (desktop and mobile). Architecture mission: analysis and rebuild of the existing foundation, definition of a modular target architecture and a reusable project template. Mobile POC in MAUI to validate the foundation and formalize the field constraints. Design of the Nexio customer portal (individuals and businesses).",
           valueDelivered:
-            "Designed and delivered a reliable system for critical operations with stronger field responsiveness.",
-          tech: [".NET 7", "C#", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "Redis", "MongoDB"],
-        },
-        {
-          roleTitle: "Fullstack .NET Development Engineer",
-          organizationLabel: "Groupe C8G",
-          period: "Jun. 2023 - Present",
-          context:
-            "Business-oriented web solutions supporting internal operations and daily team efficiency.",
-          valueDelivered:
-            "Delivered fullstack features that improved release speed and long-term product maintainability.",
-          tech: [".NET", "Blazor", "Entity Framework", "Azure", "Vue.js"],
-        },
-        {
-          roleTitle: "Back-end .NET Developer",
-          organizationLabel: "TidyUp Technologies",
-          period: "Jun. 2023 - Oct. 2023",
-          context:
-            "Content organization and search platform with an AI component.",
-          valueDelivered:
-            "Built a durable back-end foundation to support product evolution and processing reliability.",
-          tech: [".NET MVC", ".NET Core", "C#", "Xamarin Forms", "SQL"],
+            "Modular technical foundation delivered, mobile POC validated, customer portal in production. Higher field responsiveness in critical situations.",
+          tech: [
+            ".NET 8/9/10",
+            "C#",
+            "Clean Architecture",
+            "DDD",
+            "MAUI",
+            "AWS",
+            "Docker",
+            "Azure DevOps",
+            "PostgreSQL",
+          ],
         },
         {
           roleTitle: "Back-end .NET Developer",
-          organizationLabel: "UBALDI.com",
-          period: "Apr. 2021 - Jun. 2023",
+          organizationLabel: "TidyUp Technologies · Valbonne · Freelance",
+          period: "Jun. 2023 — Oct. 2023",
           context:
-            "Contributed to several internal projects with service continuity and performance constraints.",
+            "Design and development of an innovative content organization, classification, and search solution with an AI component (back-end).",
           valueDelivered:
-            "Strengthened back-end delivery and continuously improved internal engineering processes.",
-          tech: [".NET", "C#", "API", "SQL Server"],
+            "Durable back-end foundation structured to support product evolution and processing reliability at scale.",
+          tech: [
+            ".NET 7",
+            "C#",
+            "ABP Framework",
+            "DDD",
+            "Azure",
+            "Docker",
+            "RabbitMQ",
+            "Redis",
+            "MongoDB",
+            "PostgreSQL",
+          ],
+        },
+        {
+          roleTitle: "Back-end .NET Developer",
+          organizationLabel: "Ubaldi · Carros · Full-time",
+          period: "Apr. 2021 — Jun. 2023",
+          context:
+            "Design and development of multiple internal back-end projects. Active contributor to the migration of several applications to Azure Cloud, and to the introduction of a DDD approach to support company growth.",
+          valueDelivered:
+            "Strengthened back-end delivery, raised the architecture maturity (DDD), and guaranteed quality through code reviews in an Agile team.",
+          tech: [
+            ".NET 6 and earlier",
+            "C#",
+            "Blazor",
+            "Entity Framework",
+            "Azure Cloud",
+            "Vue.js",
+            "Bootstrap",
+            "Azure DevOps",
+            "SQL Server",
+          ],
         },
         {
           roleTitle: "Fullstack .NET Developer",
-          organizationLabel: "Regie Eau d'Azur",
-          period: "Sep. 2015 - Apr. 2021",
+          organizationLabel: "Régie Eau d'Azur · Nice · Full-time",
+          period: "Sep. 2015 — Apr. 2021",
           context:
-            "Built internal business applications over a long cycle across varied operational contexts.",
+            "Development of multiple internal .NET applications, handled end-to-end: requirements, technical documentation, estimation, database and application development, technical and business testing, demos. Development of a lightweight JavaScript library to improve application ergonomics.",
           valueDelivered:
-            "Gradually industrialized applications and improved service quality for end users.",
-          tech: [".NET", "C#", "SQL", "Application architecture"],
+            "Progressive industrialization of the application portfolio, higher service quality for end users, and capitalization via a reusable internal JS library.",
+          tech: [
+            ".NET MVC 4.7",
+            ".NET Core 3.1/5",
+            "C#",
+            "Blazor",
+            "Xamarin Forms",
+            "Entity Framework",
+            "SCSS",
+            "jQuery",
+            "SSIS",
+            "SQL Server",
+            "TFS",
+          ],
+        },
+        {
+          roleTitle: "Fullstack .NET Developer",
+          organizationLabel: "Beyond IT (B-Network) · Cannes · Apprenticeship",
+          period: "Sep. 2014 — Sep. 2015",
+          context:
+            "Design of several .NET WebForm web applications: requirements analysis, scope definition, development, testing, deployment, and demo.",
+          valueDelivered:
+            "First long-form professional experience — full ownership of the lifecycle of small WebForm applications in a real-world environment.",
+          tech: [
+            "ASP.NET WebForm",
+            "C#",
+            "Entity Framework",
+            "HTML/CSS",
+            "JavaScript",
+            "jQuery",
+            "Ajax",
+            "Bootstrap",
+          ],
+        },
+        {
+          roleTitle: "Back-end PHP Developer",
+          organizationLabel: "Pascal Coste (headquarters) · Nice · Internship",
+          period: "Jan. 2014 — Mar. 2014",
+          context:
+            "Design of a statistics file-sharing back-end. Drafting of functional requirements for an ERP solution. Participation in several audits.",
+          valueDelivered:
+            "First hands-on exposure to a full web project lifecycle and to functional analysis on the editor side.",
+          tech: ["PHP", "HTML/CSS", "JavaScript", "jQuery", "Ajax", "Bootstrap", "MVC"],
         },
       ],
       educationCta: "View education",
@@ -556,26 +693,32 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     education: {
       title: "Education",
       subtitle:
-        "A solid academic foundation, complemented by continuous learning and skill growth shaped by real delivery work.",
+        "An academic foundation built via apprenticeship, complemented by continuous learning and skill growth shaped by real delivery work.",
       entries: [
         {
-          period: "2014 - 2015",
-          title: "Professional Bachelor's Degree in IDSE",
+          period: "2014 — 2015",
+          title: "Professional Bachelor's Degree — SIL / IDSE (Apprenticeship)",
           institution: "IUT Nice Sophia Antipolis",
           description:
-            "Specialized in software engineering and information systems, with a strong focus on application development.",
+            "Software and Computing Systems, specializing in Distributed Computing and Enterprise Information Systems. Year completed in apprenticeship at Beyond IT.",
         },
         {
-          period: "2012 - 2014",
-          title: "BTS SIO",
-          institution: "Lycee Honore d'Estienne d'Orves",
+          period: "2012 — 2014",
+          title: "BTS SIO — SLAM",
+          institution: "Lycée Honoré d'Estienne d'Orves, Nice",
           description:
-            "A structured training path in software development, databases, and project culture applied later in varied business contexts.",
+            "IT Services for Organizations, Software Solutions and Business Applications track — a structured foundation in development, databases, and project culture.",
+        },
+        {
+          period: "2008 — 2011",
+          title: "French High School Diploma (Baccalauréat)",
+          institution: "Lycée Jules Ferry, Cannes",
+          description: "Secondary school degree, starting point of a continuous self-taught journey in software development.",
         },
       ],
       continuousLearningTitle: "Continuous learning",
       continuousLearningText:
-        "Beyond formal education, I actively keep up with the .NET ecosystem, application architecture, Microsoft cloud services, and pragmatic AI integration.",
+        "Beyond formal education, I actively keep up with the .NET ecosystem, application architecture, Azure cloud services, and pragmatic AI integration in developer tooling.",
     },
     projects: {
       title: "Projects",
@@ -583,41 +726,40 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         "A selection of concrete delivery contexts showing how I turn business or technical constraints into usable outcomes.",
       items: [
         {
-          title: "On-call and intervention platform",
+          title: "Real-time on-call — desktop and mobile",
           summary:
-            "Business solution to manage on-call operations, emergencies, and interventions across office and mobile workflows.",
+            "Business solution to manage on-call operations, emergencies, and interventions across desktop and MAUI mobile workflows.",
           context:
-            "Demanding operational environment with high expectations around availability and continuity of service.",
+            "Demanding operational environment at SMEG Monaco with high expectations around availability, continuity of service, and mobile constraints (network, updates, data sync).",
           contribution:
-            "Designed and developed the product fullstack on a .NET 7 and ABP foundation with domain-oriented architecture.",
+            "Modular target architecture, reusable project template, MAUI mobile POC to validate the foundation, and formalization of the field constraints.",
           outcome:
-            "Digitized field processes and improved responsiveness in critical situations.",
-          tags: [".NET", "C#", "ABP", "DDD", "Azure", "MongoDB"],
+            "Digitized on-call processes and improved responsiveness in critical situations.",
+          tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
-          title: "Back-end platform with AI component",
+          title: "Nexio — customer portal for individuals and businesses",
           summary:
-            "Application foundation for organizing, classifying, and searching valuable digital content.",
+            "Web portal for SMEG customer request management and follow-up, serving both individual and business profiles.",
           context:
-            "A product context that required a strong back-end basis to support future AI-enabled evolutions.",
+            "Redesign of a multi-target customer journey requiring a consistent experience across individuals and businesses.",
           contribution:
-            "Developed the back-end in .NET MVC and .NET Core while structuring technical flows and persistence.",
+            "Fullstack design and development of the portal, functional analysis, technical documentation, and coordination of incremental releases.",
           outcome:
-            "Built a durable technical base supporting product scalability and reliable processing.",
-          tags: [".NET MVC", ".NET Core", "C#", "SQL", "Architecture"],
+            "Unified customer portal in production, empowering customers to self-track their requests.",
+          tags: [".NET", "C#", "Blazor", "Azure DevOps", "PostgreSQL"],
         },
         {
-          title: "Internal business applications",
+          title: "AI platform — digital content management",
           summary:
-            "Several long-cycle internal projects built to support day-to-day business operations.",
+            "Back-end foundation of an innovative solution for organizing, classifying, and searching digital content with an AI component.",
           context:
-            "A multi-application environment with ongoing maintainability, performance, and evolution challenges.",
+            "Need for a strong back-end foundation to support long-term product evolution and AI processing on growing data volumes.",
           contribution:
-            "Worked on back-end and fullstack delivery, iterative maintenance, and overall delivery quality.",
+            "Back-end development on .NET 7 with the ABP framework, structuring technical flows (RabbitMQ, Redis, MongoDB) and persistence.",
           outcome:
-            "Improved internal process reliability and service continuity for business users.",
-          tags: [".NET", "Blazor", "Entity Framework", "SQL Server", "Delivery"],
-          publicLink: "https://c8g.fr",
+            "Durable technical base supporting product scale-up and AI processing reliability.",
+          tags: [".NET 7", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
         },
       ],
       primaryAction: { label: "Discuss your project", href: "#contact" },
@@ -638,15 +780,17 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       copyUnavailable: "Copy is unavailable. Please use the email address displayed below.",
       copyError: "The address could not be copied automatically. Please copy it manually.",
       emailLabel: "Direct email",
-      meta: "Nice, Provence-Alpes-Cote d'Azur | Remote, hybrid, and on-site",
+      meta: "Nice (06200), Provence-Alpes-Côte d'Azur · Remote, hybrid, and on-site",
       responsePromise: "Fast reply, direct conversation, no unnecessary funnel.",
     },
     footer: {
       baseline: "Fullstack .NET freelancer for reliable, readable, and useful web products.",
-      availability: "Available for structural projects, focused reinforcement, and high-impact interventions.",
+      availability:
+        "Available for structural projects, focused reinforcement, and high-impact interventions.",
       navigationTitle: "Navigation",
       links: [
         { label: "Home", href: "#hero" },
+        { label: "About", href: "#about" },
         { label: "Services", href: "#services" },
         { label: "Projects", href: "#projects" },
         { label: "Contact", href: "#contact" },

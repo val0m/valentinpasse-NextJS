@@ -14,7 +14,7 @@ type LayoutProps = {
 };
 
 const SITE_URL = "https://www.valentinpasse.fr";
-const OG_IMAGE_PATH = "/images/valentin-passe.webp";
+const OG_IMAGE_PATH = "/images/resume/valentin-passe.webp";
 
 const DEFAULT_TITLES: Record<PortfolioLocale, string> = {
     fr: "Valentin PASSE | Freelance Fullstack .NET",

@@ -85,6 +85,7 @@ const SKILL_LABEL_TRANSLATIONS: Record<string, string> = {
   Javascript: "JavaScript",
   Architectures: "Architectures",
   "Gestion de projet / Equipe": "Project delivery / Team collaboration",
+  "Tests automatisés": "Automated testing",
   "Esprit d'équipe": "Team spirit",
   Autodidacte: "Self-taught",
   Dynamique: "Driven",
@@ -93,15 +94,20 @@ const SKILL_LABEL_TRANSLATIONS: Record<string, string> = {
 };
 
 const SKILL_DESCRIPTION_TRANSLATIONS: Record<string, string> = {
-  "Core / MVC / WebForm": "Core / MVC / WebForm",
-  "Service bus / App services / Azure functions / Storage Account / Monitoring / App Insight / ...": "Service bus / App services / Azure Functions / Storage Account / Monitoring / App Insights / ...",
-  "SQL Server Integration Services / SQL Server Reporting Services": "SQL Server Integration Services / SQL Server Reporting Services",
-  "HTML5 / CSS3": "HTML5 / CSS3",
-  "Jquery / VueJS / React / TabAjax": "jQuery / Vue.js / React / TabAjax",
-  "Design patterns / CQRS / DDD": "Design patterns / CQRS / DDD",
+  "Core / MVC / WebForm / 8 / 9 / 10": "Core / MVC / WebForm / 8 / 9 / 10",
+  "API REST / Minimal API": "REST API / Minimal API",
+  "Mobile cross-platform": "Cross-platform mobile",
+  "EF Core / LINQ": "EF Core / LINQ",
+  "Service Bus / App Services / Azure Functions / Storage / Monitoring / App Insight / ...": "Service Bus / App Services / Azure Functions / Storage / Monitoring / App Insights / ...",
+  "Unitaires / intégration": "Unit / integration",
+  "HTML5 / CSS3 / SCSS / responsive": "HTML5 / CSS3 / SCSS / responsive",
+  "Vue.js / React / jQuery": "Vue.js / React / jQuery",
+  "Clean Architecture / DDD / CQRS / Design patterns": "Clean Architecture / DDD / CQRS / Design patterns",
   "Agile (Scrum) / Cycle en V / Scrum Master / Reviewer": "Agile (Scrum) / V-cycle / Scrum Master / Reviewer",
   "IDE / Code": "IDE / Code",
-  "Photoshop / InDesign": "Photoshop / InDesign",
+  "CI/CD / Pipelines": "CI/CD / Pipelines",
+  "Message broker": "Message broker",
+  Cache: "Cache",
 };
 
 const SECTION_METADATA: Record<SkillsLocale, SkillsSectionMetadata> = {
