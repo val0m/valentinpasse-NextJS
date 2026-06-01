@@ -130,6 +130,30 @@ npm run test
 Recommended validation flow after changes:
 
 ```bash
-npm run build
+npm run lint
 npm run test
+npm run build
 ```
+
+CI (`.github/workflows/ci.yml`) runs the same three steps plus a coverage
+threshold (`lines: 40`, statements/branches: 40, functions: 30) — ratchet up
+progressively as more tests are added.
+
+## Images and Assets
+
+The portrait at `public/images/resume/valentin-passe.jpg` is the canonical
+high-resolution source. The `.webp` variant served via `next/image` is
+regenerated from it. Do not delete the `.jpg` — it is required to rebuild the
+optimized variants from a known-good source.
+
+### Updating the portrait
+
+1. Replace `public/images/resume/valentin-passe.jpg` with the new photo.
+2. Run:
+   ```bash
+   npm run optimize:portrait
+   npm run build:og
+   ```
+   This regenerates the resized WebP/JPG and the 1200×630 Open Graph image at
+   `public/og-image.{webp,jpg}`.
+3. Commit both the source `.jpg` and the regenerated optimized files.

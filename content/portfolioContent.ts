@@ -156,6 +156,12 @@ export type PortfolioContent = {
   };
 };
 
+// The `educations` section is intentionally excluded from NAV_IDS to keep the
+// nav bar at 7 items (avoids mobile overflow). The section is still reachable
+// via the "View education" CTA at the bottom of SectionWorkExperiences. As a
+// side-effect, the IntersectionObserver in HeaderCustom does not highlight any
+// nav item while the user is scrolled into the Education section — accepted
+// trade-off.
 const NAV_IDS: Array<{ id: string; fr: string; en: string }> = [
   { id: "hero", fr: "Accueil", en: "Home" },
   { id: "about", fr: "À propos", en: "About" },

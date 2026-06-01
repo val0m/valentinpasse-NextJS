@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+// Content-Security-Policy is intentionally omitted here: Next.js hydration with
+// next/font/google and the inline JSON-LD <script> in components/layout/layout.tsx
+// require careful unsafe-inline/style-src tuning that we have not yet validated.
+// Revisit once we have a CSP report-only endpoint to measure violations.
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },

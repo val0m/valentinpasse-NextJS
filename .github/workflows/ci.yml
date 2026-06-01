@@ -27,7 +27,7 @@ jobs:
         run: npm run lint
 
       - name: Test
-        run: npm test -- --ci
+        run: npm test -- --ci --coverage --coverageThreshold='{"global":{"lines":40,"statements":40,"functions":30,"branches":40}}'
 
       - name: Build
         run: npm run build
