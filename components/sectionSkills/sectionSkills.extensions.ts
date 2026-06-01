@@ -29,41 +29,86 @@ type RawSkill = {
 
 const CATEGORY_ORDER: Array<{
   id: string;
-  label: string;
-  supportText: string;
+  label: Record<SkillsLocale, string>;
+  supportText: Record<SkillsLocale, string>;
   sourceCategories: string[];
 }> = [
   {
     id: "fullstack-dotnet",
-    label: "Fullstack .NET",
-    supportText: "Le socle principal pour concevoir, livrer et faire évoluer des applications robustes.",
+    label: { fr: "Fullstack .NET", en: "Fullstack .NET" },
+    supportText: {
+      fr: "Le socle principal pour concevoir, livrer et faire evoluer des applications robustes.",
+      en: "The core stack used to design, ship, and evolve reliable applications.",
+    },
     sourceCategories: ["Technology"],
   },
   {
     id: "frontend-architecture",
-    label: "Front-end & Architecture",
-    supportText: "Interfaces web, structuration technique et choix d'architecture orientés usage.",
+    label: { fr: "Front-end & Architecture", en: "Front-end & Architecture" },
+    supportText: {
+      fr: "Interfaces web, structuration technique et choix d'architecture orientes usage.",
+      en: "Web interfaces, technical structure, and architecture choices driven by actual usage.",
+    },
     sourceCategories: ["other"],
   },
   {
     id: "data-cloud",
-    label: "Data & Cloud",
-    supportText: "Persistance, services cloud et outils pour des solutions prêtes à l'exploitation.",
+    label: { fr: "Data & Cloud", en: "Data & Cloud" },
+    supportText: {
+      fr: "Persistance, services cloud et outils pour des solutions pretes a l'exploitation.",
+      en: "Persistence, cloud services, and tooling to support production-ready solutions.",
+    },
     sourceCategories: ["database"],
   },
   {
     id: "delivery-tooling",
-    label: "Delivery & Outils",
-    supportText: "Environnement de production, collaboration d'équipe et suivi du delivery.",
+    label: { fr: "Delivery & Outils", en: "Delivery & Tooling" },
+    supportText: {
+      fr: "Environnement de production, collaboration d'equipe et suivi du delivery.",
+      en: "Production environment, team collaboration, and delivery execution tooling.",
+    },
     sourceCategories: ["software"],
   },
   {
     id: "environment-collaboration",
-    label: "Environnements & Qualités humaines",
-    supportText: "Capacité à intervenir dans des contextes variés avec autonomie et esprit d'équipe.",
+    label: { fr: "Environnements & Qualites humaines", en: "Environments & Human qualities" },
+    supportText: {
+      fr: "Capacite a intervenir dans des contextes varies avec autonomie et esprit d'equipe.",
+      en: "Ability to contribute across varied environments with autonomy and strong collaboration.",
+    },
     sourceCategories: ["operatingsystem", "qualification"],
   },
 ];
+
+const SKILL_LABEL_TRANSLATIONS: Record<string, string> = {
+  "Bases du Web": "Web fundamentals",
+  Javascript: "JavaScript",
+  Architectures: "Architectures",
+  "Gestion de projet / Equipe": "Project delivery / Team collaboration",
+  "Tests automatisés": "Automated testing",
+  "Esprit d'équipe": "Team spirit",
+  Autodidacte: "Self-taught",
+  Dynamique: "Driven",
+  "Méthodique": "Methodical",
+  Autonome: "Autonomous",
+};
+
+const SKILL_DESCRIPTION_TRANSLATIONS: Record<string, string> = {
+  "Core / MVC / WebForm / 8 / 9 / 10": "Core / MVC / WebForm / 8 / 9 / 10",
+  "API REST / Minimal API": "REST API / Minimal API",
+  "Mobile cross-platform": "Cross-platform mobile",
+  "EF Core / LINQ": "EF Core / LINQ",
+  "Service Bus / App Services / Azure Functions / Storage / Monitoring / App Insight / ...": "Service Bus / App Services / Azure Functions / Storage / Monitoring / App Insights / ...",
+  "Unitaires / intégration": "Unit / integration",
+  "HTML5 / CSS3 / SCSS / responsive": "HTML5 / CSS3 / SCSS / responsive",
+  "Vue.js / React / jQuery": "Vue.js / React / jQuery",
+  "Clean Architecture / DDD / CQRS / Design patterns": "Clean Architecture / DDD / CQRS / Design patterns",
+  "Agile (Scrum) / Cycle en V / Scrum Master / Reviewer": "Agile (Scrum) / V-cycle / Scrum Master / Reviewer",
+  "IDE / Code": "IDE / Code",
+  "CI/CD / Pipelines": "CI/CD / Pipelines",
+  "Message broker": "Message broker",
+  Cache: "Cache",
+};
 
 const SECTION_METADATA: Record<SkillsLocale, SkillsSectionMetadata> = {
   fr: {
@@ -88,19 +133,29 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-function toSkillItem(item: RawSkill): SkillItem | null {
+function translateValue(value: string, locale: SkillsLocale, translations: Record<string, string>): string {
+  if (locale === "fr") {
+    return value;
+  }
+
+  return translations[value] || value;
+}
+
+function toSkillItem(item: RawSkill, locale: SkillsLocale): SkillItem | null {
   if (!isNonEmptyString(item.label)) {
     return null;
   }
 
   return {
-    label: item.label,
-    description: isNonEmptyString(item.description) ? item.description : null,
+    label: translateValue(item.label, locale, SKILL_LABEL_TRANSLATIONS),
+    description: isNonEmptyString(item.description)
+      ? translateValue(item.description, locale, SKILL_DESCRIPTION_TRANSLATIONS)
+      : null,
     position: typeof item.position === "number" ? item.position : Number.MAX_SAFE_INTEGER,
   };
 }
 
-export function normalizeSkills(items: unknown): SkillCategory[] {
+export function normalizeSkills(items: unknown, locale: SkillsLocale = "fr"): SkillCategory[] {
   if (!Array.isArray(items)) {
     return [];
   }
@@ -131,7 +186,7 @@ export function normalizeSkills(items: unknown): SkillCategory[] {
       return;
     }
 
-    const normalizedSkill = toSkillItem(rawSkill);
+    const normalizedSkill = toSkillItem(rawSkill, locale);
     if (!normalizedSkill) {
       return;
     }
@@ -152,7 +207,10 @@ export function normalizeSkills(items: unknown): SkillCategory[] {
   });
 
   return CATEGORY_ORDER.map((category) => ({
-    ...category,
+    id: category.id,
+    label: category.label[locale],
+    supportText: category.supportText[locale],
+    sourceCategories: category.sourceCategories,
     skills: (grouped.get(category.id) || []).sort((left, right) => {
       if (left.position !== right.position) {
         return left.position - right.position;

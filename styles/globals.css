@@ -1,9 +1,38 @@
+:root {
+  --font-body: "Manrope", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --color-ink: #09111b;
+  --color-deep: #0d1724;
+  --color-surface: #f4f7fb;
+  --color-surface-strong: #ffffff;
+  --color-line: rgba(148, 163, 184, 0.22);
+  --color-text: #102033;
+  --color-text-muted: #506174;
+  --color-highlight: #2f6bff;
+  --color-highlight-soft: #dbeafe;
+  --color-accent: #c68b59;
+  --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+  --shadow-strong: 0 28px 70px rgba(2, 8, 23, 0.18);
+  --radius-xl: 24px;
+  --radius-lg: 18px;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -11,16 +40,34 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+}
+
+main {
+  display: block;
+}
+
+section[id] {
+  scroll-margin-top: 7rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
 * {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+*::selection {
+  background: rgba(47, 107, 255, 0.2);
 }

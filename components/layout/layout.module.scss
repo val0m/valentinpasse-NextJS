@@ -1,0 +1,46 @@
+.mainContainer {
+	position: relative;
+	min-height: 100vh;
+	overflow: hidden;
+	background:
+		radial-gradient(circle at top left, rgba(47, 107, 255, 0.12), transparent 32%),
+		radial-gradient(circle at 85% 8%, rgba(198, 139, 89, 0.12), transparent 24%),
+		linear-gradient(180deg, #09111b 0%, #0d1724 20%, #f4f7fb 20.1%, #eef2f8 100%);
+}
+
+.mainContainer::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	background-image:
+		linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+	background-size: 72px 72px;
+	mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.68), transparent 78%);
+}
+
+.content {
+	position: relative;
+	z-index: 1;
+}
+
+.skipLink {
+	position: absolute;
+	left: -10000px;
+	top: 8px;
+	z-index: 1000;
+	background: #0d1724;
+	color: #ffffff;
+	padding: 0.75rem 1rem;
+	border-radius: 0.5rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.skipLink:focus {
+	left: 12px;
+	outline: 3px solid #2f6bff;
+	outline-offset: 2px;
+}
+

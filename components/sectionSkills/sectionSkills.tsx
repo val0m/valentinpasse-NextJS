@@ -1,4 +1,5 @@
 import React from "react";
+import { PortfolioLocale } from "../../content/portfolioContent";
 import styles from "./sectionSkills.module.scss";
 import skillsData from "../../public/data/skills.json";
 import {
@@ -7,10 +8,13 @@ import {
   SkillsLocale,
 } from "./sectionSkills.extensions";
 
-export function SectionSkills() {
-  const locale: SkillsLocale = "fr";
+type SectionSkillsProps = {
+  locale?: PortfolioLocale;
+};
+
+export function SectionSkills({ locale = "fr" }: SectionSkillsProps) {
   const metadata = resolveSkillsSectionMetadata(locale);
-  const categories = normalizeSkills(skillsData);
+  const categories = normalizeSkills(skillsData, locale as SkillsLocale);
 
   return (
     <section id="skills" className={styles.section} aria-labelledby="skills-title">
@@ -22,23 +26,29 @@ export function SectionSkills() {
           <p className={styles.subtitle}>{metadata.subtitle}</p>
         </header>
 
-        <div className={styles.grid}>
+        <div className={styles.diagram}>
           {categories.map((category) => (
-            <article key={category.id} className={styles.card}>
-              <h3 className={styles.cardTitle}>{category.label}</h3>
-              <p className={styles.cardSupport}>{category.supportText}</p>
-
-              <ul className={styles.skillsList}>
-                {category.skills.map((skill) => (
-                  <li key={`${category.id}-${skill.label}`} className={styles.skillItem}>
-                    <p className={styles.skillLabel}>{skill.label}</p>
-                    {skill.description ? (
-                      <p className={styles.skillDescription}>{skill.description}</p>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            </article>
+            <div key={category.id} className={styles.node}>
+              <div className={styles.nodeHead}>
+                <div className={styles.nodeOrb} aria-hidden="true" />
+                <div className={styles.nodeVline} aria-hidden="true" />
+              </div>
+              <div className={styles.nodeBody}>
+                <h3 className={styles.nodeLabel}>{category.label}</h3>
+                <p className={styles.nodeSupport}>{category.supportText}</p>
+                <ul className={styles.chipList}>
+                  {category.skills.map((skill) => (
+                    <li
+                      key={`${category.id}-${skill.label}`}
+                      className={styles.chip}
+                      title={skill.description ?? undefined}
+                    >
+                      {skill.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           ))}
         </div>
 

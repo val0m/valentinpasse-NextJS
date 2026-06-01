@@ -1,28 +1,26 @@
 import React, { useState } from "react";
+import { PortfolioLocale, getPortfolioContent, portfolioEmail } from "../../content/portfolioContent";
 import styles from "./sectionContact.module.scss";
 
-const CONTACT_EMAIL = "passe.valentin@gmail.com";
+type SectionContactProps = {
+  locale?: PortfolioLocale;
+};
 
-const INQUIRY_TYPES = [
-  "Création ou refonte d'application web .NET",
-  "Renfort Fullstack sur produit existant",
-  "Audit technique et plan de delivery",
-];
-
-export function SectionContact() {
+export function SectionContact({ locale = "fr" }: SectionContactProps) {
+  const content = getPortfolioContent(locale).contact;
   const [feedback, setFeedback] = useState<string>("");
 
   const handleCopyEmail = async () => {
     if (typeof navigator === "undefined" || !navigator.clipboard) {
-      setFeedback("Copie non disponible. Utilisez l'adresse e-mail affichée ci-dessous.");
+      setFeedback(content.copyUnavailable);
       return;
     }
 
     try {
-      await navigator.clipboard.writeText(CONTACT_EMAIL);
-      setFeedback("Adresse e-mail copiée.");
+      await navigator.clipboard.writeText(portfolioEmail);
+      setFeedback(content.copySuccess);
     } catch {
-      setFeedback("Impossible de copier l'adresse automatiquement. Copiez-la manuellement.");
+      setFeedback(content.copyError);
     }
   };
 
@@ -30,16 +28,13 @@ export function SectionContact() {
     <section id="contact" className={styles.section} aria-labelledby="contact-title">
       <div className={styles.container}>
         <h2 id="contact-title" className={styles.title}>
-          Contact
+          {content.title}
         </h2>
-        <p className={styles.description}>
-          Dites-moi ce que vous souhaitez livrer et je vous réponds rapidement.
-          Je suis disponible pour des missions freelance .NET en remote, hybride
-          ou sur site.
-        </p>
+        <p className={styles.description}>{content.description}</p>
+        <p className={styles.responsePromise}>{content.responsePromise}</p>
 
-        <ul className={styles.inquiryList} aria-label="Types de demandes">
-          {INQUIRY_TYPES.map((item) => (
+        <ul className={styles.inquiryList} aria-label={content.inquiriesAriaLabel}>
+          {content.inquiryTypes.map((item) => (
             <li key={item} className={styles.inquiryItem}>
               {item}
             </li>
@@ -48,27 +43,27 @@ export function SectionContact() {
 
         <div className={styles.actions}>
           <a
-            href={`mailto:${CONTACT_EMAIL}`}
+            href={`mailto:${portfolioEmail}`}
             className={styles.primaryAction}
-            aria-label="Envoyer un e-mail à Valentin Passe"
+            aria-label={content.sendEmailAriaLabel}
           >
-            Me contacter
+            {content.primaryActionLabel}
           </a>
 
           <button
             type="button"
             className={styles.secondaryAction}
             onClick={handleCopyEmail}
-            aria-label="Copier l'adresse e-mail"
+            aria-label={content.copyEmailAriaLabel}
           >
-            Copier l'adresse e-mail
+            {content.copyActionLabel}
           </button>
         </div>
 
         <p className={styles.emailText}>
-          Email direct: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          {content.emailLabel}: <a href={`mailto:${portfolioEmail}`}>{portfolioEmail}</a>
         </p>
-        <p className={styles.meta}>Nice, Provence-Alpes-Côte d'Azur · LinkedIn disponible sur demande</p>
+        <p className={styles.meta}>{content.meta}</p>
         <p className={styles.feedback} role="status" aria-live="polite">
           {feedback}
         </p>

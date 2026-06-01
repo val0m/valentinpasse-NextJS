@@ -1,76 +1,119 @@
-// Libs
-import PropTypes from "prop-types";
 import Head from "next/head";
-import React, {ReactNode} from 'react';
-import { useEffect } from 'react';
-import { useRouter } from "next/router";
-import { AppProps } from 'next/app';
-// import { Analytics } from '@vercel/analytics/react';
-
-// Components
-import { HeaderCustom } from '../headerCustom';
-import { FooterCustom } from '../footerCustom';
-
-//CSS Module
+import React, { ReactNode } from "react";
+import { HeaderCustom } from "../headerCustom";
+import { FooterCustom } from "../footerCustom";
+import { PortfolioLocale, portfolioEmail } from "../../content/portfolioContent";
 import styles from "./layout.module.scss";
-import Image from "next/image";
 
 type LayoutProps = {
     children: ReactNode;
+    locale: PortfolioLocale;
     title?: string;
+    description?: string;
+    canonicalPath?: string;
 };
 
-export function Layout ({
-    children,
-    title = 'Développeur informatique .NET - Valentin PASSE'
-    } : LayoutProps) 
-{    
-    return (
-        <div className={styles["main-container"]}>
-            <Head>
-                <meta charSet="utf-8" />
-                <meta name="acharSet=thor" content="Valentin PASSE" />
-                <meta name="author" content="Valentin PASSE" />
-                <meta name="copyright" content="Portfolio of Valentin PASSE" />
-                <meta name="keywords" content="Valentin Passé, Valentin Passe, Portfolio, Web Developer, Développeur Web, Informatique, Web, .Net, C#, NextJS, Developer .Net, Backend, Frontend, freelance, autoentrepreneur" />
-                <meta name="description" content="Portfolio de Valentin PASSE. Développeur Web spécialisé dans la technologie Microsoft et les nouvelles technologies." />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta name="robots" content="Valentin Passé, Valentin Passe, Portfolio, Web Developer, Développeur Web, Web, Développeur informatique" />
+const SITE_URL = "https://www.valentinpasse.fr";
+const OG_IMAGE_PATH = "/og-image.webp";
 
-                <meta itemProp="name" content="Valentin PASSE - Portfolio professionnel - Développeur informatique" />
-                <meta itemProp="description" content="Porfolio de Valentin PASSE, développeur web en auto-entrepreneur." />
-                <meta itemProp="image" content="https://valentin-passe.com" />
-                
-                <meta property="og:title" content="Valentin PASSE - Portfolio professionnel - Développeur informatique" />
-                <meta property="og:description" content="Porfolio de Valentin PASSE, développeur web en auto-entrepreneur." />
-                <meta property="og:image" content="https://valentin-passe.com/assets/images/home/image1.webp" />
-                <meta property="og:url" content="https://valentin-passe.com" />
-                <meta property="og:site_name" content="Développeur .NET - Valentin PASSE" />
-                <meta property="og:locale" content="fr_FR" />
-                <meta property="og:type" content="website" />
-
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <meta name="robots" content="Valentin Passé, Valentin Passe, Portfolio, Web Developer, Développeur Web, Web" />
-                <meta name="author" content="Passé Valentin" />
-
-                <title>{title}</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <HeaderCustom />
-            <main>
-                {children}
-                {/* <Analytics /> */}
-            </main>
-
-            <FooterCustom />            
-        </div>
-    )
+function escapeJsonLd(value: unknown): string {
+    return JSON.stringify(value).replace(/</g, "\\u003c");
 }
 
-Layout.propTypes = {
-    /**
-     * page content
-     */
-    children: PropTypes.node.isRequired,
+const DEFAULT_TITLES: Record<PortfolioLocale, string> = {
+    fr: "Valentin PASSE | Freelance Fullstack .NET",
+    en: "Valentin PASSE | Freelance Fullstack .NET Engineer",
+};
+
+const DEFAULT_DESCRIPTIONS: Record<PortfolioLocale, string> = {
+    fr: "Portfolio de Valentin PASSE, freelance Fullstack .NET (Blazor, C#, Azure).",
+    en: "Portfolio of Valentin PASSE, freelance Fullstack .NET engineer (Blazor, C#, Azure).",
+};
+
+export function Layout({
+    children,
+    locale,
+    title,
+    description,
+    canonicalPath = "/",
+}: LayoutProps) {
+    const resolvedTitle = title ?? DEFAULT_TITLES[locale];
+    const resolvedDescription = description ?? DEFAULT_DESCRIPTIONS[locale];
+    const ogLocale = locale === "en" ? "en_US" : "fr_FR";
+    const alternateLocale = locale === "en" ? "fr_FR" : "en_US";
+    const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "" : canonicalPath}`;
+    const ogImageUrl = `${SITE_URL}${OG_IMAGE_PATH}`;
+    const frUrl = SITE_URL;
+    const enUrl = `${SITE_URL}/en`;
+
+    const jsonLdPerson = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Valentin PASSE",
+        jobTitle: locale === "en" ? "Freelance Fullstack .NET Engineer" : "Freelance Fullstack .NET",
+        url: SITE_URL,
+        image: ogImageUrl,
+        email: `mailto:${portfolioEmail}`,
+        sameAs: [
+            "https://github.com/val0m",
+            "https://www.linkedin.com/in/valentin-passe/",
+        ],
+    };
+
+    return (
+        <div className={styles.mainContainer}>
+            <Head>
+                <meta charSet="utf-8" />
+                <meta name="author" content="Valentin PASSE" />
+                <meta name="copyright" content="Portfolio of Valentin PASSE" />
+                <meta
+                    name="keywords"
+                    content="Valentin Passe, Portfolio, Fullstack .NET, Blazor, C#, Azure, freelance, software delivery"
+                />
+                <meta name="description" content={resolvedDescription} />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta name="robots" content="index,follow" />
+                <meta name="theme-color" content="#0f172a" />
+                <meta itemProp="name" content={resolvedTitle} />
+                <meta itemProp="description" content={resolvedDescription} />
+                <meta itemProp="image" content={ogImageUrl} />
+
+                <meta property="og:title" content={resolvedTitle} />
+                <meta property="og:description" content={resolvedDescription} />
+                <meta property="og:site_name" content="Valentin PASSE" />
+                <meta property="og:locale" content={ogLocale} />
+                <meta property="og:locale:alternate" content={alternateLocale} />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={canonicalUrl} />
+                <meta property="og:image" content={ogImageUrl} />
+                <meta property="og:image:alt" content="Valentin PASSE" />
+
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={resolvedTitle} />
+                <meta name="twitter:description" content={resolvedDescription} />
+                <meta name="twitter:image" content={ogImageUrl} />
+
+                <link rel="canonical" href={canonicalUrl} />
+                <link rel="alternate" hrefLang="fr" href={frUrl} />
+                <link rel="alternate" hrefLang="en" href={enUrl} />
+                <link rel="alternate" hrefLang="x-default" href={frUrl} />
+
+                <title>{resolvedTitle}</title>
+                <link rel="icon" href="/favicon.ico" />
+
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLdPerson) }}
+                />
+            </Head>
+
+            <a href="#main-content" className={styles.skipLink}>
+                {locale === "en" ? "Skip to content" : "Aller au contenu"}
+            </a>
+
+            <HeaderCustom locale={locale} />
+            <div className={styles.content}>{children}</div>
+            <FooterCustom locale={locale} />
+        </div>
+    );
 }
