@@ -14,7 +14,11 @@ type LayoutProps = {
 };
 
 const SITE_URL = "https://www.valentinpasse.fr";
-const OG_IMAGE_PATH = "/images/resume/valentin-passe.webp";
+const OG_IMAGE_PATH = "/og-image.webp";
+
+function escapeJsonLd(value: unknown): string {
+    return JSON.stringify(value).replace(/</g, "\\u003c");
+}
 
 const DEFAULT_TITLES: Record<PortfolioLocale, string> = {
     fr: "Valentin PASSE | Freelance Fullstack .NET",
@@ -99,7 +103,7 @@ export function Layout({
 
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerson) }}
+                    dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLdPerson) }}
                 />
             </Head>
 
