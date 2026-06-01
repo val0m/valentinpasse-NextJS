@@ -201,8 +201,8 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         "Veille active sur l'IA et intégration concrète des outils dans le quotidien de développement.",
       ],
       metrics: [
-        { value: "10+", label: "ans de delivery logiciel" },
-        { value: "2", label: "missions freelance en parallèle depuis 2023" },
+        { value: "10+", label: "ans de développement logiciel" },
+        { value: "Fullstack", label: "Back-end, API, web Blazor et mobile MAUI sur le socle .NET" },
         { value: ".NET", label: "socle principal, du legacy au .NET 10" },
       ],
       primaryAction: { label: "Discuter de votre besoin", href: "#contact" },
@@ -543,8 +543,8 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         "Active watch on AI tooling and concrete integration into day-to-day development practice.",
       ],
       metrics: [
-        { value: "10+", label: "years of software delivery" },
-        { value: "2", label: "parallel freelance engagements since 2023" },
+        { value: "10+", label: "years of software development" },
+        { value: "Fullstack", label: "Back-end, APIs, Blazor web and MAUI mobile on the .NET stack" },
         { value: ".NET", label: "core stack, from legacy to .NET 10" },
       ],
       primaryAction: { label: "Discuss your needs", href: "#contact" },
