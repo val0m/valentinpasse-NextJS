@@ -70,6 +70,7 @@ export type PortfolioContent = {
     items: NavigationItem[];
     ctaLabel: string;
     localeSwitcherLabel: string;
+    mainNavAriaLabel: string;
   };
   hero: {
     eyebrow: string;
@@ -80,6 +81,10 @@ export type PortfolioContent = {
     metrics: HeroMetric[];
     primaryAction: ActionLink;
     secondaryAction: ActionLink;
+    proofPointsAriaLabel: string;
+    actionsAriaLabel: string;
+    floatingLabel: string;
+    floatingValue: string;
   };
   about: {
     title: string;
@@ -89,6 +94,7 @@ export type PortfolioContent = {
     principles: string[];
     primaryAction: ActionLink;
     secondaryAction: ActionLink;
+    principlesAriaLabel: string;
   };
   services: {
     title: string;
@@ -100,6 +106,9 @@ export type PortfolioContent = {
     subtitle: string;
     entries: ExperienceEntry[];
     educationCta: string;
+    contextLabel: string;
+    valueDeliveredLabel: string;
+    techListAriaLabel: string;
   };
   education: {
     title: string;
@@ -114,6 +123,12 @@ export type PortfolioContent = {
     items: ProjectEntry[];
     primaryAction: ActionLink;
     secondaryAction: ActionLink;
+    contextLabel: string;
+    contributionLabel: string;
+    outcomeLabel: string;
+    tagsAriaLabel: string;
+    externalLinkAriaTemplate: string;
+    externalLinkLabel: string;
   };
   contact: {
     title: string;
@@ -127,6 +142,9 @@ export type PortfolioContent = {
     emailLabel: string;
     meta: string;
     responsePromise: string;
+    inquiriesAriaLabel: string;
+    sendEmailAriaLabel: string;
+    copyEmailAriaLabel: string;
   };
   footer: {
     baseline: string;
@@ -163,6 +181,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       items: NAV_IDS.map((item) => ({ id: item.id, label: item.fr })),
       ctaLabel: "Parler de votre projet",
       localeSwitcherLabel: "Basculer la langue du portfolio",
+      mainNavAriaLabel: "Navigation principale",
     },
     hero: {
       eyebrow: "Freelance Fullstack .NET · Nice · Remote, hybride, sur site",
@@ -182,6 +201,10 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       primaryAction: { label: "Discuter de votre besoin", href: "#contact" },
       secondaryAction: { label: "Voir les projets", href: "#projects" },
+      proofPointsAriaLabel: "Points clés",
+      actionsAriaLabel: "Actions principales",
+      floatingLabel: "Focus delivery",
+      floatingValue: "Architecture .NET, Blazor, IA utile",
     },
     about: {
       title: "À propos",
@@ -211,6 +234,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       principles: ["Concevoir", "Livrer", "Fiabiliser", "Faire évoluer"],
       primaryAction: { label: "Explorer les projets", href: "#projects" },
       secondaryAction: { label: "Me contacter", href: "#contact" },
+      principlesAriaLabel: "Principes de travail",
     },
     services: {
       title: "Services",
@@ -365,6 +389,9 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         },
       ],
       educationCta: "Voir le parcours de formation",
+      contextLabel: "Contexte",
+      valueDeliveredLabel: "Valeur livrée",
+      techListAriaLabel: "Technologies",
     },
     education: {
       title: "Formation",
@@ -440,6 +467,12 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       primaryAction: { label: "Discuter de votre projet", href: "#contact" },
       secondaryAction: { label: "Demander un échange", href: "#contact" },
+      contextLabel: "Contexte",
+      contributionLabel: "Contribution",
+      outcomeLabel: "Résultat",
+      tagsAriaLabel: "Technologies et compétences projet",
+      externalLinkAriaTemplate: "Voir le site de {title} (lien externe)",
+      externalLinkLabel: "Voir un lien public",
     },
     contact: {
       title: "Contact",
@@ -458,6 +491,9 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       emailLabel: "Email direct",
       meta: "Nice (06200), Provence-Alpes-Côte d'Azur · Remote, hybride et sur site",
       responsePromise: "Réponse rapide, échange simple et pas de tunnel inutile.",
+      inquiriesAriaLabel: "Types de demandes",
+      sendEmailAriaLabel: "Envoyer un e-mail à Valentin Passe",
+      copyEmailAriaLabel: "Copier l'adresse e-mail",
     },
     footer: {
       baseline: "Freelance Fullstack .NET pour des produits web fiables, lisibles et utiles.",
@@ -487,6 +523,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       items: NAV_IDS.map((item) => ({ id: item.id, label: item.en })),
       ctaLabel: "Discuss your project",
       localeSwitcherLabel: "Switch portfolio language",
+      mainNavAriaLabel: "Main navigation",
     },
     hero: {
       eyebrow: "Fullstack .NET freelancer · Nice · Remote, hybrid, on-site",
@@ -506,6 +543,10 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       primaryAction: { label: "Discuss your needs", href: "#contact" },
       secondaryAction: { label: "View projects", href: "#projects" },
+      proofPointsAriaLabel: "Key proof points",
+      actionsAriaLabel: "Main actions",
+      floatingLabel: "Delivery focus",
+      floatingValue: "Architecture .NET, Blazor, useful AI",
     },
     about: {
       title: "About",
@@ -535,6 +576,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       principles: ["Design", "Ship", "Stabilize", "Evolve"],
       primaryAction: { label: "Explore projects", href: "#projects" },
       secondaryAction: { label: "Get in touch", href: "#contact" },
+      principlesAriaLabel: "Working principles",
     },
     services: {
       title: "Services",
@@ -689,6 +731,9 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         },
       ],
       educationCta: "View education",
+      contextLabel: "Context",
+      valueDeliveredLabel: "Value delivered",
+      techListAriaLabel: "Technologies",
     },
     education: {
       title: "Education",
@@ -764,6 +809,12 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       primaryAction: { label: "Discuss your project", href: "#contact" },
       secondaryAction: { label: "Book an intro call", href: "#contact" },
+      contextLabel: "Context",
+      contributionLabel: "Contribution",
+      outcomeLabel: "Outcome",
+      tagsAriaLabel: "Project technologies and skills",
+      externalLinkAriaTemplate: "View the {title} website (external link)",
+      externalLinkLabel: "View public link",
     },
     contact: {
       title: "Contact",
@@ -782,6 +833,9 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       emailLabel: "Direct email",
       meta: "Nice (06200), Provence-Alpes-Côte d'Azur · Remote, hybrid, and on-site",
       responsePromise: "Fast reply, direct conversation, no unnecessary funnel.",
+      inquiriesAriaLabel: "Inquiry types",
+      sendEmailAriaLabel: "Send an email to Valentin Passe",
+      copyEmailAriaLabel: "Copy email address",
     },
     footer: {
       baseline: "Fullstack .NET freelancer for reliable, readable, and useful web products.",

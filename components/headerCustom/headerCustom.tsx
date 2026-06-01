@@ -95,7 +95,7 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
 
   return (
     <header className={styles.header}>
-      <nav className={styles.nav} aria-label="Navigation principale">
+      <nav className={styles.nav} aria-label={content.navigation.mainNavAriaLabel}>
         <a href="#hero" className={styles.brand} onClick={(event) => handleAnchorNavigation(event, "#hero", "hero")}>
           <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" />
           <span className={styles.brandText}>

@@ -25,16 +25,16 @@ export function SectionProjects({ locale = "fr" }: SectionProjectsProps) {
               <h3 className={styles.cardTitle}>{project.title}</h3>
               <p className={styles.summary}>{project.summary}</p>
 
-              <p className={styles.blockLabel}>Contexte</p>
+              <p className={styles.blockLabel}>{content.contextLabel}</p>
               <p className={styles.blockText}>{project.context}</p>
 
-              <p className={styles.blockLabel}>Contribution</p>
+              <p className={styles.blockLabel}>{content.contributionLabel}</p>
               <p className={styles.blockText}>{project.contribution}</p>
 
-              <p className={styles.blockLabel}>Résultat</p>
+              <p className={styles.blockLabel}>{content.outcomeLabel}</p>
               <p className={styles.blockText}>{project.outcome}</p>
 
-              <ul className={styles.tags} aria-label="Technologies et compétences projet">
+              <ul className={styles.tags} aria-label={content.tagsAriaLabel}>
                 {project.tags.map((tag) => (
                   <li key={`${project.title}-${tag}`} className={styles.tag}>
                     {tag}
@@ -48,9 +48,9 @@ export function SectionProjects({ locale = "fr" }: SectionProjectsProps) {
                   className={styles.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Voir le site de ${project.title} (lien externe)`}
+                  aria-label={content.externalLinkAriaTemplate.replace("{title}", project.title)}
                 >
-                  {locale === "fr" ? "Voir un lien public" : "View public link"}
+                  {content.externalLinkLabel}
                 </a>
               ) : null}
             </article>

@@ -21,11 +21,11 @@ function HeroHeadline({ locale = "fr" }: HeroSectionProps) {
 }
 
 function HeroProofPoints({ locale = "fr" }: HeroSectionProps) {
-  const points = getPortfolioContent(locale).hero.proofPoints;
+  const hero = getPortfolioContent(locale).hero;
 
   return (
-    <ul className={styles.proofPoints} aria-label="Points clés">
-      {points.map((point) => (
+    <ul className={styles.proofPoints} aria-label={hero.proofPointsAriaLabel}>
+      {hero.proofPoints.map((point) => (
         <li key={point} className={styles.proofPoint}>
           <span className={styles.proofIcon} aria-hidden="true">✓</span>
           {point}
@@ -39,7 +39,7 @@ function HeroActionGroup({ locale = "fr" }: HeroSectionProps) {
   const content = getPortfolioContent(locale).hero;
 
   return (
-    <div className={styles.actionGroup} role="group" aria-label="Actions principales">
+    <div className={styles.actionGroup} role="group" aria-label={content.actionsAriaLabel}>
       <a
         href={content.primaryAction.href}
         className={`${styles.btn} ${styles.btnPrimary}`}
@@ -73,22 +73,24 @@ function HeroMetrics({ locale = "fr" }: HeroSectionProps) {
   );
 }
 
-function HeroVisual() {
+function HeroVisual({ locale = "fr" }: HeroSectionProps) {
+  const hero = getPortfolioContent(locale).hero;
+
   return (
     <div className={styles.visual} aria-hidden="true">
       <div className={styles.visualCard}>
         <div className={styles.portraitShell}>
           <Image
             src={Profile}
-            alt="Portrait de Valentin Passe"
+            alt=""
             className={styles.portrait}
             sizes="(max-width: 900px) 240px, 360px"
             priority
           />
         </div>
         <div className={styles.floatingPanel}>
-          <p className={styles.floatingLabel}>Delivery focus</p>
-          <p className={styles.floatingValue}>Architecture .NET, Blazor, IA utile</p>
+          <p className={styles.floatingLabel}>{hero.floatingLabel}</p>
+          <p className={styles.floatingValue}>{hero.floatingValue}</p>
         </div>
       </div>
       <div className={styles.ring} />
@@ -109,7 +111,7 @@ export function HeroSection({ locale = "fr" }: HeroSectionProps) {
         <HeroActionGroup locale={locale} />
         <HeroMetrics locale={locale} />
       </div>
-      <HeroVisual />
+      <HeroVisual locale={locale} />
     </section>
   );
 }

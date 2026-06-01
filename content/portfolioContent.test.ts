@@ -36,4 +36,48 @@ describe("getPortfolioContent", () => {
   it("exposes a portfolio email constant", () => {
     expect(portfolioEmail).toMatch(/@/);
   });
+
+  describe("localized accessibility and visible labels", () => {
+    const locales = ["fr", "en"] as const;
+
+    type LabelPath = readonly [string, string];
+
+    const requiredLabels: LabelPath[] = [
+      ["navigation", "mainNavAriaLabel"],
+      ["hero", "proofPointsAriaLabel"],
+      ["hero", "actionsAriaLabel"],
+      ["hero", "floatingLabel"],
+      ["hero", "floatingValue"],
+      ["about", "principlesAriaLabel"],
+      ["experience", "contextLabel"],
+      ["experience", "valueDeliveredLabel"],
+      ["experience", "techListAriaLabel"],
+      ["projects", "contextLabel"],
+      ["projects", "contributionLabel"],
+      ["projects", "outcomeLabel"],
+      ["projects", "tagsAriaLabel"],
+      ["projects", "externalLinkAriaTemplate"],
+      ["projects", "externalLinkLabel"],
+      ["contact", "inquiriesAriaLabel"],
+      ["contact", "sendEmailAriaLabel"],
+      ["contact", "copyEmailAriaLabel"],
+    ];
+
+    locales.forEach((locale) => {
+      requiredLabels.forEach(([section, field]) => {
+        it(`exposes a non-empty ${section}.${field} for locale '${locale}'`, () => {
+          const content = getPortfolioContent(locale) as unknown as Record<string, Record<string, string>>;
+          const value = content[section]?.[field];
+          expect(typeof value).toBe("string");
+          expect(value.trim().length).toBeGreaterThan(0);
+        });
+      });
+    });
+
+    it("project external link template contains the {title} placeholder", () => {
+      locales.forEach((locale) => {
+        expect(getPortfolioContent(locale).projects.externalLinkAriaTemplate).toContain("{title}");
+      });
+    });
+  });
 });

@@ -40,7 +40,7 @@ export function SectionResume({ locale = "fr" }: SectionResumeProps) {
             ))}
           </div>
 
-          <div className={styles.principles} aria-label="Principes de travail">
+          <div className={styles.principles} aria-label={content.principlesAriaLabel}>
             {content.principles.map((item) => (
               <span key={item} className={styles.principleChip}>
                 {item}

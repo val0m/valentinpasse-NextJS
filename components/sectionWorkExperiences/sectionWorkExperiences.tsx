@@ -25,11 +25,11 @@ export function SectionWorkExperiences({ locale = "fr" }: SectionWorkExperiences
               <p className={styles.period}>{entry.period}</p>
               <h3 className={styles.role}>{entry.roleTitle}</h3>
               <p className={styles.organization}>{entry.organizationLabel}</p>
-              <p className={styles.blockLabel}>Contexte</p>
+              <p className={styles.blockLabel}>{content.contextLabel}</p>
               <p className={styles.blockText}>{entry.context}</p>
-              <p className={styles.blockLabel}>Valeur livrée</p>
+              <p className={styles.blockLabel}>{content.valueDeliveredLabel}</p>
               <p className={styles.blockText}>{entry.valueDelivered}</p>
-              <ul className={styles.techList} aria-label="Technologies">
+              <ul className={styles.techList} aria-label={content.techListAriaLabel}>
                 {entry.tech.map((item) => (
                   <li key={`${entry.organizationLabel}-${item}`} className={styles.techItem}>
                     {item}

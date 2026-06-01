@@ -33,7 +33,7 @@ export function SectionContact({ locale = "fr" }: SectionContactProps) {
         <p className={styles.description}>{content.description}</p>
         <p className={styles.responsePromise}>{content.responsePromise}</p>
 
-        <ul className={styles.inquiryList} aria-label="Types de demandes">
+        <ul className={styles.inquiryList} aria-label={content.inquiriesAriaLabel}>
           {content.inquiryTypes.map((item) => (
             <li key={item} className={styles.inquiryItem}>
               {item}
@@ -45,7 +45,7 @@ export function SectionContact({ locale = "fr" }: SectionContactProps) {
           <a
             href={`mailto:${portfolioEmail}`}
             className={styles.primaryAction}
-            aria-label="Envoyer un e-mail à Valentin Passe"
+            aria-label={content.sendEmailAriaLabel}
           >
             {content.primaryActionLabel}
           </a>
@@ -54,7 +54,7 @@ export function SectionContact({ locale = "fr" }: SectionContactProps) {
             type="button"
             className={styles.secondaryAction}
             onClick={handleCopyEmail}
-            aria-label="Copier l'adresse e-mail"
+            aria-label={content.copyEmailAriaLabel}
           >
             {content.copyActionLabel}
           </button>
