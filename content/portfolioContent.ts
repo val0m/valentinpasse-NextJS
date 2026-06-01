@@ -284,7 +284,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Développeur Full-Stack .NET",
           organizationLabel: "SMEG · Monaco · Freelance",
-          period: "Nov. 2024 — Aujourd'hui",
+          period: "Nov. 2023 — Aujourd'hui",
           context:
             "Solution de gestion des appels d'astreinte, d'urgence et d'interventions (bureau et mobile). Mission d'architecture et de refonte du socle applicatif, avec définition d'une cible modulaire et d'un template projet réutilisable. POC mobile MAUI pour valider le socle et formaliser les contraintes terrain. Conception du portail client Nexio (particuliers et professionnels).",
           valueDelivered:
@@ -626,7 +626,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Full-Stack .NET Developer",
           organizationLabel: "SMEG · Monaco · Freelance",
-          period: "Nov. 2024 — Present",
+          period: "Nov. 2023 — Present",
           context:
             "On-call, emergency and intervention management platform (desktop and mobile). Architecture mission: analysis and rebuild of the existing foundation, definition of a modular target architecture and a reusable project template. Mobile POC in MAUI to validate the foundation and formalize the field constraints. Design of the Nexio customer portal (individuals and businesses).",
           valueDelivered:
