@@ -103,7 +103,7 @@ export function Layout({
                 />
             </Head>
 
-            <a href="#hero" className={styles.skipLink}>
+            <a href="#main-content" className={styles.skipLink}>
                 {locale === "en" ? "Skip to content" : "Aller au contenu"}
             </a>
 

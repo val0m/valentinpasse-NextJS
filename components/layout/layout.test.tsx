@@ -11,7 +11,7 @@ describe("Layout", () => {
     );
 
     const skipLink = screen.getByRole("link", { name: "Aller au contenu" });
-    expect(skipLink).toHaveAttribute("href", "#hero");
+    expect(skipLink).toHaveAttribute("href", "#main-content");
   });
 
   it("renders a skip link in English when the locale is 'en'", () => {

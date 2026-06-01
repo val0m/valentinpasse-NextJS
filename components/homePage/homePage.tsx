@@ -27,7 +27,7 @@ export function HomePage({ locale }: HomePageProps) {
       description={content.meta.description}
       canonicalPath={canonicalPath}
     >
-      <main className={styles.page}>
+      <main id="main-content" className={styles.page}>
         <HeroSection locale={locale} />
         <div className={styles.container}>
           <div className={styles.stack}>
