@@ -1,14 +1,14 @@
 import type { AppProps } from "next/app";
-import { Manrope, Space_Grotesk } from "next/font/google";
+import { Archivo, Space_Grotesk } from "next/font/google";
 import "../styles/globals.css";
 
-const bodyFont = Manrope({
+const bodyFont = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
 });
 
-const displayFont = Space_Grotesk({
+const displayFont = Archivo({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",

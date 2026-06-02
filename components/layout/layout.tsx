@@ -73,7 +73,7 @@ export function Layout({
                 <meta name="description" content={resolvedDescription} />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="robots" content="index,follow" />
-                <meta name="theme-color" content="#0f172a" />
+                <meta name="theme-color" content="#18181b" />
                 <meta itemProp="name" content={resolvedTitle} />
                 <meta itemProp="description" content={resolvedDescription} />
                 <meta itemProp="image" content={ogImageUrl} />

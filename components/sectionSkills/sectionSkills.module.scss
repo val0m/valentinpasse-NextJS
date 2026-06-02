@@ -4,9 +4,9 @@
 	width: 100%;
 	padding: 6rem 1.25rem;
 	background:
-		radial-gradient(circle at 8% 10%, rgba(47, 107, 255, 0.07), transparent 40%),
-		radial-gradient(circle at 92% 85%, rgba(217, 119, 6, 0.06), transparent 40%),
-		#f1f5f9;
+		radial-gradient(circle at 8% 10%, color-mix(in srgb, var(--cat-1) 7%, transparent), transparent 40%),
+		radial-gradient(circle at 92% 85%, color-mix(in srgb, var(--cat-5) 6%, transparent), transparent 40%),
+		var(--color-background-alt);
 }
 
 .container {
@@ -21,7 +21,7 @@
 
 .title {
 	margin: 0;
-	color: #0f172a;
+	color: var(--color-foreground);
 	font-family: var(--font-display);
 	font-size: clamp(2.2rem, 3vw, 3.2rem);
 	letter-spacing: -0.03em;
@@ -29,7 +29,7 @@
 
 .subtitle {
 	margin: 0.85rem 0 0;
-	color: #334155;
+	color: var(--color-text-muted);
 	line-height: 1.65;
 	font-size: 1.02rem;
 }
@@ -43,15 +43,15 @@
 	gap: 0 1.25rem;
 
 	/* Blueprint dot-grid background */
-	background-color: rgba(255, 255, 255, 0.65);
-	background-image: radial-gradient(circle, rgba(100, 116, 139, 0.18) 1.2px, transparent 1.2px);
+	background-color: color-mix(in srgb, var(--color-card) 65%, transparent);
+	background-image: radial-gradient(circle, color-mix(in srgb, var(--color-muted-foreground) 18%, transparent) 1.2px, transparent 1.2px);
 	background-size: 22px 22px;
 	border-radius: 32px;
-	border: 1px solid rgba(148, 163, 184, 0.2);
+	border: 1px solid var(--color-border);
 	padding: 2.5rem 2rem;
 	box-shadow:
-		inset 0 1px 0 rgba(255, 255, 255, 0.9),
-		0 24px 60px rgba(15, 23, 42, 0.06);
+		inset 0 1px 0 color-mix(in srgb, var(--color-card) 90%, transparent),
+		0 24px 60px color-mix(in srgb, var(--color-foreground) 6%, transparent);
 
 	/* Horizontal connector line through all node orbs */
 	&::before {
@@ -63,13 +63,13 @@
 		height: 2px;
 		background: linear-gradient(
 			to right,
-			rgba(59, 130, 246, 0),
-			rgba(59, 130, 246, 0.55) 12%,
-			rgba(139, 92, 246, 0.5) 30%,
-			rgba(6, 182, 212, 0.5) 50%,
-			rgba(16, 185, 129, 0.5) 70%,
-			rgba(245, 158, 11, 0.55) 88%,
-			rgba(245, 158, 11, 0)
+			color-mix(in srgb, var(--cat-1) 0%, transparent),
+			color-mix(in srgb, var(--cat-1) 55%, transparent) 12%,
+			color-mix(in srgb, var(--cat-2) 50%, transparent) 30%,
+			color-mix(in srgb, var(--cat-3) 50%, transparent) 50%,
+			color-mix(in srgb, var(--cat-4) 50%, transparent) 70%,
+			color-mix(in srgb, var(--cat-5) 55%, transparent) 88%,
+			color-mix(in srgb, var(--cat-5) 0%, transparent)
 		);
 		z-index: 0;
 		pointer-events: none;
@@ -97,7 +97,7 @@
 	width: 44px;
 	height: 44px;
 	border-radius: 50%;
-	border: 3px solid #fff;
+	border: 3px solid var(--color-card);
 	flex-shrink: 0;
 	position: relative;
 
@@ -107,7 +107,7 @@
 		position: absolute;
 		inset: 0;
 		border-radius: 50%;
-		background: radial-gradient(circle at 34% 34%, rgba(255, 255, 255, 0.6), transparent 58%);
+		background: radial-gradient(circle at 34% 34%, color-mix(in srgb, var(--color-card) 60%, transparent), transparent 58%);
 	}
 }
 
@@ -120,17 +120,17 @@
 /* ─── Node body card ─────────────────────────────────────────────────── */
 
 .nodeBody {
-	background: rgba(255, 255, 255, 0.9);
-	border: 1px solid rgba(148, 163, 184, 0.22);
+	background: color-mix(in srgb, var(--color-card) 90%, transparent);
+	border: 1px solid var(--color-border);
 	border-radius: 20px;
 	padding: 1rem 0.9rem;
 	width: 100%;
-	box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+	box-shadow: 0 4px 16px color-mix(in srgb, var(--color-foreground) 5%, transparent);
 }
 
 .nodeLabel {
 	margin: 0 0 0.35rem;
-	color: #0f172a;
+	color: var(--color-foreground);
 	font-family: var(--font-display);
 	font-size: 0.9rem;
 	font-weight: 700;
@@ -139,7 +139,7 @@
 
 .nodeSupport {
 	margin: 0 0 0.8rem;
-	color: #64748b;
+	color: var(--color-muted-foreground);
 	font-size: 0.76rem;
 	line-height: 1.5;
 }
@@ -171,121 +171,58 @@
 
 /* ─── Per-node color themes (nth-child on .node) ─────────────────────── */
 
-/* 1 — Fullstack .NET → blue */
-.node:nth-child(1) {
+/* Shared theming driven by a per-node --cat custom property */
+@mixin node-theme($cat) {
 	.nodeOrb {
-		background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+		background: linear-gradient(135deg, $cat, color-mix(in srgb, #{$cat} 55%, var(--color-foreground)));
 		box-shadow:
-			0 0 0 4px rgba(59, 130, 246, 0.14),
-			0 0 22px rgba(59, 130, 246, 0.28);
+			0 0 0 4px color-mix(in srgb, #{$cat} 14%, transparent),
+			0 0 22px color-mix(in srgb, #{$cat} 28%, transparent);
 	}
 	.nodeVline {
-		background: linear-gradient(to bottom, rgba(59, 130, 246, 0.45), transparent);
+		background: linear-gradient(to bottom, color-mix(in srgb, #{$cat} 45%, transparent), transparent);
 	}
 	.chip {
-		background: rgba(59, 130, 246, 0.07);
-		border-color: rgba(59, 130, 246, 0.22);
-		color: #1e40af;
+		background: color-mix(in srgb, #{$cat} 7%, transparent);
+		border-color: color-mix(in srgb, #{$cat} 22%, transparent);
+		color: color-mix(in srgb, #{$cat} 45%, var(--color-foreground));
 		&:hover {
-			background: rgba(59, 130, 246, 0.14);
-			border-color: rgba(59, 130, 246, 0.4);
+			background: color-mix(in srgb, #{$cat} 14%, transparent);
+			border-color: color-mix(in srgb, #{$cat} 40%, transparent);
 		}
 	}
 }
 
-/* 2 — Front-end & Architecture → purple */
+/* 1 — Fullstack .NET → blue */
+.node:nth-child(1) {
+	@include node-theme(var(--cat-1));
+}
+
+/* 2 — Front-end & Architecture → violet */
 .node:nth-child(2) {
-	.nodeOrb {
-		background: linear-gradient(135deg, #8b5cf6, #5b21b6);
-		box-shadow:
-			0 0 0 4px rgba(139, 92, 246, 0.14),
-			0 0 22px rgba(139, 92, 246, 0.28);
-	}
-	.nodeVline {
-		background: linear-gradient(to bottom, rgba(139, 92, 246, 0.45), transparent);
-	}
-	.chip {
-		background: rgba(139, 92, 246, 0.07);
-		border-color: rgba(139, 92, 246, 0.22);
-		color: #4c1d95;
-		&:hover {
-			background: rgba(139, 92, 246, 0.14);
-			border-color: rgba(139, 92, 246, 0.4);
-		}
-	}
+	@include node-theme(var(--cat-2));
 }
 
 /* 3 — Data & Cloud → cyan */
 .node:nth-child(3) {
-	.nodeOrb {
-		background: linear-gradient(135deg, #06b6d4, #0e7490);
-		box-shadow:
-			0 0 0 4px rgba(6, 182, 212, 0.14),
-			0 0 22px rgba(6, 182, 212, 0.28);
-	}
-	.nodeVline {
-		background: linear-gradient(to bottom, rgba(6, 182, 212, 0.45), transparent);
-	}
-	.chip {
-		background: rgba(6, 182, 212, 0.07);
-		border-color: rgba(6, 182, 212, 0.22);
-		color: #155e75;
-		&:hover {
-			background: rgba(6, 182, 212, 0.14);
-			border-color: rgba(6, 182, 212, 0.4);
-		}
-	}
+	@include node-theme(var(--cat-3));
 }
 
-/* 4 — Delivery & Tooling → green */
+/* 4 — Delivery & Tooling → emerald */
 .node:nth-child(4) {
-	.nodeOrb {
-		background: linear-gradient(135deg, #10b981, #047857);
-		box-shadow:
-			0 0 0 4px rgba(16, 185, 129, 0.14),
-			0 0 22px rgba(16, 185, 129, 0.28);
-	}
-	.nodeVline {
-		background: linear-gradient(to bottom, rgba(16, 185, 129, 0.45), transparent);
-	}
-	.chip {
-		background: rgba(16, 185, 129, 0.07);
-		border-color: rgba(16, 185, 129, 0.22);
-		color: #065f46;
-		&:hover {
-			background: rgba(16, 185, 129, 0.14);
-			border-color: rgba(16, 185, 129, 0.4);
-		}
-	}
+	@include node-theme(var(--cat-4));
 }
 
 /* 5 — Environments & Human qualities → amber */
 .node:nth-child(5) {
-	.nodeOrb {
-		background: linear-gradient(135deg, #f59e0b, #b45309);
-		box-shadow:
-			0 0 0 4px rgba(245, 158, 11, 0.14),
-			0 0 22px rgba(245, 158, 11, 0.28);
-	}
-	.nodeVline {
-		background: linear-gradient(to bottom, rgba(245, 158, 11, 0.45), transparent);
-	}
-	.chip {
-		background: rgba(245, 158, 11, 0.07);
-		border-color: rgba(245, 158, 11, 0.22);
-		color: #78350f;
-		&:hover {
-			background: rgba(245, 158, 11, 0.14);
-			border-color: rgba(245, 158, 11, 0.4);
-		}
-	}
+	@include node-theme(var(--cat-5));
 }
 
 /* ─── Fallback ───────────────────────────────────────────────────────── */
 
 .fallback {
 	margin-top: 1rem;
-	color: #475569;
+	color: var(--color-text-muted);
 }
 
 /* ─── Responsive ─────────────────────────────────────────────────────── */

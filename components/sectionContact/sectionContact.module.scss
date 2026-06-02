@@ -2,9 +2,8 @@
   width: 100%;
   padding: 6rem 1.5rem;
   background:
-    radial-gradient(circle at 20% 16%, rgba(47, 107, 255, 0.16), transparent 24%),
-    radial-gradient(circle at 82% 14%, rgba(198, 139, 89, 0.14), transparent 20%),
-    linear-gradient(180deg, #09111b 0%, #0d1724 100%);
+    radial-gradient(circle at 20% 16%, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 24%),
+    linear-gradient(180deg, var(--color-dark) 0%, var(--color-dark-2) 100%);
 }
 
 .container {
@@ -13,29 +12,29 @@
   text-align: center;
   padding: 2rem;
   border-radius: 32px;
-  border: 1px solid rgba(148, 163, 184, 0.16);
-  background: rgba(9, 17, 27, 0.58);
-  box-shadow: 0 30px 80px rgba(2, 8, 23, 0.24);
+  border: 1px solid var(--color-on-dark-border);
+  background: color-mix(in srgb, var(--color-dark) 58%, transparent);
+  box-shadow: 0 30px 80px color-mix(in srgb, var(--color-dark-2) 24%, transparent);
 }
 
 .title {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 3vw, 3.2rem);
-  color: #f8fafc;
+  color: var(--color-on-dark);
 }
 
 .description {
   margin: 1rem auto 0;
   max-width: 680px;
   line-height: 1.75;
-  color: rgba(226, 232, 240, 0.82);
+  color: var(--color-on-dark-muted);
 }
 
 .responsePromise {
   margin: 0.8rem auto 0;
   max-width: 620px;
-  color: #bfd7ff;
+  color: var(--color-accent-on-dark);
   font-weight: 600;
 }
 
@@ -45,15 +44,15 @@
   text-align: left;
   display: grid;
   gap: 0.65rem;
-  color: #f8fafc;
+  color: var(--color-on-dark);
 }
 
 .inquiryItem {
   line-height: 1.6;
   padding: 0.9rem 1rem;
   border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.16);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-on-dark-border);
+  background: color-mix(in srgb, var(--color-on-dark) 5%, transparent);
 }
 
 .actions {
@@ -79,36 +78,36 @@
 }
 
 .primaryAction {
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 45%, #f5d0a9 100%);
-  color: #09111b;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 .secondaryAction {
-	background-color: rgba(255, 255, 255, 0.08);
-	color: #f8fafc;
-	border: 1px solid rgba(148, 163, 184, 0.22);
+	background-color: color-mix(in srgb, var(--color-on-dark) 8%, transparent);
+	color: var(--color-on-dark);
+	border: 1px solid var(--color-on-dark-border);
 }
 
 .emailText {
   margin: 1rem 0 0;
-  color: rgba(226, 232, 240, 0.78);
+  color: var(--color-on-dark-muted);
 }
 
 .emailText a {
-  color: #f8fafc;
+  color: var(--color-on-dark);
   font-weight: 600;
 }
 
 .meta {
   margin: 0.35rem 0 0;
-	color: rgba(226, 232, 240, 0.6);
+	color: var(--color-on-dark-faint);
   font-size: 0.95rem;
 }
 
 .feedback {
   min-height: 1.2rem;
   margin: 0.7rem 0 0;
-	color: #93c5fd;
+	color: var(--color-accent-on-dark);
   font-size: 0.9rem;
 }
 
@@ -120,7 +119,7 @@
 
 .primaryAction:focus-visible,
 .secondaryAction:focus-visible {
-  outline: 2px solid #bfdbfe;
+  outline: 2px solid var(--color-accent-on-dark);
   outline-offset: 2px;
 }
 
