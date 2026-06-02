@@ -2,8 +2,8 @@
 	width: 100%;
 	padding: 6rem 1.25rem;
 	background:
-		radial-gradient(circle at 80% 12%, rgba(198, 139, 89, 0.08), transparent 24%),
-		linear-gradient(180deg, #f7f9fc 0%, #edf2f8 100%);
+		radial-gradient(circle at 80% 12%, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 24%),
+		linear-gradient(180deg, var(--color-background-alt) 0%, var(--color-background) 100%);
 }
 
 .container {
@@ -18,7 +18,7 @@
 
 .title {
 	margin: 0;
-	color: #0f172a;
+	color: var(--color-foreground);
 	font-family: var(--font-display);
 	font-size: clamp(2.2rem, 3vw, 3.2rem);
 	letter-spacing: -0.03em;
@@ -26,7 +26,7 @@
 
 .subtitle {
 	margin: 0.85rem 0 0;
-	color: #334155;
+	color: var(--color-text-muted);
 	line-height: 1.65;
 	font-size: 1.02rem;
 }
@@ -44,16 +44,16 @@
 	top: 0;
 	bottom: 0;
 	width: 2px;
-	background: linear-gradient(180deg, #0f172a 0%, #2f6bff 50%, #c68b59 100%);
+	background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-accent) 100%);
 }
 
 .card {
 	position: relative;
 	margin-left: 2.4rem;
-	border: 1px solid rgba(148, 163, 184, 0.18);
+	border: 1px solid var(--color-border);
 	border-radius: 24px;
-	background: rgba(255, 255, 255, 0.88);
-	box-shadow: 0 18px 44px rgba(15, 23, 42, 0.06);
+	background: var(--color-card);
+	box-shadow: 0 18px 44px color-mix(in srgb, var(--color-foreground) 6%, transparent);
 	padding: 1.2rem 1.2rem;
 }
 
@@ -65,13 +65,13 @@
 	width: 14px;
 	height: 14px;
 	border-radius: 50%;
-	background: linear-gradient(135deg, #2f6bff 0%, #c68b59 100%);
-	box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.95);
+	background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
+	box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-card) 95%, transparent);
 }
 
 .period {
 	margin: 0;
-	color: #40618c;
+	color: var(--color-accent);
 	font-weight: 700;
 	font-size: 0.82rem;
 	letter-spacing: 0.14em;
@@ -80,19 +80,19 @@
 
 .role {
 	margin: 0.3rem 0 0;
-	color: #0f172a;
+	color: var(--color-foreground);
 	font-size: 1.14rem;
 }
 
 .organization {
 	margin: 0.2rem 0 0.7rem;
-	color: #334155;
+	color: var(--color-text-muted);
 	font-weight: 600;
 }
 
 .blockLabel {
 	margin: 0.6rem 0 0;
-	color: #0f172a;
+	color: var(--color-foreground);
 	font-weight: 700;
 	font-size: 0.86rem;
 	text-transform: uppercase;
@@ -101,7 +101,7 @@
 
 .blockText {
 	margin: 0.25rem 0 0;
-	color: #475569;
+	color: var(--color-text-muted);
 	line-height: 1.6;
 	font-size: 0.93rem;
 }
@@ -117,9 +117,9 @@
 
 .techItem {
 	border-radius: 999px;
-	border: 1px solid #d6dfef;
-	background: #f8fbff;
-	color: #1e293b;
+	border: 1px solid var(--color-border);
+	background: var(--color-background-alt);
+	color: var(--color-text);
 	padding: 0.25rem 0.6rem;
 	font-size: 0.82rem;
 }
@@ -130,8 +130,8 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: 999px;
-	background: #0f172a;
-	color: #ffffff;
+	background: var(--color-primary);
+	color: var(--color-on-primary);
 	text-decoration: none;
 	font-weight: 600;
 	padding: 0.78rem 1.05rem;

@@ -43,9 +43,10 @@
 **Règle** : un seul accent dominant (`--color-accent`). Tout le reste est monochrome.
 Consommer les variables, jamais de hex en dur dans les composants.
 
-> ⚠️ **Divergence avec l'implémentation actuelle** (`styles/globals.css`) : le site utilise aujourd'hui
-> `--color-highlight: #2f6bff`, `Manrope`/`Space Grotesk`, et une palette plus bleutée/chaude
-> (`--color-accent: #c68b59`). Adopter ce MASTER implique une migration des tokens. Voir §7.
+> ✅ **Implémenté** : `styles/globals.css` expose ce set de tokens, complété de tokens dérivés pour les
+> surfaces sombres (`--color-dark`, `--color-on-dark*`, `--color-accent-on-dark`, `--color-accent-soft`).
+> Les 11 SCSS de composants consomment `var(--color-*)` ; les tints/alphas sont obtenus via `color-mix()`.
+> L'ancien accent chaud `#c68b59` et les bleus multiples ont été supprimés au profit du seul `--color-accent`.
 
 ## 4. Typographie — « Minimalist Portfolio »
 
@@ -81,8 +82,8 @@ Consommer les variables, jamais de hex en dur dans les composants.
 
 - **CSS Modules** par composant + tokens globaux dans `styles/globals.css` ; pas de styles inline.
 - Pas de Tailwind ni lib UI tierce — composants maison dans `components/`.
-- **Migration des tokens** : pour adopter ce MASTER, mettre à jour les `--color-*` de `globals.css`
-  (mapper `--color-highlight` → `--color-accent #2563EB`, ajuster les fonts, etc.). À faire dans un commit dédié.
+- **Tints & opacités** : générées via `color-mix(in srgb, var(--color-x) N%, transparent)` plutôt que des
+  rgba codés en dur — un seul token source par teinte.
 - Icônes : SVG (Lucide/Heroicons), jamais d'emoji ; stroke et taille cohérents (tokens).
 - Focus visible sur tous les interactifs (`--color-ring`) ; contraste AA min (AAA visé en Swiss).
 
@@ -92,6 +93,11 @@ Consommer les variables, jamais de hex en dur dans les composants.
 - Multi-accents qui se disputent l'attention.
 - Ombres/dégradés décoratifs, animations gratuites, mouvement sans signification.
 - Emoji comme icônes ; hex codés en dur dans les composants.
+
+> **Exception assumée — diagramme de compétences** (`sectionSkills`) : utilise un set catégoriel
+> `--cat-1..5` (bleu / violet / cyan / émeraude / ambre) pour distinguer 5 domaines. C'est un usage
+> data-viz légitime (la couleur n'est pas le seul porteur d'info : chaque nœud a son libellé). Ces
+> couleurs restent **tokenisées** dans `globals.css` et ne doivent pas se propager au reste de l'UI.
 
 ## 9. Pre-Delivery Checklist (plugin)
 

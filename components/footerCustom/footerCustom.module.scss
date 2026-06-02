@@ -2,8 +2,8 @@
 	position: relative;
 	z-index: 1;
 	padding: 2.5rem 1.25rem 3rem;
-	background: #09111b;
-	color: #f8fafc;
+	background: var(--color-dark);
+	color: var(--color-on-dark);
 }
 
 .container {
@@ -13,7 +13,7 @@
 	grid-template-columns: 1.4fr 0.8fr 0.8fr;
 	gap: 2rem;
 	padding-top: 2rem;
-	border-top: 1px solid rgba(148, 163, 184, 0.16);
+	border-top: 1px solid var(--color-on-dark-border);
 }
 
 .brandLink {
@@ -33,19 +33,19 @@
 	margin: 0.35rem 0 0;
 	max-width: 34ch;
 	line-height: 1.6;
-	color: rgba(226, 232, 240, 0.74);
+	color: var(--color-on-dark-muted);
 }
 
 .availability {
 	margin: 1rem 0 0;
 	max-width: 46ch;
 	line-height: 1.7;
-	color: rgba(226, 232, 240, 0.74);
+	color: var(--color-on-dark-muted);
 }
 
 .columnTitle {
 	margin: 0 0 0.75rem;
-	color: #93c5fd;
+	color: var(--color-accent-on-dark);
 	font-size: 0.76rem;
 	font-weight: 700;
 	letter-spacing: 0.14em;
@@ -62,12 +62,12 @@
 
 .linkList a,
 .emailLink {
-	color: #f8fafc;
+	color: var(--color-on-dark);
 }
 
 .rights {
 	margin: 1rem 0 0;
-	color: rgba(226, 232, 240, 0.56);
+	color: var(--color-on-dark-faint);
 	line-height: 1.6;
 }
 

@@ -31,8 +31,8 @@ const fadeOverlay = Buffer.from(
   `<svg width="${PORTRAIT_WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="fade" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="60%" stop-color="#09111b" stop-opacity="0" />
-        <stop offset="100%" stop-color="#09111b" stop-opacity="1" />
+        <stop offset="60%" stop-color="#18181b" stop-opacity="0" />
+        <stop offset="100%" stop-color="#18181b" stop-opacity="1" />
       </linearGradient>
     </defs>
     <rect width="${PORTRAIT_WIDTH}" height="${HEIGHT}" fill="url(#fade)" />
@@ -42,7 +42,7 @@ const fadeOverlay = Buffer.from(
 const textSvg = Buffer.from(
   `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
     <text x="560" y="270" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Valentin PASSE</text>
-    <text x="560" y="332" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="500" fill="#c68b59">Freelance Fullstack .NET</text>
+    <text x="560" y="332" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="500" fill="#93c5fd">Freelance Fullstack .NET</text>
     <text x="560" y="402" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#cbd5e1">Architecture .NET · Blazor · IA utile</text>
     <text x="560" y="582" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#94a3b8">valentinpasse.fr</text>
   </svg>`,

@@ -2,8 +2,8 @@
   width: 100%;
   padding: 6rem 1.25rem;
   background:
-    radial-gradient(circle at 15% 10%, rgba(47, 107, 255, 0.08), transparent 24%),
-    linear-gradient(180deg, #eef3f9 0%, #f7f9fc 100%);
+    radial-gradient(circle at 15% 10%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 24%),
+    linear-gradient(180deg, var(--color-background-alt) 0%, var(--color-background) 100%);
 }
 
 .container {
@@ -18,7 +18,7 @@
 
 .title {
   margin: 0;
-  color: #0f172a;
+  color: var(--color-foreground);
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 3vw, 3.2rem);
   letter-spacing: -0.03em;
@@ -26,7 +26,7 @@
 
 .subtitle {
   margin: 0.85rem 0 0;
-  color: #334155;
+  color: var(--color-text-muted);
   line-height: 1.65;
   font-size: 1.02rem;
 }
@@ -44,9 +44,9 @@
   gap: 0.9rem;
   padding: 1.35rem;
   border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.07);
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--color-foreground) 7%, transparent);
   animation: reveal 0.45s ease both;
 }
 
@@ -55,7 +55,7 @@
   width: 72px;
   height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #2f6bff 0%, #c68b59 100%);
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
 }
 
 .card:nth-child(2) {
@@ -68,18 +68,18 @@
 
 .cardTitle {
   margin: 0;
-  color: #0f172a;
+  color: var(--color-foreground);
   font-size: 1.12rem;
 }
 
 .block {
-  border-left: 3px solid rgba(47, 107, 255, 0.4);
+  border-left: 3px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
   padding-left: 0.7rem;
 }
 
 .blockLabel {
   margin: 0;
-  color: #0f172a;
+  color: var(--color-foreground);
   font-weight: 700;
   font-size: 0.86rem;
   text-transform: uppercase;
@@ -88,7 +88,7 @@
 
 .blockText {
   margin: 0.25rem 0 0;
-  color: #475569;
+  color: var(--color-text-muted);
   line-height: 1.6;
   font-size: 0.93rem;
 }
@@ -96,7 +96,7 @@
 .capabilities {
   margin: 0;
   padding-left: 1rem;
-  color: #1e293b;
+  color: var(--color-text);
   display: grid;
   gap: 0.42rem;
 }
@@ -112,8 +112,8 @@
   align-items: center;
   min-height: 48px;
   border-radius: 999px;
-  background: #0f172a;
-  color: #ffffff;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   text-decoration: none;
   font-weight: 600;
   padding: 0.72rem 0.95rem;
@@ -126,13 +126,13 @@
 }
 
 .cardAction:focus-visible {
-  outline: 2px solid #0ea5e9;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 .fallback {
   margin-top: 1rem;
-  color: #475569;
+  color: var(--color-text-muted);
 }
 
 @keyframes reveal {
