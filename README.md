@@ -117,7 +117,7 @@ npm run test
 - French is the default locale and English is exposed through a dedicated `/en` page.
 - Section anchors are shared across locales to keep navigation and language switching predictable.
 - Styling relies on CSS variables in `styles/globals.css` and section-level Sass modules.
-- Typography is loaded through `next/font/google` with Manrope for body text and Space Grotesk for display text.
+- Typography is loaded through `next/font/google` with Space Grotesk for body text and Archivo for display text.
 
 ## Documentation
 
