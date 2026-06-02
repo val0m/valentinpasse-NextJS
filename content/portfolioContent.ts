@@ -194,7 +194,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       name: "Valentin Passe",
       tagline: "Je conçois des produits web fiables, lisibles et rapides à faire évoluer.",
       promise:
-        "Autodidacte avec 10+ ans de delivery .NET, j'interviens du cadrage à la mise en production : architecture applicative, développement fullstack et intégration IA utile pour accélérer les équipes sans dette inutile.",
+        "Autodidacte avec 10+ ans de développement logiciel, j'interviens du cadrage à la mise en production : architecture applicative, développement fullstack et intégration IA utile pour accélérer les équipes sans dette inutile.",
       proofPoints: [
         "10+ ans d'expérience en développement web et applicatif, alternant CDI et freelance.",
         "Expertise .NET (Core, MVC, Blazor, MAUI), architecture Clean / DDD / CQRS et cloud Azure.",
