@@ -160,7 +160,7 @@ export type PortfolioContent = {
 // nav bar at 7 items (avoids mobile overflow). The section is still reachable
 // via the "View education" CTA at the bottom of SectionWorkExperiences. As a
 // side-effect, the IntersectionObserver in HeaderCustom does not highlight any
-// nav item while the user is scrolled into the Education section — accepted
+// nav item while the user is scrolled into the Education section - accepted
 // trade-off.
 const NAV_IDS: Array<{ id: string; fr: string; en: string }> = [
   { id: "hero", fr: "Accueil", en: "Home" },
@@ -181,7 +181,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     meta: {
       title: "Valentin PASSE | Freelance Fullstack .NET",
       description:
-        "Portfolio one-page de Valentin PASSE, freelance Fullstack .NET à Nice. 10+ ans de delivery logiciel, architecture applicative et intégration IA pragmatique.",
+        "Portfolio one-page de Valentin PASSE, freelance Fullstack .NET à Nice. 10+ ans de livraison logicielle, architecture applicative et intégration IA pragmatique.",
     },
     navigation: {
       items: NAV_IDS.map((item) => ({ id: item.id, label: item.fr })),
@@ -209,7 +209,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       secondaryAction: { label: "Voir les projets", href: "#projects" },
       proofPointsAriaLabel: "Points clés",
       actionsAriaLabel: "Actions principales",
-      floatingLabel: "Focus delivery",
+      floatingLabel: "Focus livraison",
       floatingValue: "Architecture .NET, Blazor, IA utile",
     },
     about: {
@@ -217,8 +217,8 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       lead:
         "Ingénieur Fullstack .NET freelance, j'aide les entreprises à transformer un besoin métier en produit web robuste, lisible et exploitable dans la durée.",
       paragraphs: [
-        "J'interviens sur toute la chaîne de valeur : cadrage, architecture, implémentation, qualité et mise en production. L'objectif est simple — livrer vite, proprement, sans sacrifier la maintenabilité.",
-        "Autodidacte de formation et de tempérament, j'allie autonomie, rigueur et travail collaboratif. Ma passion pour les nouvelles technologies — et en particulier l'IA — me pousse à intégrer en continu les outils qui apportent une valeur concrète aux équipes.",
+        "J'interviens sur toute la chaîne de valeur : cadrage, architecture, implémentation, qualité et mise en production. L'objectif est simple - livrer vite, proprement, sans sacrifier la maintenabilité.",
+        "Autodidacte de formation et de tempérament, j'allie autonomie, rigueur et travail collaboratif. Ma passion pour les nouvelles technologies - et en particulier l'IA - me pousse à intégrer en continu les outils qui apportent une valeur concrète aux équipes.",
       ],
       highlights: [
         {
@@ -252,7 +252,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           clientProblem:
             "Le besoin est clair côté métier, mais la solution manque encore de structure technique pour démarrer sans dispersion.",
           businessOutcome:
-            "Vous obtenez des choix d'architecture argumentés, un découpage livrable et une trajectoire de delivery crédible.",
+            "Vous obtenez des choix d'architecture argumentés, un découpage livrable et une trajectoire de livraison crédible.",
           capabilities: ["Ateliers de cadrage", "Architecture .NET / Clean", "Roadmap priorisée"],
           ctaTarget: "#contact",
         },
@@ -279,12 +279,12 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     experience: {
       title: "Expérience",
       subtitle:
-        "Plus de 10 ans de delivery, du stage initial aux missions freelance actuelles — en CDI comme en indépendant, sur des contextes opérationnels exigeants.",
+        "Plus de 10 ans de livraison, du stage initial aux missions freelance actuelles - en CDI comme en indépendant, sur des contextes opérationnels exigeants.",
       entries: [
         {
           roleTitle: "Développeur Full-Stack .NET",
           organizationLabel: "SMEG · Monaco · Freelance",
-          period: "Nov. 2023 — Aujourd'hui",
+          period: "Nov. 2023 - Aujourd'hui",
           context:
             "Solution de gestion des appels d'astreinte, d'urgence et d'interventions (bureau et mobile). Mission d'architecture et de refonte du socle applicatif, avec définition d'une cible modulaire et d'un template projet réutilisable. POC mobile MAUI pour valider le socle et formaliser les contraintes terrain. Conception du portail client Nexio (particuliers et professionnels).",
           valueDelivered:
@@ -304,7 +304,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Développeur Back-end .NET",
           organizationLabel: "TidyUp Technologies · Valbonne · Freelance",
-          period: "Juin 2023 — Oct. 2023",
+          period: "Juin 2023 - Oct. 2023",
           context:
             "Conception et développement d'une solution innovante de rangement, classement et recherche de contenus numériques avec composante IA (back-end).",
           valueDelivered:
@@ -325,11 +325,11 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Développeur Back-end .NET",
           organizationLabel: "Ubaldi · Carros · CDI",
-          period: "Avr. 2021 — Juin 2023",
+          period: "Avr. 2021 - Juin 2023",
           context:
             "Conception et développement de plusieurs projets internes côté back-end. Participation à la migration de plusieurs applications vers le Cloud Azure et à la mise en place d'une approche DDD pour accompagner la croissance.",
           valueDelivered:
-            "Fiabilisation du delivery backend, montée en maturité architecture (DDD) et garantie de la qualité via les revues de code en équipe Agile.",
+            "Fiabilisation de la livraison backend, montée en maturité architecture (DDD) et garantie de la qualité via les revues de code en équipe Agile.",
           tech: [
             ".NET 6 et antérieurs",
             "C#",
@@ -345,7 +345,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Développeur Fullstack .NET",
           organizationLabel: "Régie Eau d'Azur · Nice · CDI",
-          period: "Sept. 2015 — Avr. 2021",
+          period: "Sept. 2015 - Avr. 2021",
           context:
             "Développement de multiples solutions applicatives internes .NET, prises en charge de bout en bout : cahier des charges, documentation technique, estimations, développement BDD et applications, recettes techniques et métiers, démos. Développement d'une bibliothèque JavaScript allégée pour améliorer l'ergonomie des applications.",
           valueDelivered:
@@ -367,11 +367,11 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Développeur Fullstack .NET",
           organizationLabel: "Beyond IT (B-Network) · Cannes · Apprentissage",
-          period: "Sept. 2014 — Sept. 2015",
+          period: "Sept. 2014 - Sept. 2015",
           context:
             "Conception de plusieurs applications web .NET (WebForm) : analyse des besoins, rédaction du cahier des charges, développement, tests, déploiement et démo.",
           valueDelivered:
-            "Première expérience long format en alternance — autonomie sur le cycle complet de petites applications WebForm en environnement professionnel.",
+            "Première expérience long format en alternance - autonomie sur le cycle complet de petites applications WebForm en environnement professionnel.",
           tech: [
             "ASP.NET WebForm",
             "C#",
@@ -386,7 +386,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Développeur Back-end PHP",
           organizationLabel: "Pascal Coste (siège) · Nice · Stage",
-          period: "Janv. 2014 — Mars 2014",
+          period: "Janv. 2014 - Mars 2014",
           context:
             "Conception d'un site web de partage de fichiers statistiques (back-end). Rédaction d'un cahier des charges fonctionnel pour une solution ERP. Participation à plusieurs audits.",
           valueDelivered:
@@ -405,21 +405,21 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         "Un socle académique en alternance, complété par une veille continue et une montée en compétences pilotée par les besoins terrain.",
       entries: [
         {
-          period: "2014 — 2015",
-          title: "Licence Professionnelle SIL — IDSE (Alternance)",
+          period: "2014 - 2015",
+          title: "Licence Professionnelle SIL - IDSE (Alternance)",
           institution: "IUT Nice Sophia Antipolis",
           description:
             "Systèmes Informatiques et Logiciels, spécialité Informatique Distribuée et Systèmes d'Information pour l'Entreprise. Année réalisée en apprentissage chez Beyond IT.",
         },
         {
-          period: "2012 — 2014",
-          title: "BTS SIO — SLAM",
+          period: "2012 - 2014",
+          title: "BTS SIO - SLAM",
           institution: "Lycée Honoré d'Estienne d'Orves, Nice",
           description:
-            "Services Informatiques aux Organisations, option Solutions Logicielles et Applications Métiers — socle structurant en développement, bases de données et culture projet.",
+            "Services Informatiques aux Organisations, option Solutions Logicielles et Applications Métiers - socle structurant en développement, bases de données et culture projet.",
         },
         {
-          period: "2008 — 2011",
+          period: "2008 - 2011",
           title: "Baccalauréat",
           institution: "Lycée Jules Ferry, Cannes",
           description: "Diplôme du secondaire, point de départ d'un parcours autodidacte continu autour du développement logiciel.",
@@ -435,7 +435,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         "Quelques cas concrets pour illustrer comment je transforme un contexte technique ou métier en résultat exploitable.",
       items: [
         {
-          title: "Astreinte temps réel — bureau et mobile",
+          title: "Astreinte temps réel - bureau et mobile",
           summary:
             "Solution métier pour piloter appels d'astreinte, urgences et interventions sur usages bureau et mobile MAUI.",
           context:
@@ -447,7 +447,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
-          title: "Nexio — Portail client particuliers et pros",
+          title: "Nexio - Portail client particuliers et pros",
           summary:
             "Portail web de gestion des demandes et du suivi client pour particuliers et professionnels SMEG.",
           context:
@@ -459,7 +459,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           tags: [".NET", "C#", "Blazor", "Azure DevOps", "PostgreSQL"],
         },
         {
-          title: "Plateforme IA — gestion de contenus numériques",
+          title: "Plateforme IA - gestion de contenus numériques",
           summary:
             "Socle backend d'une solution innovante de rangement, classement et recherche de contenus numériques avec composante IA.",
           context:
@@ -487,7 +487,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       inquiryTypes: [
         "Création ou refonte d'application web .NET",
         "Renfort Fullstack sur produit existant",
-        "Audit technique, cadrage ou accélération de delivery",
+        "Audit technique, cadrage ou accélération de la livraison",
       ],
       primaryActionLabel: "Me contacter",
       copyActionLabel: "Copier l'adresse e-mail",
@@ -559,8 +559,8 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       lead:
         "As a freelance Fullstack .NET engineer, I help companies turn business needs into robust, readable and long-lasting web products.",
       paragraphs: [
-        "I work across the whole value chain: scoping, architecture, implementation, quality, and production delivery. The objective is simple — ship quickly, cleanly, and without sacrificing maintainability.",
-        "Self-taught by training and temperament, I combine autonomy, rigor, and collaborative work. My passion for new technologies — especially AI — pushes me to continuously integrate the tools that bring real value to the teams I work with.",
+        "I work across the whole value chain: scoping, architecture, implementation, quality, and production delivery. The objective is simple - ship quickly, cleanly, and without sacrificing maintainability.",
+        "Self-taught by training and temperament, I combine autonomy, rigor, and collaborative work. My passion for new technologies - especially AI - pushes me to continuously integrate the tools that bring real value to the teams I work with.",
       ],
       highlights: [
         {
@@ -621,12 +621,12 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     experience: {
       title: "Experience",
       subtitle:
-        "Over 10 years of delivery, from initial internship to current freelance engagements — alternating employee and freelance positions in demanding operational environments.",
+        "Over 10 years of delivery, from initial internship to current freelance engagements - alternating employee and freelance positions in demanding operational environments.",
       entries: [
         {
           roleTitle: "Full-Stack .NET Developer",
           organizationLabel: "SMEG · Monaco · Freelance",
-          period: "Nov. 2023 — Present",
+          period: "Nov. 2023 - Present",
           context:
             "On-call, emergency and intervention management platform (desktop and mobile). Architecture mission: analysis and rebuild of the existing foundation, definition of a modular target architecture and a reusable project template. Mobile POC in MAUI to validate the foundation and formalize the field constraints. Design of the Nexio customer portal (individuals and businesses).",
           valueDelivered:
@@ -646,7 +646,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Back-end .NET Developer",
           organizationLabel: "TidyUp Technologies · Valbonne · Freelance",
-          period: "Jun. 2023 — Oct. 2023",
+          period: "Jun. 2023 - Oct. 2023",
           context:
             "Design and development of an innovative content organization, classification, and search solution with an AI component (back-end).",
           valueDelivered:
@@ -667,7 +667,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Back-end .NET Developer",
           organizationLabel: "Ubaldi · Carros · Full-time",
-          period: "Apr. 2021 — Jun. 2023",
+          period: "Apr. 2021 - Jun. 2023",
           context:
             "Design and development of multiple internal back-end projects. Active contributor to the migration of several applications to Azure Cloud, and to the introduction of a DDD approach to support company growth.",
           valueDelivered:
@@ -687,7 +687,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Fullstack .NET Developer",
           organizationLabel: "Régie Eau d'Azur · Nice · Full-time",
-          period: "Sep. 2015 — Apr. 2021",
+          period: "Sep. 2015 - Apr. 2021",
           context:
             "Development of multiple internal .NET applications, handled end-to-end: requirements, technical documentation, estimation, database and application development, technical and business testing, demos. Development of a lightweight JavaScript library to improve application ergonomics.",
           valueDelivered:
@@ -709,11 +709,11 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Fullstack .NET Developer",
           organizationLabel: "Beyond IT (B-Network) · Cannes · Apprenticeship",
-          period: "Sep. 2014 — Sep. 2015",
+          period: "Sep. 2014 - Sep. 2015",
           context:
             "Design of several .NET WebForm web applications: requirements analysis, scope definition, development, testing, deployment, and demo.",
           valueDelivered:
-            "First long-form professional experience — full ownership of the lifecycle of small WebForm applications in a real-world environment.",
+            "First long-form professional experience - full ownership of the lifecycle of small WebForm applications in a real-world environment.",
           tech: [
             "ASP.NET WebForm",
             "C#",
@@ -728,7 +728,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           roleTitle: "Back-end PHP Developer",
           organizationLabel: "Pascal Coste (headquarters) · Nice · Internship",
-          period: "Jan. 2014 — Mar. 2014",
+          period: "Jan. 2014 - Mar. 2014",
           context:
             "Design of a statistics file-sharing back-end. Drafting of functional requirements for an ERP solution. Participation in several audits.",
           valueDelivered:
@@ -747,21 +747,21 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         "An academic foundation built via apprenticeship, complemented by continuous learning and skill growth shaped by real delivery work.",
       entries: [
         {
-          period: "2014 — 2015",
-          title: "Professional Bachelor's Degree — SIL / IDSE (Apprenticeship)",
+          period: "2014 - 2015",
+          title: "Professional Bachelor's Degree - SIL / IDSE (Apprenticeship)",
           institution: "IUT Nice Sophia Antipolis",
           description:
             "Software and Computing Systems, specializing in Distributed Computing and Enterprise Information Systems. Year completed in apprenticeship at Beyond IT.",
         },
         {
-          period: "2012 — 2014",
-          title: "BTS SIO — SLAM",
+          period: "2012 - 2014",
+          title: "BTS SIO - SLAM",
           institution: "Lycée Honoré d'Estienne d'Orves, Nice",
           description:
-            "IT Services for Organizations, Software Solutions and Business Applications track — a structured foundation in development, databases, and project culture.",
+            "IT Services for Organizations, Software Solutions and Business Applications track - a structured foundation in development, databases, and project culture.",
         },
         {
-          period: "2008 — 2011",
+          period: "2008 - 2011",
           title: "French High School Diploma (Baccalauréat)",
           institution: "Lycée Jules Ferry, Cannes",
           description: "Secondary school degree, starting point of a continuous self-taught journey in software development.",
@@ -777,7 +777,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         "A selection of concrete delivery contexts showing how I turn business or technical constraints into usable outcomes.",
       items: [
         {
-          title: "Real-time on-call — desktop and mobile",
+          title: "Real-time on-call - desktop and mobile",
           summary:
             "Business solution to manage on-call operations, emergencies, and interventions across desktop and MAUI mobile workflows.",
           context:
@@ -789,7 +789,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
-          title: "Nexio — customer portal for individuals and businesses",
+          title: "Nexio - customer portal for individuals and businesses",
           summary:
             "Web portal for SMEG customer request management and follow-up, serving both individual and business profiles.",
           context:
@@ -801,7 +801,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           tags: [".NET", "C#", "Blazor", "Azure DevOps", "PostgreSQL"],
         },
         {
-          title: "AI platform — digital content management",
+          title: "AI platform - digital content management",
           summary:
             "Back-end foundation of an innovative solution for organizing, classifying, and searching digital content with an AI component.",
           context:

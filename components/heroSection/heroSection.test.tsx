@@ -17,7 +17,7 @@ describe("HeroSection", () => {
 
     expect(screen.getByLabelText("Points clés")).toBeInTheDocument();
     expect(screen.getByLabelText("Actions principales")).toBeInTheDocument();
-    expect(screen.getByText("Focus delivery")).toBeInTheDocument();
+    expect(screen.getByText("Focus livraison")).toBeInTheDocument();
     expect(screen.getByText("Architecture .NET, Blazor, IA utile")).toBeInTheDocument();
   });
 });

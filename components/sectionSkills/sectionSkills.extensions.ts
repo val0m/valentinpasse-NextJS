@@ -62,9 +62,9 @@ const CATEGORY_ORDER: Array<{
   },
   {
     id: "delivery-tooling",
-    label: { fr: "Delivery & Outils", en: "Delivery & Tooling" },
+    label: { fr: "Livraison & Outils", en: "Delivery & Tooling" },
     supportText: {
-      fr: "Environnement de production, collaboration d'equipe et suivi du delivery.",
+      fr: "Environnement de production, collaboration d'equipe et suivi de la livraison.",
       en: "Production environment, team collaboration, and delivery execution tooling.",
     },
     sourceCategories: ["software"],
@@ -114,7 +114,7 @@ const SECTION_METADATA: Record<SkillsLocale, SkillsSectionMetadata> = {
   fr: {
     title: "Compétences",
     subtitle:
-      "Une expertise Fullstack .NET complétée par des compétences front-end, cloud, data et delivery pour des projets concrets.",
+      "Une expertise Fullstack .NET complétée par des compétences front-end, cloud, data et livraison pour des projets concrets.",
     fallback: "Les compétences sont en cours de mise à jour.",
   },
   en: {
