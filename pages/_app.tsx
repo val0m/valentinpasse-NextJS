@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { Archivo, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "../components/googleAnalytics";
 import { CookieConsentBanner } from "../components/cookieConsent";
 import "../styles/globals.css";
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <GoogleAnalytics />
       <Component {...pageProps} />
       <CookieConsentBanner locale={locale} />
+      <Analytics />
     </div>
   );
 }
