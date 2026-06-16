@@ -17,8 +17,25 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
   const navItemIds = React.useMemo(() => navItems.map((item) => item.id), [navItems]);
   const [activeSectionId, setActiveSectionId] = React.useState<string>("hero");
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
   const [notice, setNotice] = React.useState<string>("");
   const otherLocaleHref = `${locale === "fr" ? "/en" : "/"}#${activeSectionId || "hero"}`;
+  // Over the hero the header stays transparent so the 3D scene shows through;
+  // a solid backdrop appears once scrolled (or while the mobile menu is open)
+  // to keep the nav readable above the lighter content sections.
+  const hasBackdrop = isScrolled || isMenuOpen;
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   React.useEffect(() => {
     if (typeof window === "undefined") {
@@ -94,7 +111,7 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${hasBackdrop ? styles.headerScrolled : ""}`.trim()}>
       <nav className={styles.nav} aria-label={content.navigation.mainNavAriaLabel}>
         <a href="#hero" className={styles.brand} onClick={(event) => handleAnchorNavigation(event, "#hero", "hero")}>
           <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" />

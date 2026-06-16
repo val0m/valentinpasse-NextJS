@@ -1,58 +1,77 @@
-import React from "react";
-import Image from "next/image";
-import Profile from "../../public/images/resume/valentin-passe.webp";
+import React, { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
 import styles from "./heroSection.module.scss";
+
+// Spline ships a heavy WebGL runtime + loads a remote scene, so we defer it:
+// no SSR, lazy-loaded on the client, and only when the user has not requested
+// reduced motion. The dark gradient backdrop renders immediately as a fallback.
+const Spline = dynamic(() => import("@splinetool/react-spline"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const SPLINE_SCENE = "https://prod.spline.design/dJqTIQ-tE3ULUPMi/scene.splinecode";
 
 type HeroSectionProps = {
   locale?: PortfolioLocale;
 };
 
-function HeroHeadline({ locale = "fr" }: HeroSectionProps) {
-  const content = getPortfolioContent(locale).hero;
+function prefersReducedMotion() {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
+
+function HeroBackground() {
+  const [enable3d, setEnable3d] = useState(false);
+
+  useEffect(() => {
+    if (!prefersReducedMotion()) {
+      setEnable3d(true);
+    }
+  }, []);
 
   return (
-    <div className={styles.headline}>
-      <p className={styles.eyebrow}>{content.eyebrow}</p>
-      <h1 className={styles.name}>{content.name}</h1>
-      <p className={styles.tagline}>{content.tagline}</p>
+    <div className={styles.background} aria-hidden="true">
+      {enable3d && <Spline className={styles.spline} scene={SPLINE_SCENE} />}
+      <div className={styles.backdrop} />
     </div>
   );
 }
 
-function HeroProofPoints({ locale = "fr" }: HeroSectionProps) {
+function HeroHeadline({ locale = "fr" }: HeroSectionProps) {
   const hero = getPortfolioContent(locale).hero;
 
   return (
-    <ul className={styles.proofPoints} aria-label={hero.proofPointsAriaLabel}>
-      {hero.proofPoints.map((point) => (
-        <li key={point} className={styles.proofPoint}>
-          <span className={styles.proofIcon} aria-hidden="true">✓</span>
-          {point}
-        </li>
-      ))}
-    </ul>
+    <div className={styles.headline}>
+      <p className={styles.eyebrow}>{hero.eyebrow}</p>
+      <h1 className={styles.name}>{hero.name}</h1>
+      <p className={styles.tagline}>{hero.tagline}</p>
+    </div>
   );
 }
 
-function HeroActionGroup({ locale = "fr" }: HeroSectionProps) {
-  const content = getPortfolioContent(locale).hero;
+function HeroActions({ locale = "fr" }: HeroSectionProps) {
+  const hero = getPortfolioContent(locale).hero;
 
   return (
-    <div className={styles.actionGroup} role="group" aria-label={content.actionsAriaLabel}>
+    <div className={styles.actionGroup} role="group" aria-label={hero.actionsAriaLabel}>
       <a
-        href={content.primaryAction.href}
+        href={hero.primaryAction.href}
         className={`${styles.btn} ${styles.btnPrimary}`}
-        aria-label={content.primaryAction.label}
+        aria-label={hero.primaryAction.label}
       >
-        {content.primaryAction.label}
+        {hero.primaryAction.label}
       </a>
       <a
-        href={content.secondaryAction.href}
+        href={hero.secondaryAction.href}
         className={`${styles.btn} ${styles.btnOutline}`}
-        aria-label={content.secondaryAction.label}
+        aria-label={hero.secondaryAction.label}
       >
-        {content.secondaryAction.label}
+        {hero.secondaryAction.label}
       </a>
     </div>
   );
@@ -73,45 +92,47 @@ function HeroMetrics({ locale = "fr" }: HeroSectionProps) {
   );
 }
 
-function HeroVisual({ locale = "fr" }: HeroSectionProps) {
-  const hero = getPortfolioContent(locale).hero;
-
-  return (
-    <div className={styles.visual} aria-hidden="true">
-      <div className={styles.visualCard}>
-        <div className={styles.portraitShell}>
-          <Image
-            src={Profile}
-            alt=""
-            className={styles.portrait}
-            sizes="(max-width: 900px) 240px, 360px"
-            priority
-          />
-        </div>
-        <div className={styles.floatingPanel}>
-          <p className={styles.floatingLabel}>{hero.floatingLabel}</p>
-          <p className={styles.floatingValue}>{hero.floatingValue}</p>
-        </div>
-      </div>
-      <div className={styles.ring} />
-      <div className={styles.ring2} />
-    </div>
-  );
-}
-
 export function HeroSection({ locale = "fr" }: HeroSectionProps) {
-  const content = getPortfolioContent(locale).hero;
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // Parallax fade of the hero copy as the user scrolls past it, mirroring the
+  // source component. Skipped entirely under prefers-reduced-motion.
+  useEffect(() => {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
+    const handleScroll = () => {
+      const el = contentRef.current;
+      if (!el) {
+        return;
+      }
+
+      requestAnimationFrame(() => {
+        const scrollPosition = window.pageYOffset;
+        const opacity = 1 - Math.min(scrollPosition / 400, 1);
+        el.style.opacity = opacity.toString();
+        el.style.transform = `translateY(${scrollPosition * 0.15}px)`;
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section id="hero" className={styles.hero} aria-label="Introduction">
-      <div className={styles.content}>
-        <HeroHeadline locale={locale} />
-        <p className={styles.promise}>{content.promise}</p>
-        <HeroProofPoints locale={locale} />
-        <HeroActionGroup locale={locale} />
-        <HeroMetrics locale={locale} />
+      <HeroBackground />
+
+      <div ref={contentRef} className={styles.content}>
+        <div className={styles.inner}>
+          <div className={styles.lead}>
+            <HeroHeadline locale={locale} />
+            <HeroActions locale={locale} />
+          </div>
+          <HeroMetrics locale={locale} />
+        </div>
       </div>
-      <HeroVisual locale={locale} />
     </section>
   );
 }

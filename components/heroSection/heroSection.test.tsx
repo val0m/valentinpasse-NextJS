@@ -3,21 +3,25 @@ import { render, screen } from "@testing-library/react";
 import { HeroSection } from "./heroSection";
 
 describe("HeroSection", () => {
-  it("renders English aria-labels and floating panel text when locale is 'en'", () => {
+  it("renders English headline, actions and metrics when locale is 'en'", () => {
     render(<HeroSection locale="en" />);
 
-    expect(screen.getByLabelText("Key proof points")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Valentin Passe" }),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText("Main actions")).toBeInTheDocument();
-    expect(screen.getByText("Delivery focus")).toBeInTheDocument();
-    expect(screen.getByText("Architecture .NET, Blazor, useful AI")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "View projects" })).toBeInTheDocument();
+    expect(screen.getByText("years of software development")).toBeInTheDocument();
   });
 
-  it("renders French aria-labels and floating panel text when locale is 'fr'", () => {
+  it("renders French headline, actions and metrics when locale is 'fr'", () => {
     render(<HeroSection locale="fr" />);
 
-    expect(screen.getByLabelText("Points clés")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Valentin Passe" }),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText("Actions principales")).toBeInTheDocument();
-    expect(screen.getByText("Focus livraison")).toBeInTheDocument();
-    expect(screen.getByText("Architecture .NET, Blazor, IA utile")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Voir les projets" })).toBeInTheDocument();
+    expect(screen.getByText("ans de développement logiciel")).toBeInTheDocument();
   });
 });
