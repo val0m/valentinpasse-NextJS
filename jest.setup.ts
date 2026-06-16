@@ -21,3 +21,56 @@ jest.mock("next/link", () => ({
   default: ({ children, href, ...rest }: { children: React.ReactNode; href: string }) =>
     React.createElement("a", { href, ...rest }, children),
 }));
+
+// next/dynamic resolves lazily and would pull in the heavy Spline WebGL runtime;
+// stub it to an inert component so hero tests stay fast and deterministic.
+jest.mock("next/dynamic", () => ({
+  __esModule: true,
+  default: () => {
+    const DynamicStub = () => null;
+    DynamicStub.displayName = "DynamicStub";
+    return DynamicStub;
+  },
+}));
+
+// jsdom does not implement matchMedia; default to "motion allowed".
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: () => undefined,
+    removeListener: () => undefined,
+    addEventListener: () => undefined,
+    removeEventListener: () => undefined,
+    dispatchEvent: () => false,
+  }),
+});
+
+// jsdom does not implement IntersectionObserver; provide an inert stub so
+// components that observe visibility can mount without throwing.
+class IntersectionObserverStub {
+  observe() {
+    return undefined;
+  }
+  unobserve() {
+    return undefined;
+  }
+  disconnect() {
+    return undefined;
+  }
+  takeRecords() {
+    return [];
+  }
+}
+Object.defineProperty(window, "IntersectionObserver", {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserverStub,
+});
+Object.defineProperty(globalThis, "IntersectionObserver", {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserverStub,
+});
