@@ -16,6 +16,9 @@
 
 .nav {
 	position: relative;
+	/* Own stacking context so the z-index:-1 ::before layers predictably
+	   against the nav content instead of slipping behind ancestors. */
+	z-index: 0;
 	max-width: 1240px;
 	margin: 0 auto;
 	padding: 0.85rem 1rem;

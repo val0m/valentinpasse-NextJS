@@ -207,6 +207,7 @@ function HeroMetrics({ locale = "fr" }: HeroSectionProps) {
 }
 
 export function HeroSection({ locale = "fr" }: HeroSectionProps) {
+  const hero = getPortfolioContent(locale).hero;
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Parallax fade of the hero copy as the user scrolls past it, mirroring the
@@ -216,26 +217,37 @@ export function HeroSection({ locale = "fr" }: HeroSectionProps) {
       return;
     }
 
-    const handleScroll = () => {
+    // Coalesce scroll events to a single pending frame so fast scrolling never
+    // queues redundant layout work.
+    let ticking = false;
+    const update = () => {
+      ticking = false;
       const el = contentRef.current;
       if (!el) {
         return;
       }
-
-      requestAnimationFrame(() => {
-        const scrollPosition = window.pageYOffset;
-        const opacity = 1 - Math.min(scrollPosition / 400, 1);
-        el.style.opacity = opacity.toString();
-        el.style.transform = `translateY(${scrollPosition * 0.15}px)`;
-      });
+      const scrollPosition = window.pageYOffset;
+      const opacity = 1 - Math.min(scrollPosition / 400, 1);
+      el.style.opacity = opacity.toString();
+      el.style.transform = `translateY(${scrollPosition * 0.15}px)`;
     };
 
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    // Apply the correct initial state in case the page loads already scrolled
+    // (e.g. when navigating to a hash).
+    update();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <section id="hero" className={styles.hero} aria-label="Introduction">
+    <section id="hero" className={styles.hero} aria-label={hero.sectionAriaLabel}>
       <HeroBackground />
 
       <div ref={contentRef} className={styles.content}>

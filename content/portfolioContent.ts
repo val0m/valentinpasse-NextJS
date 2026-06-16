@@ -81,6 +81,7 @@ export type PortfolioContent = {
     metrics: HeroMetric[];
     primaryAction: ActionLink;
     secondaryAction: ActionLink;
+    sectionAriaLabel: string;
     proofPointsAriaLabel: string;
     actionsAriaLabel: string;
     floatingLabel: string;
@@ -207,6 +208,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       primaryAction: { label: "Discuter de votre besoin", href: "#contact" },
       secondaryAction: { label: "Voir les projets", href: "#projects" },
+      sectionAriaLabel: "Présentation",
       proofPointsAriaLabel: "Points clés",
       actionsAriaLabel: "Actions principales",
       floatingLabel: "Focus livraison",
@@ -549,6 +551,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       primaryAction: { label: "Discuss your needs", href: "#contact" },
       secondaryAction: { label: "View projects", href: "#projects" },
+      sectionAriaLabel: "Introduction",
       proofPointsAriaLabel: "Key proof points",
       actionsAriaLabel: "Main actions",
       floatingLabel: "Delivery focus",
