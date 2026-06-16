@@ -108,6 +108,9 @@
 
 .headline {
 	max-width: 620px;
+	/* Re-enable selection/interaction on the copy over the pass-through overlay;
+	   the open areas around it still let the 3D scene receive pointer events. */
+	pointer-events: auto;
 }
 
 .eyebrow {

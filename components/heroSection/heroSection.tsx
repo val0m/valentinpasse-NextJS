@@ -27,13 +27,15 @@ function prefersReducedMotion() {
 
 function HeroBackground() {
   const [enable3d, setEnable3d] = useState(false);
+  const bgRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const lastUserMoveRef = useRef(0);
+  const startLoopRef = useRef<() => void>(() => undefined);
 
   useEffect(() => {
-    if (!prefersReducedMotion()) {
-      setEnable3d(true);
+    if (prefersReducedMotion()) {
+      return;
     }
 
     // Record genuine cursor activity so the auto-motion can yield to it.
@@ -45,79 +47,107 @@ function HeroBackground() {
     };
     window.addEventListener("pointermove", handleRealMove, { passive: true });
 
-    return () => {
-      window.removeEventListener("pointermove", handleRealMove);
+    // Pause the auto-motion while the real cursor is moving; it resumes after
+    // this short idle delay so genuine hover still wins.
+    const idleDelayMs = 600;
+    let startTime: number | null = null;
+
+    const stopLoop = () => {
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
     };
-  }, []);
 
-  // Drive the cursor-reactive Spline scene on its own: once loaded, feed the
-  // canvas synthetic pointer moves along a slow Lissajous path so the 3D keeps
-  // animating automatically, without any real mouse movement.
-  const startAutoMotion = () => {
-    if (prefersReducedMotion()) {
-      return;
-    }
-
-    const canvas = hostRef.current?.querySelector("canvas");
-    if (!canvas) {
-      return;
-    }
-
-    let startTime: number | null = null;
-    // Pause the auto-motion while the real cursor is moving; resume after this
-    // short idle delay so genuine hover still wins but the synthetic motion
-    // reappears quickly once the cursor stops.
-    const idleDelayMs = 600;
-
-    const tick = (now: number) => {
-      if (startTime === null) {
-        startTime = now;
+    // Drive the cursor-reactive Spline scene on its own: feed the canvas
+    // synthetic pointer moves along a slow Lissajous path so the 3D keeps
+    // animating without real mouse movement. The early return guards against
+    // stacking duplicate loops if this is re-triggered.
+    const startLoop = () => {
+      if (rafRef.current !== null) {
+        return;
+      }
+      const canvas = hostRef.current?.querySelector("canvas");
+      if (!canvas) {
+        return;
       }
 
-      if (now - lastUserMoveRef.current > idleDelayMs) {
-        const t = (now - startTime) / 1000;
-        const rect = canvas.getBoundingClientRect();
-        const x = rect.left + rect.width * (0.5 + 0.32 * Math.sin(t * 0.55));
-        const y = rect.top + rect.height * (0.5 + 0.26 * Math.cos(t * 0.4));
+      const tick = (now: number) => {
+        if (startTime === null) {
+          startTime = now;
+        }
 
-        canvas.dispatchEvent(
-          new PointerEvent("pointermove", {
-            clientX: x,
-            clientY: y,
-            pointerId: 1,
-            pointerType: "mouse",
-            isPrimary: true,
-            bubbles: true,
-            cancelable: true,
-          })
-        );
-        canvas.dispatchEvent(
-          new MouseEvent("mousemove", {
-            clientX: x,
-            clientY: y,
-            bubbles: true,
-            cancelable: true,
-          })
-        );
-      }
+        if (now - lastUserMoveRef.current > idleDelayMs) {
+          const t = (now - startTime) / 1000;
+          const rect = canvas.getBoundingClientRect();
+          const x = rect.left + rect.width * (0.5 + 0.32 * Math.sin(t * 0.55));
+          const y = rect.top + rect.height * (0.5 + 0.26 * Math.cos(t * 0.4));
+
+          canvas.dispatchEvent(
+            new PointerEvent("pointermove", {
+              clientX: x,
+              clientY: y,
+              pointerId: 1,
+              pointerType: "mouse",
+              isPrimary: true,
+              bubbles: true,
+              cancelable: true,
+            })
+          );
+          canvas.dispatchEvent(
+            new MouseEvent("mousemove", {
+              clientX: x,
+              clientY: y,
+              bubbles: true,
+              cancelable: true,
+            })
+          );
+        }
+
+        rafRef.current = requestAnimationFrame(tick);
+      };
 
       rafRef.current = requestAnimationFrame(tick);
     };
 
-    rafRef.current = requestAnimationFrame(tick);
-  };
+    startLoopRef.current = startLoop;
+
+    // Mount the scene and run the loop only while the hero is on screen; the
+    // loop is fully stopped once it scrolls out of view. Setting state from the
+    // observer callback is the recommended "subscribe to an external system"
+    // pattern (avoids a synchronous setState in the effect body).
+    const node = bgRef.current;
+    let observer: IntersectionObserver | undefined;
+    if (node) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setEnable3d(true);
+            startLoop();
+          } else {
+            stopLoop();
+          }
+        },
+        { threshold: 0 }
+      );
+      observer.observe(node);
+    }
+
+    return () => {
+      window.removeEventListener("pointermove", handleRealMove);
+      observer?.disconnect();
+      stopLoop();
+    };
+  }, []);
 
   return (
-    <div className={styles.background} aria-hidden="true">
+    <div ref={bgRef} className={styles.background} aria-hidden="true">
       {enable3d && (
         <div ref={hostRef} className={styles.splineHost}>
           <Spline
             className={styles.spline}
             scene={SPLINE_SCENE}
-            onLoad={startAutoMotion}
+            onLoad={() => startLoopRef.current()}
           />
         </div>
       )}

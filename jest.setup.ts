@@ -47,3 +47,30 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => false,
   }),
 });
+
+// jsdom does not implement IntersectionObserver; provide an inert stub so
+// components that observe visibility can mount without throwing.
+class IntersectionObserverStub {
+  observe() {
+    return undefined;
+  }
+  unobserve() {
+    return undefined;
+  }
+  disconnect() {
+    return undefined;
+  }
+  takeRecords() {
+    return [];
+  }
+}
+Object.defineProperty(window, "IntersectionObserver", {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserverStub,
+});
+Object.defineProperty(globalThis, "IntersectionObserver", {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserverStub,
+});
