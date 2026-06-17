@@ -13,8 +13,8 @@ type LayoutProps = {
     canonicalPath?: string;
 };
 
-const SITE_URL = "https://www.valentinpasse.fr";
-const OG_IMAGE_PATH = "/og-image.webp";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.valentin-passe.com").replace(/\/+$/, "");
+const OG_IMAGE_PATH = "/og-image.jpg";
 
 function escapeJsonLd(value: unknown): string {
     return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -87,11 +87,15 @@ export function Layout({
                 <meta property="og:url" content={canonicalUrl} />
                 <meta property="og:image" content={ogImageUrl} />
                 <meta property="og:image:alt" content="Valentin PASSE" />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="og:image:type" content="image/jpeg" />
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={resolvedTitle} />
                 <meta name="twitter:description" content={resolvedDescription} />
                 <meta name="twitter:image" content={ogImageUrl} />
+                <meta name="twitter:image:alt" content="Valentin PASSE" />
 
                 <link rel="canonical" href={canonicalUrl} />
                 <link rel="alternate" hrefLang="fr" href={frUrl} />

@@ -44,7 +44,7 @@ const textSvg = Buffer.from(
     <text x="560" y="270" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="700" fill="#ffffff">Valentin PASSE</text>
     <text x="560" y="332" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="500" fill="#93c5fd">Freelance Fullstack .NET</text>
     <text x="560" y="402" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#cbd5e1">Architecture .NET · Blazor · IA utile</text>
-    <text x="560" y="582" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#94a3b8">valentinpasse.fr</text>
+    <text x="560" y="582" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#94a3b8">valentin-passe.com</text>
   </svg>`,
 );
 
