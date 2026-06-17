@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.valentinpasse.fr/sitemap.xml
+Sitemap: https://www.valentin-passe.com/sitemap.xml
