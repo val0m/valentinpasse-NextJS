@@ -13,8 +13,8 @@ type LayoutProps = {
     canonicalPath?: string;
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.valentin-passe.com";
-const OG_IMAGE_PATH = "/og-image.webp";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.valentin-passe.com").replace(/\/+$/, "");
+const OG_IMAGE_PATH = "/og-image.jpg";
 
 function escapeJsonLd(value: unknown): string {
     return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -89,7 +89,7 @@ export function Layout({
                 <meta property="og:image:alt" content="Valentin PASSE" />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
-                <meta property="og:image:type" content="image/webp" />
+                <meta property="og:image:type" content="image/jpeg" />
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={resolvedTitle} />
