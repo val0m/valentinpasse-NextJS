@@ -71,6 +71,18 @@
 	line-height: 1.6;
 }
 
+.legalLink {
+	display: inline-block;
+	margin-top: 0.65rem;
+	color: var(--color-on-dark-muted);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.legalLink:hover {
+	color: var(--color-on-dark);
+}
+
 @media (max-width: 900px) {
 	.container {
 		grid-template-columns: 1fr;

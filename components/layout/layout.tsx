@@ -5,13 +5,30 @@ import { FooterCustom } from "../footerCustom";
 import { PortfolioLocale, portfolioEmail } from "../../content/portfolioContent";
 import styles from "./layout.module.scss";
 
+type LocaleAlternates = {
+    fr: string;
+    en: string;
+};
+
 type LayoutProps = {
     children: ReactNode;
     locale: PortfolioLocale;
     title?: string;
     description?: string;
     canonicalPath?: string;
+    /**
+     * Paths (per locale) of the current page's language variants. Drives the
+     * hreflang links and the header locale switcher. Defaults to the home pages.
+     */
+    localeAlternates?: LocaleAlternates;
+    /**
+     * Secondary pages (e.g. legal notice) are not the one-page home, so the
+     * header navigates back to the home sections instead of scrolling in place.
+     */
+    secondary?: boolean;
 };
+
+const DEFAULT_LOCALE_ALTERNATES: LocaleAlternates = { fr: "/", en: "/en" };
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.valentin-passe.com").replace(/\/+$/, "");
 const OG_IMAGE_PATH = "/og-image.jpg";
@@ -36,15 +53,21 @@ export function Layout({
     title,
     description,
     canonicalPath = "/",
+    localeAlternates = DEFAULT_LOCALE_ALTERNATES,
+    secondary = false,
 }: LayoutProps) {
     const resolvedTitle = title ?? DEFAULT_TITLES[locale];
     const resolvedDescription = description ?? DEFAULT_DESCRIPTIONS[locale];
     const ogLocale = locale === "en" ? "en_US" : "fr_FR";
     const alternateLocale = locale === "en" ? "fr_FR" : "en_US";
-    const canonicalUrl = `${SITE_URL}${canonicalPath === "/" ? "" : canonicalPath}`;
+    const toAbsolute = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
+    const canonicalUrl = toAbsolute(canonicalPath);
     const ogImageUrl = `${SITE_URL}${OG_IMAGE_PATH}`;
-    const frUrl = SITE_URL;
-    const enUrl = `${SITE_URL}/en`;
+    const frUrl = toAbsolute(localeAlternates.fr);
+    const enUrl = toAbsolute(localeAlternates.en);
+    // On secondary pages the header switches language by jumping to the other
+    // locale's variant of this same page rather than the home root.
+    const localeSwitchHref = locale === "fr" ? localeAlternates.en : localeAlternates.fr;
 
     const jsonLdPerson = {
         "@context": "https://schema.org",
@@ -115,7 +138,11 @@ export function Layout({
                 {locale === "en" ? "Skip to content" : "Aller au contenu"}
             </a>
 
-            <HeaderCustom locale={locale} />
+            <HeaderCustom
+                locale={locale}
+                secondary={secondary}
+                localeSwitchHref={secondary ? localeSwitchHref : undefined}
+            />
             <div className={styles.content}>{children}</div>
             <FooterCustom locale={locale} />
         </div>
