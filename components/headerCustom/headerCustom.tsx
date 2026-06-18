@@ -31,8 +31,10 @@ export function HeaderCustom({ locale, secondary = false, localeSwitchHref }: He
   const resolvedLocaleSwitchHref = localeSwitchHref ?? otherLocaleHref;
   // Over the hero the header stays transparent so the 3D scene shows through;
   // a solid backdrop appears once scrolled (or while the mobile menu is open)
-  // to keep the nav readable above the lighter content sections.
-  const hasBackdrop = isScrolled || isMenuOpen;
+  // to keep the nav readable above the lighter content sections. Secondary
+  // pages (e.g. legal notice) have no dark hero, so the backdrop is always on
+  // to keep the light-on-dark nav legible against their light background.
+  const hasBackdrop = isScrolled || isMenuOpen || secondary;
 
   React.useEffect(() => {
     if (typeof window === "undefined") {
