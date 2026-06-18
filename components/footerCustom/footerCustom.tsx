@@ -43,6 +43,9 @@ export function FooterCustom({ locale }: FooterCustomProps) {
             {portfolioEmail}
           </a>
           <p className={styles.rights}>{content.rights}</p>
+          <Link href={content.legalLink.href} className={styles.legalLink}>
+            {content.legalLink.label}
+          </Link>
         </div>
       </div>
     </footer>

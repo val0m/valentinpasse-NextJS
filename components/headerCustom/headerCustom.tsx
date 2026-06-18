@@ -6,9 +6,16 @@ import styles from "./headerCustom.module.scss";
 
 type HeaderCustomProps = {
   locale: PortfolioLocale;
+  /**
+   * When true, the header belongs to a secondary page (not the one-page home):
+   * nav links navigate back to the home sections instead of scrolling in place.
+   */
+  secondary?: boolean;
+  /** Overrides the locale switcher target (used by secondary pages). */
+  localeSwitchHref?: string;
 };
 
-export function HeaderCustom({ locale }: HeaderCustomProps) {
+export function HeaderCustom({ locale, secondary = false, localeSwitchHref }: HeaderCustomProps) {
   const content = React.useMemo(() => getPortfolioContent(locale), [locale]);
   const navItems = React.useMemo(
     () => content.navigation.items.map((item) => ({ ...item, route: `#${item.id}` })),
@@ -20,6 +27,8 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
   const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
   const [notice, setNotice] = React.useState<string>("");
   const otherLocaleHref = `${locale === "fr" ? "/en" : "/"}#${activeSectionId || "hero"}`;
+  const homeBase = locale === "en" ? "/en" : "/";
+  const resolvedLocaleSwitchHref = localeSwitchHref ?? otherLocaleHref;
   // Over the hero the header stays transparent so the 3D scene shows through;
   // a solid backdrop appears once scrolled (or while the mobile menu is open)
   // to keep the nav readable above the lighter content sections.
@@ -113,7 +122,11 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
   return (
     <header className={`${styles.header} ${hasBackdrop ? styles.headerScrolled : ""}`.trim()}>
       <nav className={styles.nav} aria-label={content.navigation.mainNavAriaLabel}>
-        <a href="#hero" className={styles.brand} onClick={(event) => handleAnchorNavigation(event, "#hero", "hero")}>
+        <a
+          href={secondary ? homeBase : "#hero"}
+          className={styles.brand}
+          onClick={secondary ? undefined : (event) => handleAnchorNavigation(event, "#hero", "hero")}
+        >
           <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" />
           <span className={styles.brandText}>
             <span className={styles.brandTitle}>Valentin Passe</span>
@@ -142,10 +155,10 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
             {navItems.map((item) => (
               <li key={item.id}>
                 <a
-                  href={item.route}
-                  className={`${styles.navLink} ${activeSectionId === item.id ? styles.navLinkActive : ""}`.trim()}
-                  aria-current={activeSectionId === item.id ? "page" : undefined}
-                  onClick={(event) => handleAnchorNavigation(event, item.route, item.id)}
+                  href={secondary ? `${homeBase}${item.route}` : item.route}
+                  className={`${styles.navLink} ${!secondary && activeSectionId === item.id ? styles.navLinkActive : ""}`.trim()}
+                  aria-current={!secondary && activeSectionId === item.id ? "page" : undefined}
+                  onClick={secondary ? undefined : (event) => handleAnchorNavigation(event, item.route, item.id)}
                 >
                   {item.label}
                 </a>
@@ -155,16 +168,16 @@ export function HeaderCustom({ locale }: HeaderCustomProps) {
 
           <div className={styles.utilityGroup}>
             <a
-              href={otherLocaleHref}
+              href={resolvedLocaleSwitchHref}
               className={styles.localeSwitch}
               aria-label={content.navigation.localeSwitcherLabel}
             >
               {content.switchLocaleLabel}
             </a>
             <a
-              href="#contact"
+              href={secondary ? `${homeBase}#contact` : "#contact"}
               className={styles.contactCta}
-              onClick={(event) => handleAnchorNavigation(event, "#contact", "contact")}
+              onClick={secondary ? undefined : (event) => handleAnchorNavigation(event, "#contact", "contact")}
             >
               {content.navigation.ctaLabel}
             </a>

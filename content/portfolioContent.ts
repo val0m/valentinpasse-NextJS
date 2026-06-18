@@ -59,6 +59,26 @@ type FooterLink = {
   href: string;
 };
 
+type LegalRow = {
+  label?: string;
+  value: string;
+  href?: string;
+};
+
+type LegalSection = {
+  heading: string;
+  rows: LegalRow[];
+};
+
+type LegalContent = {
+  metaTitle: string;
+  metaDescription: string;
+  pageTitle: string;
+  lastUpdated: string;
+  backHomeLabel: string;
+  sections: LegalSection[];
+};
+
 export type PortfolioContent = {
   localeName: string;
   switchLocaleLabel: string;
@@ -154,7 +174,9 @@ export type PortfolioContent = {
     links: FooterLink[];
     contactTitle: string;
     rights: string;
+    legalLink: FooterLink;
   };
+  legal: LegalContent;
 };
 
 // The `educations` section is intentionally excluded from NAV_IDS to keep the
@@ -517,6 +539,81 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       contactTitle: "Contact",
       rights: "© 2026 Valentin PASSE. Tous droits réservés.",
+      legalLink: { label: "Mentions légales", href: "/mentions-legales" },
+    },
+    legal: {
+      metaTitle: "Mentions légales | Valentin PASSE",
+      metaDescription:
+        "Mentions légales du site de Valentin PASSE, développeur Fullstack .NET freelance (micro-entreprise) basé à Nice.",
+      pageTitle: "Mentions légales",
+      lastUpdated: "Dernière mise à jour : juin 2026",
+      backHomeLabel: "← Retour à l'accueil",
+      sections: [
+        {
+          heading: "Éditeur du site",
+          rows: [
+            { label: "Éditeur", value: "Valentin PASSE" },
+            { label: "Statut", value: "Entrepreneur individuel (micro-entreprise)" },
+            { label: "SIREN", value: "947 577 623" },
+            { label: "N° de TVA intracommunautaire", value: "FR53947577623" },
+            { label: "Localisation", value: "Nice (06200), France" },
+            {
+              label: "E-mail",
+              value: "passe.valentin@gmail.com",
+              href: "mailto:passe.valentin@gmail.com",
+            },
+            { label: "Directeur de la publication", value: "Valentin PASSE" },
+          ],
+        },
+        {
+          heading: "Hébergement",
+          rows: [
+            { value: "Le site est hébergé par Vercel Inc." },
+            { label: "Adresse", value: "340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis" },
+            { label: "Site web", value: "vercel.com", href: "https://vercel.com" },
+          ],
+        },
+        {
+          heading: "Propriété intellectuelle",
+          rows: [
+            {
+              value:
+                "L'ensemble des contenus de ce site (textes, structure, éléments graphiques et code) est, sauf mention contraire, la propriété de Valentin PASSE. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation préalable est interdite.",
+            },
+          ],
+        },
+        {
+          heading: "Données personnelles",
+          rows: [
+            {
+              value:
+                "Ce site ne propose pas de formulaire de collecte. Les seules données traitées sont celles que vous transmettez volontairement par e-mail, utilisées uniquement pour répondre à votre demande.",
+            },
+            {
+              value:
+                "Conformément au RGPD et à la loi « Informatique et Libertés », vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Pour l'exercer, écrivez à passe.valentin@gmail.com.",
+            },
+          ],
+        },
+        {
+          heading: "Cookies et mesure d'audience",
+          rows: [
+            {
+              value:
+                "Des outils de mesure d'audience (Vercel Analytics et Google Analytics) peuvent déposer des cookies à des fins statistiques. Ils ne sont activés qu'après votre consentement, recueilli via le bandeau prévu à cet effet, et vous pouvez modifier votre choix à tout moment.",
+            },
+          ],
+        },
+        {
+          heading: "Responsabilité",
+          rows: [
+            {
+              value:
+                "Les informations diffusées sur ce site sont fournies à titre indicatif et peuvent évoluer. Valentin PASSE s'efforce d'en assurer l'exactitude mais ne saurait être tenu responsable des erreurs, d'une indisponibilité du site ou de l'usage qui en est fait.",
+            },
+          ],
+        },
+      ],
     },
   },
   en: {
@@ -860,6 +957,81 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       contactTitle: "Contact",
       rights: "© 2026 Valentin PASSE. All rights reserved.",
+      legalLink: { label: "Legal notice", href: "/legal-notice" },
+    },
+    legal: {
+      metaTitle: "Legal Notice | Valentin PASSE",
+      metaDescription:
+        "Legal notice for the website of Valentin PASSE, freelance Fullstack .NET developer (sole trader) based in Nice, France.",
+      pageTitle: "Legal Notice",
+      lastUpdated: "Last updated: June 2026",
+      backHomeLabel: "← Back to home",
+      sections: [
+        {
+          heading: "Site publisher",
+          rows: [
+            { label: "Publisher", value: "Valentin PASSE" },
+            { label: "Status", value: "Sole trader (French micro-entreprise)" },
+            { label: "SIREN", value: "947 577 623" },
+            { label: "EU VAT number", value: "FR53947577623" },
+            { label: "Location", value: "Nice (06200), France" },
+            {
+              label: "Email",
+              value: "passe.valentin@gmail.com",
+              href: "mailto:passe.valentin@gmail.com",
+            },
+            { label: "Publication director", value: "Valentin PASSE" },
+          ],
+        },
+        {
+          heading: "Hosting",
+          rows: [
+            { value: "This website is hosted by Vercel Inc." },
+            { label: "Address", value: "340 S Lemon Ave #4133, Walnut, CA 91789, United States" },
+            { label: "Website", value: "vercel.com", href: "https://vercel.com" },
+          ],
+        },
+        {
+          heading: "Intellectual property",
+          rows: [
+            {
+              value:
+                "Unless otherwise stated, all content on this site (text, structure, graphics and code) is the property of Valentin PASSE. Any reproduction, representation or distribution, in whole or in part, without prior authorisation is prohibited.",
+            },
+          ],
+        },
+        {
+          heading: "Personal data",
+          rows: [
+            {
+              value:
+                "This site has no data-collection form. The only data processed is what you voluntarily send by email, used solely to answer your request.",
+            },
+            {
+              value:
+                "In accordance with the GDPR, you have the right to access, rectify and erase your personal data. To exercise it, write to passe.valentin@gmail.com.",
+            },
+          ],
+        },
+        {
+          heading: "Cookies and analytics",
+          rows: [
+            {
+              value:
+                "Audience-measurement tools (Vercel Analytics and Google Analytics) may set cookies for statistical purposes. They are enabled only after your consent, collected via the dedicated banner, and you can change your choice at any time.",
+            },
+          ],
+        },
+        {
+          heading: "Liability",
+          rows: [
+            {
+              value:
+                "The information published on this site is provided for guidance only and may change. Valentin PASSE strives to keep it accurate but cannot be held liable for errors, for any unavailability of the site, or for the use made of it.",
+            },
+          ],
+        },
+      ],
     },
   },
 };
