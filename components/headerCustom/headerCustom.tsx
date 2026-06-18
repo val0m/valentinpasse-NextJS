@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Logo from "../../public/images/header/logo.webp";
-import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
+import { PortfolioLocale, getPortfolioContent, homePath } from "../../content/portfolioContent";
 import styles from "./headerCustom.module.scss";
 
 type HeaderCustomProps = {
@@ -27,7 +27,7 @@ export function HeaderCustom({ locale, secondary = false, localeSwitchHref }: He
   const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
   const [notice, setNotice] = React.useState<string>("");
   const otherLocaleHref = `${locale === "fr" ? "/en" : "/"}#${activeSectionId || "hero"}`;
-  const homeBase = locale === "en" ? "/en" : "/";
+  const homeBase = homePath(locale);
   const resolvedLocaleSwitchHref = localeSwitchHref ?? otherLocaleHref;
   // Over the hero the header stays transparent so the 3D scene shows through;
   // a solid backdrop appears once scrolled (or while the mobile menu is open)

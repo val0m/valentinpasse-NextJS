@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Layout } from "../layout";
-import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
+import { PortfolioLocale, getPortfolioContent, homePath } from "../../content/portfolioContent";
 import styles from "./legalNotice.module.scss";
 
 type LegalNoticePageProps = {
@@ -14,8 +14,8 @@ const LOCALE_ALTERNATES = { fr: "/mentions-legales", en: "/legal-notice" };
 
 export function LegalNoticePage({ locale }: LegalNoticePageProps) {
   const legal = getPortfolioContent(locale).legal;
-  const homeHref = locale === "en" ? "/en" : "/";
-  const canonicalPath = locale === "en" ? "/legal-notice" : "/mentions-legales";
+  const homeHref = homePath(locale);
+  const canonicalPath = LOCALE_ALTERNATES[locale];
 
   return (
     <Layout
@@ -38,9 +38,9 @@ export function LegalNoticePage({ locale }: LegalNoticePageProps) {
             <section key={section.heading} className={styles.section}>
               <h2 className={styles.heading}>{section.heading}</h2>
               <div className={styles.rows}>
-                {section.rows.map((row, index) =>
+                {section.rows.map((row) =>
                   row.label ? (
-                    <p key={index} className={styles.row}>
+                    <p key={row.label} className={styles.row}>
                       <span className={styles.rowLabel}>{row.label}</span>
                       <span className={styles.rowValue}>
                         {row.href ? (
@@ -53,7 +53,7 @@ export function LegalNoticePage({ locale }: LegalNoticePageProps) {
                       </span>
                     </p>
                   ) : (
-                    <p key={index} className={styles.paragraph}>
+                    <p key={row.value} className={styles.paragraph}>
                       {row.value}
                     </p>
                   )

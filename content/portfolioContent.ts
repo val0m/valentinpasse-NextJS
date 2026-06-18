@@ -554,7 +554,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           rows: [
             { label: "Éditeur", value: "Valentin PASSE" },
             { label: "Statut", value: "Entrepreneur individuel (micro-entreprise)" },
-            { label: "SIREN", value: "947 577 623" },
+            { label: "SIRET", value: "947 577 623 00012" },
             { label: "N° de TVA intracommunautaire", value: "FR53947577623" },
             { label: "Localisation", value: "Nice (06200), France" },
             {
@@ -972,7 +972,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           rows: [
             { label: "Publisher", value: "Valentin PASSE" },
             { label: "Status", value: "Sole trader (French micro-entreprise)" },
-            { label: "SIREN", value: "947 577 623" },
+            { label: "SIRET", value: "947 577 623 00012" },
             { label: "EU VAT number", value: "FR53947577623" },
             { label: "Location", value: "Nice (06200), France" },
             {
@@ -1041,3 +1041,7 @@ export function getPortfolioContent(locale: PortfolioLocale): PortfolioContent {
 }
 
 export const portfolioEmail = EMAIL;
+
+// Home route for a given locale — single source of truth for the "/" vs "/en"
+// root used by the header, footer and secondary pages.
+export const homePath = (locale: PortfolioLocale): string => (locale === "en" ? "/en" : "/");
