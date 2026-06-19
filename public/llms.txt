@@ -1,0 +1,44 @@
+# Valentin PASSE
+
+> Freelance Fullstack .NET engineer based in Nice, France, with 10+ years of software delivery — available for remote, hybrid, and on-site work.
+
+Valentin PASSE ("Ingénieur Fullstack .NET freelance") helps companies turn business needs into robust, readable, and long-lasting web products. He works across the whole value chain: scoping, application architecture, fullstack development, quality, and production delivery. He is self-taught, with 10+ years of web and application development experience alternating between employee and freelance positions in demanding operational environments.
+
+## Location and availability
+
+Based in Nice (06200), Provence-Alpes-Côte d'Azur, France. Works remote, hybrid, or on-site. Available for structural projects, focused reinforcement, and high-impact interventions and engagements.
+
+## Specialties
+
+- .NET ecosystem: .NET Core, MVC, Blazor, and .NET MAUI (from legacy stacks up to .NET 10)
+- Application architecture: Clean Architecture, Domain-Driven Design (DDD), and CQRS
+- Cloud and data: Microsoft Azure, PostgreSQL, and Docker
+- Pragmatic AI integration: AI used only when it genuinely simplifies a workflow, never as decorative complexity
+
+## Selected projects
+
+**Real-time on-call platform (SMEG, Monaco)** — A business solution to manage on-call operations, emergencies, and interventions across desktop and MAUI mobile workflows, built in a demanding operational environment with high expectations around availability and continuity of service. Valentin defined a modular target architecture and a reusable project template, and delivered a MAUI mobile proof of concept (POC) to validate the foundation and formalize field constraints.
+
+**Nexio — customer portal (SMEG)** — A web portal for customer request management and follow-up, serving both individual and business profiles. Valentin handled the fullstack design and development, functional analysis, technical documentation, and coordination of incremental releases, delivering a unified self-service portal in production that lets customers track their own requests.
+
+**AI digital-content management platform** — The back-end foundation of an innovative solution for organizing, classifying, and searching digital content with an AI component. Built on .NET 7 with the ABP framework, it structures technical flows (RabbitMQ, Redis, MongoDB) and persistence into a durable base that supports product scale-up and reliable AI processing.
+
+## Contact
+
+- Email: passe.valentin@gmail.com
+- Website: https://www.valentin-passe.com
+- GitHub: https://github.com/val0m
+- LinkedIn: https://www.linkedin.com/in/valentin-passe/
+
+## Note (français)
+
+Valentin PASSE est ingénieur Fullstack .NET freelance basé à Nice (06200), avec 10+ ans de livraison logicielle. Il intervient du cadrage à la mise en production sur des produits web .NET, en remote, hybride ou sur site.
+
+## Links
+
+- [Website](https://www.valentin-passe.com): One-page portfolio (English and French)
+- [Legal notice (EN)](https://www.valentin-passe.com/legal-notice)
+- [Mentions légales (FR)](https://www.valentin-passe.com/mentions-legales)
+- [GitHub](https://github.com/val0m): Open-source and project work
+- [LinkedIn](https://www.linkedin.com/in/valentin-passe/): Professional profile
+- [Contact](mailto:passe.valentin@gmail.com): Direct email
