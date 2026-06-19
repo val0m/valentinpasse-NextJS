@@ -47,6 +47,37 @@ const DEFAULT_DESCRIPTIONS: Record<PortfolioLocale, string> = {
     en: "Portfolio of Valentin PASSE, freelance Fullstack .NET engineer (Blazor, C#, Azure).",
 };
 
+// Locale-independent structured-data facts for the Person entity.
+const PERSON_KNOWS_ABOUT = [
+    ".NET",
+    "C#",
+    "ASP.NET Core",
+    "Blazor",
+    ".NET MAUI",
+    "Clean Architecture",
+    "Domain-Driven Design",
+    "CQRS",
+    "Microsoft Azure",
+    "PostgreSQL",
+    "Docker",
+    "AI integration",
+];
+
+const PERSON_ALUMNI_OF = [
+    { "@type": "EducationalOrganization", name: "IUT Nice Sophia Antipolis" },
+    { "@type": "EducationalOrganization", name: "Lycée Honoré d'Estienne d'Orves" },
+];
+
+const PERSON_JOB_TITLE: Record<PortfolioLocale, string> = {
+    fr: "Freelance Fullstack .NET",
+    en: "Freelance Fullstack .NET Engineer",
+};
+
+const PERSON_OCCUPATION_NAME: Record<PortfolioLocale, string> = {
+    fr: "Ingénieur Fullstack .NET freelance",
+    en: "Freelance Fullstack .NET Engineer",
+};
+
 export function Layout({
     children,
     locale,
@@ -69,17 +100,66 @@ export function Layout({
     // locale's variant of this same page rather than the home root.
     const localeSwitchHref = locale === "fr" ? localeAlternates.en : localeAlternates.fr;
 
-    const jsonLdPerson = {
+    const personId = `${SITE_URL}/#person`;
+    const websiteId = `${SITE_URL}/#website`;
+
+    const jsonLdGraph = {
         "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Valentin PASSE",
-        jobTitle: locale === "en" ? "Freelance Fullstack .NET Engineer" : "Freelance Fullstack .NET",
-        url: SITE_URL,
-        image: ogImageUrl,
-        email: `mailto:${portfolioEmail}`,
-        sameAs: [
-            "https://github.com/val0m",
-            "https://www.linkedin.com/in/valentin-passe/",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": websiteId,
+                url: SITE_URL,
+                name: "Valentin PASSE",
+                inLanguage: ["fr", "en"],
+                author: { "@id": personId },
+            },
+            {
+                "@type": "ProfilePage",
+                "@id": `${canonicalUrl}#profilepage`,
+                url: canonicalUrl,
+                name: resolvedTitle,
+                description: resolvedDescription,
+                inLanguage: locale,
+                isPartOf: { "@id": websiteId },
+                mainEntity: { "@id": personId },
+            },
+            {
+                "@type": "Person",
+                "@id": personId,
+                name: "Valentin PASSE",
+                givenName: "Valentin",
+                familyName: "PASSE",
+                jobTitle: PERSON_JOB_TITLE[locale],
+                description: resolvedDescription,
+                url: SITE_URL,
+                email: portfolioEmail,
+                image: {
+                    "@type": "ImageObject",
+                    url: ogImageUrl,
+                    width: 1200,
+                    height: 630,
+                },
+                address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Nice",
+                    postalCode: "06200",
+                    addressRegion: "Provence-Alpes-Côte d'Azur",
+                    addressCountry: "FR",
+                },
+                knowsAbout: PERSON_KNOWS_ABOUT,
+                alumniOf: PERSON_ALUMNI_OF,
+                hasOccupation: {
+                    "@type": "Occupation",
+                    name: PERSON_OCCUPATION_NAME[locale],
+                    occupationLocation: { "@type": "City", name: "Nice" },
+                    skills: ".NET, C#, Blazor, .NET MAUI, Azure, Clean Architecture, DDD, CQRS",
+                },
+                sameAs: [
+                    "https://github.com/val0m",
+                    "https://www.linkedin.com/in/valentin-passe/",
+                ],
+            },
         ],
     };
 
@@ -130,7 +210,7 @@ export function Layout({
 
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLdPerson) }}
+                    dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLdGraph) }}
                 />
             </Head>
 
