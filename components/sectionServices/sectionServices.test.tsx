@@ -11,11 +11,11 @@ describe("SectionServices", () => {
     expect(screen.getAllByText("Business outcome").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Discuss this service").length).toBeGreaterThan(0);
 
-    // The CTA exposes a localized aria-label (it overrides the visible text as
-    // the accessible name), built from the contactAriaTemplate placeholder.
+    // The CTA's accessible name is composed from the localized visible label
+    // plus the service title, so it contains the visible text (WCAG 2.5.3).
     const firstService = getPortfolioContent("en").services.items[0];
     expect(
-      screen.getByRole("link", { name: `Contact me about ${firstService.title}` }),
+      screen.getByRole("link", { name: `Discuss this service — ${firstService.title}` }),
     ).toBeInTheDocument();
 
     // No residual French should leak on the EN page (issue #33).
@@ -33,7 +33,7 @@ describe("SectionServices", () => {
 
     const firstService = getPortfolioContent("fr").services.items[0];
     expect(
-      screen.getByRole("link", { name: `Me contacter pour ${firstService.title}` }),
+      screen.getByRole("link", { name: `Discuter de ce service — ${firstService.title}` }),
     ).toBeInTheDocument();
   });
 });

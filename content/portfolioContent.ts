@@ -123,7 +123,7 @@ export type PortfolioContent = {
     items: ServiceOffer[];
     clientProblemLabel: string;
     businessOutcomeLabel: string;
-    contactAriaTemplate: string;
+    ctaLabel: string;
   };
   experience: {
     title: string;
@@ -304,7 +304,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       clientProblemLabel: "Problème adressé",
       businessOutcomeLabel: "Bénéfice métier",
-      contactAriaTemplate: "Me contacter pour {title}",
+      ctaLabel: "Discuter de ce service",
     },
     experience: {
       title: "Expérience",
@@ -725,7 +725,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       ],
       clientProblemLabel: "Client problem",
       businessOutcomeLabel: "Business outcome",
-      contactAriaTemplate: "Contact me about {title}",
+      ctaLabel: "Discuss this service",
     },
     experience: {
       title: "Experience",

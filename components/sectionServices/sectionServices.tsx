@@ -44,9 +44,9 @@ export function SectionServices({ locale = "fr" }: SectionServicesProps) {
               <a
                 href={service.ctaTarget}
                 className={styles.cardAction}
-                aria-label={content.contactAriaTemplate.replace("{title}", service.title)}
+                aria-label={`${content.ctaLabel} — ${service.title}`}
               >
-                {locale === "fr" ? "Discuter de ce service" : "Discuss this service"}
+                {content.ctaLabel}
               </a>
             </article>
           ))}
