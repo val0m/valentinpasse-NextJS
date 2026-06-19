@@ -1,4 +1,29 @@
+# robots.txt — https://www.valentin-passe.com
+
+# Default policy: allow every crawler to access the whole site.
 User-agent: *
 Allow: /
+
+# AI search / answer-engine crawlers — explicitly allowed (citability is
+# desired for AI Overviews, ChatGPT, Perplexity, etc.).
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# AI training-dataset crawler — opted out (no inclusion in Common Crawl
+# training corpora). Search/citation bots above remain allowed.
+User-agent: CCBot
+Disallow: /
 
 Sitemap: https://www.valentin-passe.com/sitemap.xml
