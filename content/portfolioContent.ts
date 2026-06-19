@@ -121,6 +121,9 @@ export type PortfolioContent = {
     title: string;
     subtitle: string;
     items: ServiceOffer[];
+    clientProblemLabel: string;
+    businessOutcomeLabel: string;
+    ctaLabel: string;
   };
   experience: {
     title: string;
@@ -299,6 +302,9 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           ctaTarget: "#contact",
         },
       ],
+      clientProblemLabel: "Problème adressé",
+      businessOutcomeLabel: "Bénéfice métier",
+      ctaLabel: "Discuter de ce service",
     },
     experience: {
       title: "Expérience",
@@ -717,6 +723,9 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
           ctaTarget: "#contact",
         },
       ],
+      clientProblemLabel: "Client problem",
+      businessOutcomeLabel: "Business outcome",
+      ctaLabel: "Discuss this service",
     },
     experience: {
       title: "Experience",

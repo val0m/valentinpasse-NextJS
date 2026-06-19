@@ -26,12 +26,12 @@ export function SectionServices({ locale = "fr" }: SectionServicesProps) {
               <h3 className={styles.cardTitle}>{service.title}</h3>
 
               <div className={styles.block}>
-                <p className={styles.blockLabel}>Problème adressé</p>
+                <p className={styles.blockLabel}>{content.clientProblemLabel}</p>
                 <p className={styles.blockText}>{service.clientProblem}</p>
               </div>
 
               <div className={styles.block}>
-                <p className={styles.blockLabel}>Bénéfice métier</p>
+                <p className={styles.blockLabel}>{content.businessOutcomeLabel}</p>
                 <p className={styles.blockText}>{service.businessOutcome}</p>
               </div>
 
@@ -44,9 +44,9 @@ export function SectionServices({ locale = "fr" }: SectionServicesProps) {
               <a
                 href={service.ctaTarget}
                 className={styles.cardAction}
-                aria-label={`Me contacter pour ${service.title}`}
+                aria-label={`${content.ctaLabel} — ${service.title}`}
               >
-                {locale === "fr" ? "Discuter de ce service" : "Discuss this service"}
+                {content.ctaLabel}
               </a>
             </article>
           ))}
