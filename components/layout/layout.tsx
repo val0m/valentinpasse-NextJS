@@ -202,6 +202,21 @@ export function Layout({
                 <link rel="alternate" hrefLang="en" href={enUrl} />
                 <link rel="alternate" hrefLang="x-default" href={frUrl} />
 
+                {/*
+                  The 3D hero (home pages only) loads the Spline WebGL runtime and a
+                  remote scene from prod.spline.design at first paint. Warm up the
+                  cross-origin connection ahead of that CORS fetch. crossOrigin is
+                  required so the preconnected socket is reused for the CORS request;
+                  dns-prefetch is a legacy fallback. Skipped on secondary pages
+                  (legal), which never render the hero.
+                */}
+                {!secondary && (
+                    <>
+                        <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
+                        <link rel="dns-prefetch" href="https://prod.spline.design" />
+                    </>
+                )}
+
                 <title>{resolvedTitle}</title>
                 <link rel="icon" href="/favicon.ico" />
 
