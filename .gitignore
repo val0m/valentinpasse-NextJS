@@ -24,6 +24,9 @@ yarn.lock
 docs/
 .claude/
 
+# SEO audit output (generated locally by /claude-seo:seo-audit — not versioned)
+*-audit/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
