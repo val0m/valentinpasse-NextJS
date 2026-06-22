@@ -218,7 +218,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     hero: {
       eyebrow: "Freelance Fullstack .NET · Nice · Remote, hybride, sur site",
       name: "Valentin Passe",
-      tagline: "Je conçois des produits web fiables, lisibles et rapides à faire évoluer.",
+      tagline: "Développeur Fullstack .NET freelance à Nice — je conçois des produits web fiables, lisibles et rapides à faire évoluer.",
       promise:
         "Autodidacte avec 10+ ans de développement logiciel, j'interviens du cadrage à la mise en production : architecture applicative, développement fullstack et intégration IA utile pour accélérer les équipes sans dette inutile.",
       proofPoints: [
@@ -244,8 +244,8 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       lead:
         "Ingénieur Fullstack .NET freelance, j'aide les entreprises à transformer un besoin métier en produit web robuste, lisible et exploitable dans la durée.",
       paragraphs: [
-        "J'interviens sur toute la chaîne de valeur : cadrage, architecture, implémentation, qualité et mise en production. L'objectif est simple - livrer vite, proprement, sans sacrifier la maintenabilité.",
-        "Autodidacte de formation et de tempérament, j'allie autonomie, rigueur et travail collaboratif. Ma passion pour les nouvelles technologies - et en particulier l'IA - me pousse à intégrer en continu les outils qui apportent une valeur concrète aux équipes.",
+        "Développeur Fullstack .NET freelance basé à Nice, je cumule plus de dix ans de livraison logicielle, en CDI comme en indépendant, sur des contextes opérationnels exigeants. J'interviens sur toute la chaîne de valeur - cadrage, architecture applicative, implémentation, qualité et mise en production - avec un objectif simple : livrer vite et proprement, sans sacrifier la maintenabilité.",
+        "Mon socle technique couvre .NET (Core, MVC, Blazor, MAUI), l'architecture Clean / DDD / CQRS, le cloud Azure et des bases comme PostgreSQL. Autodidacte de formation et de tempérament, j'allie autonomie, rigueur et travail collaboratif. Ma veille active sur l'IA me pousse à intégrer en continu les outils qui apportent une valeur concrète aux équipes, quand ils simplifient réellement un workflow plutôt que d'ajouter de la complexité.",
       ],
       highlights: [
         {
@@ -467,37 +467,37 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           title: "Astreinte temps réel - bureau et mobile",
           summary:
-            "Solution métier pour piloter appels d'astreinte, urgences et interventions sur usages bureau et mobile MAUI.",
+            "Pour SMEG (Monaco), une solution métier qui digitalise les appels d'astreinte, urgences et interventions, sur usages bureau et mobile MAUI, en environnement à forte exigence de disponibilité.",
           context:
             "Environnement opérationnel exigeant chez SMEG Monaco, avec fortes contraintes de disponibilité, qualité de service continue et contraintes mobiles (réseau, mises à jour, synchro données).",
           contribution:
             "Architecture cible modulaire, template projet réutilisable, POC mobile MAUI pour valider le socle et formalisation des contraintes terrain.",
           outcome:
-            "Digitalisation des processus d'astreinte et meilleure réactivité des équipes dans les situations critiques.",
+            "Processus d'astreinte digitalisés de bout en bout (bureau et mobile MAUI) et mis en service, avec une réactivité accrue des équipes sur les interventions critiques.",
           tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
           title: "Nexio - Portail client particuliers et pros",
           summary:
-            "Portail web de gestion des demandes et du suivi client pour particuliers et professionnels SMEG.",
+            "Nexio, le portail web de gestion et de suivi des demandes client de SMEG, unifié pour les particuliers et les professionnels, conçu et développé en fullstack jusqu'à la mise en production.",
           context:
             "Refonte d'un parcours client multi-cibles avec besoin de cohérence d'expérience entre profils particuliers et professionnels.",
           contribution:
             "Conception et développement fullstack du portail, analyses fonctionnelles, documentation technique et coordination des évolutions.",
           outcome:
-            "Portail client unifié en production, autonomisant les clients dans le suivi de leurs demandes.",
+            "Portail client unifié livré en production pour les particuliers et les professionnels, leur donnant un suivi de leurs demandes en self-service.",
           tags: [".NET", "C#", "Blazor", "Azure DevOps", "PostgreSQL"],
         },
         {
           title: "Plateforme IA - gestion de contenus numériques",
           summary:
-            "Socle backend d'une solution innovante de rangement, classement et recherche de contenus numériques avec composante IA.",
+            "Le socle backend d'une plateforme innovante de rangement, classement et recherche de contenus numériques à composante IA, bâti en .NET 7 / ABP pour absorber des volumes croissants de manière fiable.",
           context:
             "Besoin d'une fondation backend solide pour accompagner dans le temps les évolutions produit et les traitements IA sur des volumes croissants.",
           contribution:
             "Développement backend en .NET 7 sur framework ABP, structuration des flux techniques (RabbitMQ, Redis, MongoDB) et de la persistance.",
           outcome:
-            "Socle technique durable facilitant la montée en capacité produit et la fiabilité des traitements IA.",
+            "Fondation backend en production, durable et structurée (RabbitMQ, Redis, MongoDB), qui sécurise la montée en charge produit et la fiabilité des traitements IA.",
           tags: [".NET 7", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
         },
       ],
@@ -639,7 +639,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
     hero: {
       eyebrow: "Fullstack .NET freelancer · Nice · Remote, hybrid, on-site",
       name: "Valentin Passe",
-      tagline: "I design reliable web products that stay readable and easy to evolve.",
+      tagline: "Freelance Fullstack .NET developer in Nice — I design reliable web products that stay readable and easy to evolve.",
       promise:
         "Self-taught engineer with 10+ years of .NET delivery, I work across scoping, application architecture, fullstack development, and useful AI integration to help teams move faster without creating unnecessary debt.",
       proofPoints: [
@@ -665,8 +665,8 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       lead:
         "As a freelance Fullstack .NET engineer, I help companies turn business needs into robust, readable and long-lasting web products.",
       paragraphs: [
-        "I work across the whole value chain: scoping, architecture, implementation, quality, and production delivery. The objective is simple - ship quickly, cleanly, and without sacrificing maintainability.",
-        "Self-taught by training and temperament, I combine autonomy, rigor, and collaborative work. My passion for new technologies - especially AI - pushes me to continuously integrate the tools that bring real value to the teams I work with.",
+        "A freelance Fullstack .NET developer based in Nice, France, I bring over ten years of software delivery, as both an employee and an independent contractor, in demanding operational environments. I work across the whole value chain - scoping, application architecture, implementation, quality, and production delivery - with a simple objective: ship quickly and cleanly, without sacrificing maintainability.",
+        "My technical core covers .NET (Core, MVC, Blazor, MAUI), Clean / DDD / CQRS architecture, the Azure cloud, and databases such as PostgreSQL. Self-taught by training and temperament, I combine autonomy, rigor, and collaborative work. My active watch on AI pushes me to continuously integrate the tools that bring real value to teams, when they genuinely simplify a workflow rather than adding complexity.",
       ],
       highlights: [
         {
@@ -888,37 +888,37 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         {
           title: "Real-time on-call - desktop and mobile",
           summary:
-            "Business solution to manage on-call operations, emergencies, and interventions across desktop and MAUI mobile workflows.",
+            "For SMEG (Monaco), a business solution that digitizes on-call operations, emergencies, and interventions across desktop and MAUI mobile, in a high-availability operational environment.",
           context:
             "Demanding operational environment at SMEG Monaco with high expectations around availability, continuity of service, and mobile constraints (network, updates, data sync).",
           contribution:
             "Modular target architecture, reusable project template, MAUI mobile POC to validate the foundation, and formalization of the field constraints.",
           outcome:
-            "Digitized on-call processes and improved responsiveness in critical situations.",
+            "On-call processes digitized end to end (desktop and MAUI mobile) and put into service, with higher team responsiveness on critical interventions.",
           tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
           title: "Nexio - customer portal for individuals and businesses",
           summary:
-            "Web portal for SMEG customer request management and follow-up, serving both individual and business profiles.",
+            "Nexio, SMEG's web portal for customer request management and follow-up, unified across individual and business profiles, designed and built fullstack through to production.",
           context:
             "Redesign of a multi-target customer journey requiring a consistent experience across individuals and businesses.",
           contribution:
             "Fullstack design and development of the portal, functional analysis, technical documentation, and coordination of incremental releases.",
           outcome:
-            "Unified customer portal in production, empowering customers to self-track their requests.",
+            "Unified customer portal delivered to production for both individuals and businesses, giving them self-service tracking of their requests.",
           tags: [".NET", "C#", "Blazor", "Azure DevOps", "PostgreSQL"],
         },
         {
           title: "AI platform - digital content management",
           summary:
-            "Back-end foundation of an innovative solution for organizing, classifying, and searching digital content with an AI component.",
+            "The back-end foundation of an innovative platform for organizing, classifying, and searching digital content with an AI component, built on .NET 7 / ABP to absorb growing volumes reliably.",
           context:
             "Need for a strong back-end foundation to support long-term product evolution and AI processing on growing data volumes.",
           contribution:
             "Back-end development on .NET 7 with the ABP framework, structuring technical flows (RabbitMQ, Redis, MongoDB) and persistence.",
           outcome:
-            "Durable technical base supporting product scale-up and AI processing reliability.",
+            "Durable, well-structured back-end foundation in production (RabbitMQ, Redis, MongoDB) that secures product scale-up and the reliability of AI processing.",
           tags: [".NET 7", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
         },
       ],
