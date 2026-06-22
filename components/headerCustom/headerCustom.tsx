@@ -129,7 +129,7 @@ export function HeaderCustom({ locale, secondary = false, localeSwitchHref }: He
           className={styles.brand}
           onClick={secondary ? undefined : (event) => handleAnchorNavigation(event, "#hero", "hero")}
         >
-          <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" />
+          <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" priority />
           <span className={styles.brandText}>
             <span className={styles.brandTitle}>Valentin Passe</span>
             <span className={styles.brandSubtitle}>Fullstack .NET</span>

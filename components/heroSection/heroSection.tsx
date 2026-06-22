@@ -13,6 +13,27 @@ const Spline = dynamic(() => import("@splinetool/react-spline"), {
 
 const SPLINE_SCENE = "https://prod.spline.design/dJqTIQ-tE3ULUPMi/scene.splinecode";
 
+// Schedule the (heavy) Spline mount during browser idle time so its ~1.5-2 MB
+// WebGL runtime never evaluates inside the critical LCP / first-input window.
+// `requestIdleCallback` keeps it off the main thread until the page is quiet;
+// the `timeout` is a hard cap so the 3D still appears promptly on fast devices.
+// Falls back to a short `setTimeout` where the API is unavailable (e.g. Safari,
+// jsdom in tests).
+function scheduleIdle(callback: () => void, timeout: number): number {
+  if (typeof window !== "undefined" && typeof window.requestIdleCallback === "function") {
+    return window.requestIdleCallback(callback, { timeout });
+  }
+  return window.setTimeout(callback, 200);
+}
+
+function cancelIdle(handle: number): void {
+  if (typeof window !== "undefined" && typeof window.cancelIdleCallback === "function") {
+    window.cancelIdleCallback(handle);
+  } else {
+    window.clearTimeout(handle);
+  }
+}
+
 type HeroSectionProps = {
   locale?: PortfolioLocale;
 };
@@ -32,6 +53,11 @@ function HeroBackground() {
   const rafRef = useRef<number | null>(null);
   const lastUserMoveRef = useRef(0);
   const startLoopRef = useRef<() => void>(() => undefined);
+  // Tracks whether the scene has been mounted, and the pending idle handle, so
+  // the observer defers the first mount but resumes the loop instantly on later
+  // re-entries into the viewport.
+  const enabledRef = useRef(false);
+  const idleHandleRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -112,18 +138,37 @@ function HeroBackground() {
 
     startLoopRef.current = startLoop;
 
-    // Mount the scene and run the loop only while the hero is on screen; the
-    // loop is fully stopped once it scrolls out of view. Setting state from the
-    // observer callback is the recommended "subscribe to an external system"
-    // pattern (avoids a synchronous setState in the effect body).
+    // Defer the heavy first mount to idle time so the WebGL runtime stays out of
+    // the LCP / first-input window, then run the loop only while the hero is on
+    // screen. Setting state from the observer callback is the recommended
+    // "subscribe to an external system" pattern (avoids a synchronous setState
+    // in the effect body).
+    const enableNow = () => {
+      idleHandleRef.current = null;
+      enabledRef.current = true;
+      setEnable3d(true);
+      // The motion loop starts from Spline's onLoad once the canvas exists.
+    };
+
+    const scheduleEnable = () => {
+      if (enabledRef.current || idleHandleRef.current !== null) {
+        return;
+      }
+      idleHandleRef.current = scheduleIdle(enableNow, 3000);
+    };
+
     const node = bgRef.current;
     let observer: IntersectionObserver | undefined;
     if (node) {
       observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setEnable3d(true);
-            startLoop();
+            if (enabledRef.current) {
+              // Already mounted: just resume the motion on re-entry.
+              startLoop();
+            } else {
+              scheduleEnable();
+            }
           } else {
             stopLoop();
           }
@@ -137,6 +182,10 @@ function HeroBackground() {
       window.removeEventListener("pointermove", handleRealMove);
       observer?.disconnect();
       stopLoop();
+      if (idleHandleRef.current !== null) {
+        cancelIdle(idleHandleRef.current);
+        idleHandleRef.current = null;
+      }
     };
   }, []);
 
