@@ -2,7 +2,13 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import LogoHeader from "../../public/images/header/logo.webp";
-import { PortfolioLocale, getPortfolioContent, portfolioEmail, homePath } from "../../content/portfolioContent";
+import {
+  PortfolioLocale,
+  getPortfolioContent,
+  portfolioEmail,
+  portfolioSocialLinks,
+  homePath,
+} from "../../content/portfolioContent";
 import styles from "./footerCustom.module.scss";
 
 type FooterCustomProps = {
@@ -42,6 +48,21 @@ export function FooterCustom({ locale }: FooterCustomProps) {
           <a href={`mailto:${portfolioEmail}`} className={styles.emailLink}>
             {portfolioEmail}
           </a>
+          <ul className={styles.socialLinks}>
+            {portfolioSocialLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={link.url}
+                  className={styles.socialLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.ariaLabel[locale]}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
           <p className={styles.rights}>{content.rights}</p>
           <Link href={content.legalLink.href} className={styles.legalLink}>
             {content.legalLink.label}

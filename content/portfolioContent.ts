@@ -1051,6 +1051,38 @@ export function getPortfolioContent(locale: PortfolioLocale): PortfolioContent {
 
 export const portfolioEmail = EMAIL;
 
+type SocialLink = {
+  id: "github" | "linkedin";
+  label: string;
+  url: string;
+  ariaLabel: Record<PortfolioLocale, string>;
+};
+
+// Single source of truth for the external profile links. The same URLs feed
+// both the JSON-LD `sameAs` (components/layout) and the visible, crawlable
+// footer links, so the structured-data declarations and the rendered anchors
+// can never drift apart.
+export const portfolioSocialLinks: SocialLink[] = [
+  {
+    id: "github",
+    label: "GitHub",
+    url: "https://github.com/val0m",
+    ariaLabel: {
+      fr: "Profil GitHub de Valentin PASSE (nouvel onglet)",
+      en: "Valentin PASSE's GitHub profile (opens in a new tab)",
+    },
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/in/valentin-passe/",
+    ariaLabel: {
+      fr: "Profil LinkedIn de Valentin PASSE (nouvel onglet)",
+      en: "Valentin PASSE's LinkedIn profile (opens in a new tab)",
+    },
+  },
+];
+
 // Home route for a given locale — single source of truth for the "/" vs "/en"
 // root used by the header, footer and secondary pages.
 export const homePath = (locale: PortfolioLocale): string => (locale === "en" ? "/en" : "/");
