@@ -18,14 +18,17 @@ const contentSecurityPolicyReportOnly = [
   "object-src 'none'",
   "frame-ancestors 'none'",
   "form-action 'self'",
-  "img-src 'self' data: https:",
+  "img-src 'self' data:",
   "font-src 'self'",
   "style-src 'self' 'unsafe-inline'",
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://www.googletagmanager.com https://va.vercel-scripts.com https://www.google-analytics.com",
   "connect-src 'self' https://prod.spline.design https://www.google-analytics.com https://*.google-analytics.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
-  "upgrade-insecure-requests",
+  // `upgrade-insecure-requests` is intentionally omitted here: it is a no-op
+  // under Report-Only (browsers ignore it and log a console warning), and the
+  // site serves no HTTP subresources to upgrade. Add it when promoting to an
+  // enforced `Content-Security-Policy`.
   "report-uri /api/csp-report",
   "report-to csp",
 ].join("; ");
