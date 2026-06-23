@@ -45,6 +45,13 @@
   --radius-xl: 24px;
   --radius-lg: 18px;
 
+  /* Motion — shared premium-animation tokens (#12). Durations stay within the
+     spec's 120–600ms window; one easing keeps intensity coherent site-wide. */
+  --motion-duration: 480ms;
+  --motion-duration-fast: 200ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-reveal-shift: 22px;
+
   /* Categorical accents — skills diagram only (intentional data-viz palette) */
   --cat-1: #2563eb;
   --cat-2: #7c3aed;

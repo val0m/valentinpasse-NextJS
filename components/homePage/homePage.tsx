@@ -9,6 +9,7 @@ import { SectionSkills } from "../sectionSkills";
 import { SectionWorkExperiences } from "../sectionWorkExperiences";
 import { SectionEducations } from "../sectionEducations";
 import { SectionProjects } from "../sectionProjects";
+import { RevealOnScroll } from "../revealOnScroll";
 import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
 import styles from "../../styles/Home.module.css";
 
@@ -28,23 +29,39 @@ export function HomePage({ locale }: HomePageProps) {
       canonicalPath={canonicalPath}
     >
       <main id="main-content" className={styles.page}>
+        {/* The hero owns its own entrance/parallax motion; every other section
+            reveals on scroll via RevealOnScroll for a coherent, restrained feel. */}
         <HeroSection locale={locale} />
         <div className={styles.container}>
           <div className={styles.stack}>
-            <SectionResume locale={locale} />
+            <RevealOnScroll>
+              <SectionResume locale={locale} />
+            </RevealOnScroll>
             <Hr />
-            <SectionServices locale={locale} />
+            <RevealOnScroll>
+              <SectionServices locale={locale} />
+            </RevealOnScroll>
             <Hr />
-            <SectionSkills locale={locale} />
+            <RevealOnScroll>
+              <SectionSkills locale={locale} />
+            </RevealOnScroll>
             <Hr />
-            <SectionWorkExperiences locale={locale} />
+            <RevealOnScroll>
+              <SectionWorkExperiences locale={locale} />
+            </RevealOnScroll>
             <Hr />
-            <SectionEducations locale={locale} />
+            <RevealOnScroll>
+              <SectionEducations locale={locale} />
+            </RevealOnScroll>
             <Hr />
-            <SectionProjects locale={locale} />
+            <RevealOnScroll>
+              <SectionProjects locale={locale} />
+            </RevealOnScroll>
           </div>
         </div>
-        <SectionContact locale={locale} />
+        <RevealOnScroll>
+          <SectionContact locale={locale} />
+        </RevealOnScroll>
       </main>
     </Layout>
   );
