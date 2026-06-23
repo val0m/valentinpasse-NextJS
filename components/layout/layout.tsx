@@ -2,7 +2,7 @@ import Head from "next/head";
 import React, { ReactNode } from "react";
 import { HeaderCustom } from "../headerCustom";
 import { FooterCustom } from "../footerCustom";
-import { PortfolioLocale, portfolioEmail } from "../../content/portfolioContent";
+import { PortfolioLocale, portfolioEmail, portfolioSocialLinks } from "../../content/portfolioContent";
 import styles from "./layout.module.scss";
 
 type LocaleAlternates = {
@@ -155,10 +155,7 @@ export function Layout({
                     occupationLocation: { "@type": "City", name: "Nice" },
                     skills: ".NET, C#, Blazor, .NET MAUI, Azure, Clean Architecture, DDD, CQRS",
                 },
-                sameAs: [
-                    "https://github.com/val0m",
-                    "https://www.linkedin.com/in/valentin-passe/",
-                ],
+                sameAs: portfolioSocialLinks.map((link) => link.url),
             },
         ],
     };

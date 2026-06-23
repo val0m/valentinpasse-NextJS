@@ -65,6 +65,25 @@
 	color: var(--color-on-dark);
 }
 
+.socialLinks {
+	margin: 0.9rem 0 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.socialLink {
+	color: var(--color-on-dark-muted);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.socialLink:hover {
+	color: var(--color-on-dark);
+}
+
 .rights {
 	margin: 1rem 0 0;
 	color: var(--color-on-dark-faint);
