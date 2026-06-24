@@ -1,4 +1,6 @@
 // Pre-reveal (hidden) state — applied only once JS arms it and motion is on.
+// Only transform + opacity animate (both GPU-composited), so the reveal stays
+// cheap without pinning a permanent layer via will-change.
 .reveal {
 	opacity: 0;
 	transform: translateY(var(--motion-reveal-shift));
