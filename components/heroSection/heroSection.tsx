@@ -58,6 +58,9 @@ function HeroBackground() {
   // re-entries into the viewport.
   const enabledRef = useRef(false);
   const idleHandleRef = useRef<number | null>(null);
+  // Tracks whether the hero is currently on screen, so a tab-visibility change
+  // only resumes the ambient motion when the scene is actually visible.
+  const isIntersectingRef = useRef(false);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
@@ -73,9 +76,22 @@ function HeroBackground() {
     };
     window.addEventListener("pointermove", handleRealMove, { passive: true });
 
-    // Pause the auto-motion while the real cursor is moving; it resumes after
-    // this short idle delay so genuine hover still wins.
+    // Treat active scrolling as user activity too: while the page scrolls we
+    // stop feeding synthetic moves to the canvas so the (expensive) WebGL
+    // re-render never competes with the scroll's own compositing. The ambient
+    // motion resumes once scrolling settles (same idle delay as hover).
+    const handleScrollActivity = () => {
+      lastUserMoveRef.current = performance.now();
+    };
+    window.addEventListener("scroll", handleScrollActivity, { passive: true });
+
+    // Pause the auto-motion while the real cursor is moving (or the page is
+    // scrolling); it resumes after this short idle delay so genuine hover wins.
     const idleDelayMs = 600;
+    // Cap the synthetic-move cadence: this is a slow decorative drift, so ~30
+    // dispatches/sec look identical to 60 while halving the Spline re-renders.
+    const frameIntervalMs = 1000 / 30;
+    let lastDispatch = 0;
     let startTime: number | null = null;
 
     const stopLoop = () => {
@@ -103,7 +119,11 @@ function HeroBackground() {
           startTime = now;
         }
 
-        if (now - lastUserMoveRef.current > idleDelayMs) {
+        if (
+          now - lastUserMoveRef.current > idleDelayMs &&
+          now - lastDispatch >= frameIntervalMs
+        ) {
+          lastDispatch = now;
           const t = (now - startTime) / 1000;
           const rect = canvas.getBoundingClientRect();
           const x = rect.left + rect.width * (0.5 + 0.32 * Math.sin(t * 0.55));
@@ -162,6 +182,7 @@ function HeroBackground() {
     if (node) {
       observer = new IntersectionObserver(
         ([entry]) => {
+          isIntersectingRef.current = entry.isIntersecting;
           if (entry.isIntersecting) {
             if (enabledRef.current) {
               // Already mounted: just resume the motion on re-entry.
@@ -178,8 +199,22 @@ function HeroBackground() {
       observer.observe(node);
     }
 
+    // Suspend the WebGL render loop entirely while the tab is hidden — there is
+    // no point animating an off-screen scene — and resume it only if the hero
+    // is still on screen when the tab comes back.
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (enabledRef.current && isIntersectingRef.current) {
+        startLoop();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
       window.removeEventListener("pointermove", handleRealMove);
+      window.removeEventListener("scroll", handleScrollActivity);
+      document.removeEventListener("visibilitychange", handleVisibility);
       observer?.disconnect();
       stopLoop();
       if (idleHandleRef.current !== null) {

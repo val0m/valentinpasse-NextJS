@@ -207,14 +207,15 @@
 }
 
 .btnOutline {
-	background-color: color-mix(in srgb, var(--color-on-dark) 8%, transparent);
+	/* A denser translucent fill (no backdrop-filter) keeps the label readable
+	   over the moving 3D scene without the per-frame GPU re-blur cost. */
+	background-color: color-mix(in srgb, var(--color-dark-2) 46%, transparent);
 	color: var(--color-on-dark);
 	border: 2px solid var(--color-on-dark-border);
-	backdrop-filter: blur(6px);
 
 	&:hover {
 		border-color: var(--color-on-dark);
-		background-color: color-mix(in srgb, var(--color-on-dark) 14%, transparent);
+		background-color: color-mix(in srgb, var(--color-dark-2) 60%, transparent);
 	}
 }
 
@@ -236,8 +237,10 @@
 	padding: 1rem 1.05rem;
 	border-radius: 20px;
 	border: 1px solid var(--color-on-dark-border);
-	background: color-mix(in srgb, var(--color-dark-2) 62%, transparent);
-	backdrop-filter: blur(10px);
+	/* Opaque-enough dark fill replaces backdrop-filter: blur(): the metrics stay
+	   legible over the animated Spline canvas without forcing a GPU re-blur of
+	   the moving backdrop on every frame (a major scroll-jank source in the hero). */
+	background: color-mix(in srgb, var(--color-dark-2) 82%, transparent);
 }
 
 .metricValue {

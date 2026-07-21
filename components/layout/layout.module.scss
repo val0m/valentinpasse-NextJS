@@ -17,6 +17,12 @@
 		linear-gradient(90deg, color-mix(in srgb, var(--color-muted-foreground) 12%, transparent) 1px, transparent 1px);
 	background-size: 72px 72px;
 	mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.68), transparent 78%);
+	/* Promote this full-viewport masked grid to its own compositor layer so it is
+	   rasterized once and simply kept in place during scroll, instead of being
+	   re-painted every frame (masked `position: fixed` layers otherwise repaint
+	   on scroll in several browsers). Visual result is identical. */
+	will-change: transform;
+	transform: translateZ(0);
 }
 
 .content {
