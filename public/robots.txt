@@ -1,4 +1,4 @@
-# robots.txt — https://www.valentin-passe.com
+# robots.txt — https://www.valentin-passe.fr
 
 # Default policy: allow every crawler to access the whole site.
 User-agent: *
@@ -26,4 +26,4 @@ Allow: /
 User-agent: CCBot
 Disallow: /
 
-Sitemap: https://www.valentin-passe.com/sitemap.xml
+Sitemap: https://www.valentin-passe.fr/sitemap.xml

@@ -30,7 +30,7 @@ type LayoutProps = {
 
 const DEFAULT_LOCALE_ALTERNATES: LocaleAlternates = { fr: "/", en: "/en" };
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.valentin-passe.com").replace(/\/+$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.valentin-passe.fr").replace(/\/+$/, "");
 const OG_IMAGE_PATH = "/og-image.jpg";
 
 function escapeJsonLd(value: unknown): string {
