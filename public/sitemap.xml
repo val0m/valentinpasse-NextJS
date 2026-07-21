@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.valentin-passe.com/</loc>
+    <loc>https://www.valentin-passe.fr/</loc>
     <lastmod>2026-06-18</lastmod>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.com/en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.fr/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.fr/"/>
   </url>
   <url>
-    <loc>https://www.valentin-passe.com/en</loc>
+    <loc>https://www.valentin-passe.fr/en</loc>
     <lastmod>2026-06-18</lastmod>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.com/en"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.fr/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.fr/"/>
   </url>
   <url>
-    <loc>https://www.valentin-passe.com/mentions-legales</loc>
+    <loc>https://www.valentin-passe.fr/mentions-legales</loc>
     <lastmod>2026-06-18</lastmod>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.com/mentions-legales"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.com/legal-notice"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.fr/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.fr/legal-notice"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.fr/mentions-legales"/>
   </url>
   <url>
-    <loc>https://www.valentin-passe.com/legal-notice</loc>
+    <loc>https://www.valentin-passe.fr/legal-notice</loc>
     <lastmod>2026-06-18</lastmod>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.com/mentions-legales"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.com/legal-notice"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.valentin-passe.fr/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.valentin-passe.fr/legal-notice"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.valentin-passe.fr/mentions-legales"/>
   </url>
 </urlset>

@@ -26,7 +26,7 @@ Based in Nice (06200), Provence-Alpes-Côte d'Azur, France. Works remote, hybrid
 ## Contact
 
 - Email: passe.valentin@gmail.com
-- Website: https://www.valentin-passe.com
+- Website: https://www.valentin-passe.fr
 - GitHub: https://github.com/val0m
 - LinkedIn: https://www.linkedin.com/in/valentin-passe/
 
@@ -36,9 +36,9 @@ Valentin PASSE est ingénieur Fullstack .NET freelance basé à Nice (06200), av
 
 ## Links
 
-- [Website](https://www.valentin-passe.com): One-page portfolio (English and French)
-- [Legal notice (EN)](https://www.valentin-passe.com/legal-notice)
-- [Mentions légales (FR)](https://www.valentin-passe.com/mentions-legales)
+- [Website](https://www.valentin-passe.fr): One-page portfolio (English and French)
+- [Legal notice (EN)](https://www.valentin-passe.fr/legal-notice)
+- [Mentions légales (FR)](https://www.valentin-passe.fr/mentions-legales)
 - [GitHub](https://github.com/val0m): Open-source and project work
 - [LinkedIn](https://www.linkedin.com/in/valentin-passe/): Professional profile
 - [Contact](mailto:passe.valentin@gmail.com): Direct email
