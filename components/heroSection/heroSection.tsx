@@ -46,6 +46,53 @@ function prefersReducedMotion() {
   );
 }
 
+// Spline instantiates a three.js WebGLRenderer whose constructor THROWS
+// ("Error creating WebGL context.") on browsers/GPUs where a WebGL context
+// cannot be created (hardware acceleration off, blocklisted GPU, WebGL disabled
+// by policy/extension, out of contexts…). That throw happens synchronously in
+// react-spline's effect — the library only catches the async scene load — so it
+// escapes to React's root error boundary and replaces the whole page with
+// "Application error: a client-side exception has occurred". We probe support
+// cheaply first and never mount the scene when it is unavailable.
+function supportsWebGL(): boolean {
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return false;
+  }
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext("webgl") ||
+          canvas.getContext("experimental-webgl"))
+    );
+  } catch {
+    return false;
+  }
+}
+
+// Safety net for the case above: even when the probe passes, actual scene
+// creation can still fail (context lost, out of memory, too many live WebGL
+// contexts, driver crash). This boundary contains any such failure to the hero
+// so the page degrades to its static gradient backdrop instead of crashing.
+class SplineErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch() {
+    // Swallowed on purpose: the hero simply falls back to its backdrop.
+  }
+
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
 function HeroBackground() {
   const [enable3d, setEnable3d] = useState(false);
   const bgRef = useRef<HTMLDivElement>(null);
@@ -64,6 +111,13 @@ function HeroBackground() {
 
   useEffect(() => {
     if (prefersReducedMotion()) {
+      return;
+    }
+
+    // Never attempt the WebGL scene when the browser cannot provide a context:
+    // mounting Spline there throws and takes the whole page down (see
+    // supportsWebGL). The static backdrop stays as the graceful fallback.
+    if (!supportsWebGL()) {
       return;
     }
 
@@ -227,13 +281,15 @@ function HeroBackground() {
   return (
     <div ref={bgRef} className={styles.background} aria-hidden="true">
       {enable3d && (
-        <div ref={hostRef} className={styles.splineHost}>
-          <Spline
-            className={styles.spline}
-            scene={SPLINE_SCENE}
-            onLoad={() => startLoopRef.current()}
-          />
-        </div>
+        <SplineErrorBoundary>
+          <div ref={hostRef} className={styles.splineHost}>
+            <Spline
+              className={styles.spline}
+              scene={SPLINE_SCENE}
+              onLoad={() => startLoopRef.current()}
+            />
+          </div>
+        </SplineErrorBoundary>
       )}
       <div className={styles.backdrop} />
     </div>
