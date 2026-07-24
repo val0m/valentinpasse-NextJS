@@ -46,23 +46,27 @@ function prefersReducedMotion() {
   );
 }
 
-// Spline instantiates a three.js WebGLRenderer whose constructor THROWS
-// ("Error creating WebGL context.") on browsers/GPUs where a WebGL context
-// cannot be created (hardware acceleration off, blocklisted GPU, WebGL disabled
-// by policy/extension, out of contexts…). That throw happens synchronously in
-// react-spline's effect — the library only catches the async scene load — so it
-// escapes to React's root error boundary and replaces the whole page with
-// "Application error: a client-side exception has occurred". We probe support
-// cheaply first and never mount the scene when it is unavailable.
-function supportsWebGL(): boolean {
+// Spline instantiates a three.js WebGLRenderer that needs a WebGL2 context (the
+// scene relies on float depth textures). Its constructor THROWS ("Error creating
+// WebGL context.") wherever that context cannot be created: hardware
+// acceleration off, blocklisted GPU, WebGL disabled by policy/extension, out of
+// contexts, or WebGL2 specifically unavailable — e.g. Firefox falling back to
+// software rendering reports "AllowWebgl2:false restricts context creation". A
+// WebGL1-only browser is enough to pass a naive check yet still fails here. That
+// throw happens synchronously in react-spline's effect — the library only
+// catches the async scene load — so it escapes to React's root error boundary
+// and replaces the whole page with "Application error: a client-side exception
+// has occurred". We probe for the exact context Spline needs (WebGL2) and never
+// mount the scene when it is unavailable, so those browsers degrade cleanly to
+// the static backdrop instead of mounting a doomed renderer.
+function supportsWebGL2(): boolean {
   if (typeof window === "undefined" || typeof document === "undefined") {
     return false;
   }
   try {
     const canvas = document.createElement("canvas");
-    const gl = (window.WebGLRenderingContext &&
-      (canvas.getContext("webgl") ||
-        canvas.getContext("experimental-webgl"))) as WebGLRenderingContext | null;
+    const gl = (window.WebGL2RenderingContext &&
+      canvas.getContext("webgl2")) as WebGL2RenderingContext | null;
     // Release the probe's context immediately: browsers cap the number of live
     // WebGL contexts, and holding an idle one for the page's lifetime (on top of
     // Spline's own) wastes a slot and nudges toward the very "too many contexts"
@@ -118,10 +122,10 @@ function HeroBackground() {
       return;
     }
 
-    // Never attempt the WebGL scene when the browser cannot provide a context:
-    // mounting Spline there throws and takes the whole page down (see
-    // supportsWebGL). The static backdrop stays as the graceful fallback.
-    if (!supportsWebGL()) {
+    // Never attempt the WebGL scene when the browser cannot provide a WebGL2
+    // context: mounting Spline there throws and takes the whole page down (see
+    // supportsWebGL2). The static backdrop stays as the graceful fallback.
+    if (!supportsWebGL2()) {
       return;
     }
 
