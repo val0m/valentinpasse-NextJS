@@ -60,11 +60,15 @@ function supportsWebGL(): boolean {
   }
   try {
     const canvas = document.createElement("canvas");
-    return Boolean(
-      window.WebGLRenderingContext &&
-        (canvas.getContext("webgl") ||
-          canvas.getContext("experimental-webgl"))
-    );
+    const gl = (window.WebGLRenderingContext &&
+      (canvas.getContext("webgl") ||
+        canvas.getContext("experimental-webgl"))) as WebGLRenderingContext | null;
+    // Release the probe's context immediately: browsers cap the number of live
+    // WebGL contexts, and holding an idle one for the page's lifetime (on top of
+    // Spline's own) wastes a slot and nudges toward the very "too many contexts"
+    // failure this guard exists to prevent.
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    return Boolean(gl);
   } catch {
     return false;
   }
