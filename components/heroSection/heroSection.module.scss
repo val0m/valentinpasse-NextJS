@@ -1,11 +1,16 @@
-@keyframes fadeInUp {
+/*
+  Motion that never hides anything: the secondary blocks rise into place but stay
+  fully opaque. Fading them in from `opacity: 0` would leave the two CTAs
+  invisible — yet clickable — for the length of the animation, against a user
+  story that asks for both calls to action to be readable as the first screen
+  paints.
+*/
+@keyframes riseIn {
 	from {
-		opacity: 0;
-		transform: translateY(24px);
+		transform: translateY(18px);
 	}
 
 	to {
-		opacity: 1;
 		transform: translateY(0);
 	}
 }
@@ -38,11 +43,11 @@
 
 .hero {
 	position: relative;
-	/* Fallback first for browsers without small-viewport units. */
-	min-height: clamp(560px, 82vh, 900px);
 	/*
 	  Deliberately under a full viewport, and in `svh` so mobile browser chrome
 	  cannot inflate it: the projects band must already peek above the fold.
+	  No `vh` fallback: the build's CSS target supports small-viewport units, so
+	  Lightning CSS strips any such duplicate from the shipped stylesheet anyway.
 	*/
 	min-height: clamp(560px, 82svh, 900px);
 	display: flex;
@@ -73,7 +78,6 @@
 	content: "";
 	position: absolute;
 	border-radius: 50%;
-	will-change: transform;
 }
 
 .blooms::before {
@@ -213,8 +217,8 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.9rem;
-	/* Secondary content: safe to fade in, unlike the headline above. */
-	animation: fadeInUp 0.6s ease both;
+	/* Secondary content: safe to animate, unlike the headline above. */
+	animation: riseIn 0.6s ease both;
 
 	@media (max-width: 520px) {
 		width: 100%;
@@ -297,8 +301,8 @@
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 0.9rem;
 	width: 100%;
-	/* Secondary content, fading in just behind the actions. */
-	animation: fadeInUp 0.6s ease 0.08s both;
+	/* Secondary content, rising just behind the actions. */
+	animation: riseIn 0.6s ease 0.08s both;
 
 	@media (max-width: 768px) {
 		grid-template-columns: 1fr;

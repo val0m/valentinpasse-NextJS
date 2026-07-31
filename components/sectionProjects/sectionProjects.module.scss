@@ -12,7 +12,18 @@
 	inherits: false;
 }
 
+/*
+  Both stops render an identical gradient, which matters for the fallback:
+  without `@property` the custom property is unregistered, so this interpolates
+  discretely — it flips straight from one stop to the other. Making the two
+  endpoints visually equal turns that flip into a no-op instead of a border
+  blinking in and out every few seconds.
+*/
 @keyframes hologramBorderSpin {
+	from {
+		--hologram-angle: 0deg;
+	}
+
 	to {
 		--hologram-angle: 360deg;
 	}
@@ -81,14 +92,6 @@
 		),
 		var(--color-dark-2);
 	box-shadow: 0 24px 60px color-mix(in srgb, var(--color-dark-2) 55%, transparent);
-	/*
-	  Capped at 6°: enough to register as a response, restrained enough to stay
-	  professional. `--tilt-x` / `--tilt-y` are written by usePointerHologram and
-	  default to 0, so the card is perfectly flat until a fine pointer enters it.
-	*/
-	transform: perspective(900px) rotateX(calc(var(--tilt-y, 0) * -6deg))
-		rotateY(calc(var(--tilt-x, 0) * 6deg));
-	transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
 /* Cursor spotlight. */
@@ -147,6 +150,21 @@
   this redesign removes for a cheaper — but still pointless — one.
 */
 @media (hover: hover) and (pointer: fine) {
+	/*
+	  Capped at 6°: enough to register as a response, restrained enough to stay
+	  professional. `--tilt-x` / `--tilt-y` are written by usePointerHologram and
+	  default to 0, so the card is flat until the pointer enters it.
+
+	  Declared here rather than on `.card` so coarse-pointer devices — where the
+	  tilt can never happen — never pay for a 3D rendering context and its
+	  per-card composited layer.
+	*/
+	.card {
+		transform: perspective(900px) rotateX(calc(var(--tilt-y, 0) * -6deg))
+			rotateY(calc(var(--tilt-x, 0) * 6deg));
+		transition: transform 0.25s ease, border-color 0.25s ease;
+	}
+
 	.card:hover::before,
 	.card:focus-within::before {
 		opacity: 1;
@@ -398,8 +416,13 @@
 @media (min-width: 1024px) {
 	.grid {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		/* Explicit rows: the track count never depends on content, so expanding a
-		   disclosure cannot re-flow the bento into a different shape. */
+		/*
+		  Explicit rows: the track *count* never depends on content, so the bento
+		  keeps its shape whatever the cards contain. Track *height* still follows
+		  content — expanding a disclosure grows its row and pushes what sits below
+		  down, exactly as any native <details> does. Cards sharing a row keep their
+		  position.
+		*/
 		grid-template-rows: repeat(2, minmax(0, auto));
 	}
 

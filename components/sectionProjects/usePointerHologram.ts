@@ -102,10 +102,14 @@ export function usePointerHologram(gridRef: RefObject<HTMLElement | null>): void
 
     grid.addEventListener("pointermove", handleMove, { passive: true });
     grid.addEventListener("pointerleave", handleLeave);
+    // The OS or an input device can take the gesture over mid-move; without
+    // this the card would stay tilted until the next pointermove.
+    grid.addEventListener("pointercancel", handleLeave);
 
     return () => {
       grid.removeEventListener("pointermove", handleMove);
       grid.removeEventListener("pointerleave", handleLeave);
+      grid.removeEventListener("pointercancel", handleLeave);
       if (frame !== null) {
         cancelAnimationFrame(frame);
         frame = null;

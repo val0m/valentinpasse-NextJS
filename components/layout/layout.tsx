@@ -165,11 +165,6 @@ export function Layout({
             <Head>
                 <meta charSet="utf-8" />
 
-                {/*
-                  No third-party origin is warmed up here: the hero is CSS-only
-                  since #68, so the page loads nothing cross-origin at first paint.
-                */}
-
                 <meta name="author" content="Valentin PASSE" />
                 <meta name="copyright" content="Portfolio of Valentin PASSE" />
                 <meta

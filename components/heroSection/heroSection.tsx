@@ -95,8 +95,10 @@ export function HeroSection({ locale = "fr" }: HeroSectionProps) {
     // Coalesce scroll events to a single pending frame so fast scrolling never
     // queues redundant layout work.
     let ticking = false;
+    let frame: number | null = null;
     const update = () => {
       ticking = false;
+      frame = null;
       const el = contentRef.current;
       if (!el) {
         return;
@@ -110,7 +112,7 @@ export function HeroSection({ locale = "fr" }: HeroSectionProps) {
     const handleScroll = () => {
       if (!ticking) {
         ticking = true;
-        requestAnimationFrame(update);
+        frame = requestAnimationFrame(update);
       }
     };
 
@@ -118,7 +120,12 @@ export function HeroSection({ locale = "fr" }: HeroSectionProps) {
     // (e.g. when navigating to a hash).
     update();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame !== null) {
+        cancelAnimationFrame(frame);
+      }
+    };
   }, []);
 
   return (

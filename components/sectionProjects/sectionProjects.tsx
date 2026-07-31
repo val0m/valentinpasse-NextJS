@@ -7,6 +7,15 @@ type SectionProjectsProps = {
   locale?: PortfolioLocale;
 };
 
+/**
+ * Only an absolute https URL may reach the markup: a relative one would resolve
+ * against the portfolio itself, and an http one would downgrade the connection
+ * on a link opened in a new tab.
+ */
+function isPublishableLink(url: string | undefined): url is string {
+  return typeof url === "string" && /^https:\/\/\S+$/.test(url.trim());
+}
+
 export function SectionProjects({ locale = "fr" }: SectionProjectsProps) {
   const content = getPortfolioContent(locale).projects;
   const gridRef = useRef<HTMLDivElement>(null);
@@ -76,7 +85,7 @@ export function SectionProjects({ locale = "fr" }: SectionProjectsProps) {
                   </div>
                 </details>
 
-                {project.publicLink ? (
+                {isPublishableLink(project.publicLink) ? (
                   <a
                     href={project.publicLink}
                     className={styles.link}

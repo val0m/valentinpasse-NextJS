@@ -90,8 +90,11 @@ describe("Spline removal regressions", () => {
     const { container } = render(<HomePage locale="fr" />);
 
     // next/head is stubbed to a Fragment in jest.setup.ts, so head links render
-    // inline and are queryable here.
-    const hints = Array.from(container.querySelectorAll("link[rel='preconnect'], link[rel='dns-prefetch']"));
+    // inline and are queryable here. Scoped to the Spline origin on purpose: a
+    // legitimate preconnect added later must not fail a Spline regression test.
+    const hints = container.querySelectorAll(
+      "link[rel='preconnect'][href*='spline'], link[rel='dns-prefetch'][href*='spline']"
+    );
 
     expect(hints).toHaveLength(0);
   });

@@ -4,28 +4,23 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { HeroSection } from "./heroSection";
 import { getPortfolioContent } from "../../content/portfolioContent";
+import {
+  NO_PREFERENCE,
+  REDUCED_MOTION,
+  mockMatchMedia,
+} from "../../lib/testing/mockMatchMedia";
 
 const heroStyles = fs.readFileSync(path.join(__dirname, "heroSection.module.scss"), "utf8");
 
-function mockMatchMedia(matcher: (query: string) => boolean) {
-  // jest.setup.ts installs matchMedia as writable but not configurable, so it is
-  // reassigned rather than redefined.
-  window.matchMedia = ((query: string) => ({
-    matches: matcher(query),
-    media: query,
-    onchange: null,
-    addListener: () => undefined,
-    removeListener: () => undefined,
-    addEventListener: () => undefined,
-    removeEventListener: () => undefined,
-    dispatchEvent: () => false,
-  })) as unknown as typeof window.matchMedia;
-}
+/** Body of the file's single top-level reduced-motion block. */
+const reducedMotionBlock = heroStyles.match(
+  /^@media \(prefers-reduced-motion: reduce\) \{([\s\S]*?)^\}/m
+)?.[1];
 
 describe("HeroSection", () => {
   afterEach(() => {
     jest.restoreAllMocks();
-    mockMatchMedia(() => false);
+    mockMatchMedia(NO_PREFERENCE);
   });
 
   it("renders English headline, actions and metrics when locale is 'en'", () => {
@@ -75,7 +70,7 @@ describe("HeroSection", () => {
   });
 
   it("binds no scroll listener under prefers-reduced-motion", () => {
-    mockMatchMedia((query) => query === "(prefers-reduced-motion: reduce)");
+    mockMatchMedia(REDUCED_MOTION);
     const addEventListener = jest.spyOn(window, "addEventListener");
 
     render(<HeroSection locale="fr" />);
@@ -99,10 +94,25 @@ describe("HeroSection", () => {
       expect(heroStyles).toMatch(/min-height:\s*clamp\(560px,\s*82svh,\s*900px\)/);
     });
 
-    it("suppresses the backdrop drift under prefers-reduced-motion", () => {
-      expect(heroStyles).toMatch(
-        /@media \(prefers-reduced-motion: reduce\) \{[\s\S]*\.blooms::before,\s*\n\s*\.blooms::after \{\s*\n\s*animation: none;/
+    it("suppresses the backdrop drift inside the reduced-motion block itself", () => {
+      // Asserted against the extracted block, not the whole file: the file holds
+      // several nested reduced-motion blocks, and a loose match would stay green
+      // even if this rule drifted out of its media query.
+      expect(reducedMotionBlock).toBeDefined();
+      expect(reducedMotionBlock).toMatch(
+        /\.blooms::before,\s*\.blooms::after \{\s*animation: none;\s*\}/
       );
+    });
+
+    it("never fades secondary blocks in from zero opacity", () => {
+      // An `opacity: 0` fill would leave the two CTAs invisible yet clickable
+      // while the animation runs.
+      const keyframes = heroStyles.match(/^@keyframes riseIn \{([\s\S]*?)^\}/m)?.[1];
+
+      expect(keyframes).toBeDefined();
+      expect(keyframes).not.toMatch(/opacity/);
+      // The removed keyframes are still named in a comment explaining the fix.
+      expect(heroStyles.replace(/\/\*[\s\S]*?\*\//g, "")).not.toMatch(/fadeInUp/);
     });
   });
 });

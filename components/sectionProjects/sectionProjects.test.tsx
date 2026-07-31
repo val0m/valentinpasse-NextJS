@@ -1,7 +1,14 @@
+import fs from "fs";
+import path from "path";
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { SectionProjects } from "./sectionProjects";
 import { getPortfolioContent } from "../../content/portfolioContent";
+import {
+  FINE_POINTER,
+  NO_PREFERENCE,
+  mockMatchMedia,
+} from "../../lib/testing/mockMatchMedia";
 
 jest.mock("../../content/portfolioContent", () => {
   const actual = jest.requireActual("../../content/portfolioContent");
@@ -17,28 +24,13 @@ const frContent = jest
   .getPortfolioContent("fr");
 const frProjects = frContent.projects;
 
-/**
- * jsdom has no media queries; each test declares which ones match so the
- * binding guards of usePointerHologram can be exercised for real.
- */
-function mockMatchMedia(matcher: (query: string) => boolean) {
-  // jest.setup.ts installs matchMedia as writable but not configurable, so it is
-  // reassigned rather than redefined.
-  window.matchMedia = ((query: string) => ({
-    matches: matcher(query),
-    media: query,
-    onchange: null,
-    addListener: () => undefined,
-    removeListener: () => undefined,
-    addEventListener: () => undefined,
-    removeEventListener: () => undefined,
-    dispatchEvent: () => false,
-  })) as unknown as typeof window.matchMedia;
-}
+const projectStyles = fs.readFileSync(
+  path.join(__dirname, "sectionProjects.module.scss"),
+  "utf8"
+);
 
-const FINE_POINTER = (query: string) => query === "(hover: hover) and (pointer: fine)";
-const COARSE_POINTER = () => false;
-const REDUCED_MOTION = (query: string) =>
+/** A hybrid machine: fine pointer available, but reduced motion requested. */
+const FINE_POINTER_REDUCED_MOTION = (query: string) =>
   query === "(prefers-reduced-motion: reduce)" || FINE_POINTER(query);
 
 /**
@@ -68,7 +60,7 @@ describe("SectionProjects", () => {
         "../../content/portfolioContent"
       ).getPortfolioContent
     );
-    mockMatchMedia(() => false);
+    mockMatchMedia(NO_PREFERENCE);
   });
 
   describe("content exposure", () => {
@@ -187,6 +179,27 @@ describe("SectionProjects", () => {
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
       expect(link).toHaveAttribute("target", "_blank");
     });
+
+    it.each(["http://example.com", "/somewhere", "example.com", "javascript:alert(1)"])(
+      "never emits a link for the non-absolute-https value %s",
+      (publicLink) => {
+        getPortfolioContentMock.mockReturnValue({
+          ...frContent,
+          projects: {
+            ...frProjects,
+            items: [{ ...frProjects.items[0], publicLink }],
+          },
+        });
+
+        render(<SectionProjects locale="fr" />);
+
+        const externalLinkName = frProjects.externalLinkAriaTemplate.replace(
+          "{title}",
+          frProjects.items[0].title
+        );
+        expect(screen.queryByRole("link", { name: externalLinkName })).not.toBeInTheDocument();
+      }
+    );
   });
 
   describe("pointer hologram binding guards", () => {
@@ -200,18 +213,19 @@ describe("SectionProjects", () => {
       const addEventListener = jest.spyOn(EventTarget.prototype, "addEventListener");
       render(<SectionProjects locale="fr" />);
       return addEventListener.mock.calls.filter(
-        ([type], index) => type === "pointermove" && isGrid(addEventListener.mock.instances[index])
+        // `contexts` is the documented accessor for a call's `this`.
+        ([type], index) => type === "pointermove" && isGrid(addEventListener.mock.contexts[index])
       ).length;
     }
 
     it("binds no pointer listener on a coarse pointer", () => {
-      mockMatchMedia(COARSE_POINTER);
+      mockMatchMedia(NO_PREFERENCE);
 
       expect(countPointerBindings()).toBe(0);
     });
 
     it("binds no pointer listener under prefers-reduced-motion", () => {
-      mockMatchMedia(REDUCED_MOTION);
+      mockMatchMedia(FINE_POINTER_REDUCED_MOTION);
 
       expect(countPointerBindings()).toBe(0);
     });
@@ -278,6 +292,50 @@ describe("SectionProjects", () => {
       });
 
       expect(requestAnimationFrame).not.toHaveBeenCalled();
+    });
+  });
+
+  /*
+   * The CSS half of the guardrails. jsdom loads no stylesheet — CSS-module
+   * classes are mapped to their own name by identity-obj-proxy — so
+   * getComputedStyle would report nothing. Asserting on the source is the only
+   * lever available, and these rules are exactly the ones the issue calls
+   * non-negotiable.
+   */
+  describe("stylesheet guardrails", () => {
+    const reducedMotionBlock = projectStyles.match(
+      /^@media \(prefers-reduced-motion: reduce\) \{([\s\S]*?)^\}/m
+    )?.[1];
+
+    it("suppresses tilt, spotlight and border animation under prefers-reduced-motion", () => {
+      expect(reducedMotionBlock).toBeDefined();
+      expect(reducedMotionBlock).toMatch(/\.card \{[^}]*transform: none;/);
+      expect(reducedMotionBlock).toMatch(/opacity: 0;/);
+      expect(reducedMotionBlock).toMatch(/animation: none;/);
+    });
+
+    it("declares the reduced-motion override after the fine-pointer block, so it wins", () => {
+      // Same specificity: source order decides.
+      expect(projectStyles.indexOf("@media (prefers-reduced-motion: reduce)")).toBeGreaterThan(
+        projectStyles.indexOf("@media (hover: hover) and (pointer: fine)")
+      );
+    });
+
+    it("binds tilt only inside the fine-pointer block", () => {
+      const finePointerBlock = projectStyles.match(
+        /^@media \(hover: hover\) and \(pointer: fine\) \{([\s\S]*?)^\}/m
+      )?.[1];
+
+      expect(finePointerBlock).toMatch(/transform: perspective\(900px\)/);
+      // Capped at 6°, per the issue.
+      expect(finePointerBlock).toMatch(/\* -6deg/);
+      expect(finePointerBlock).toMatch(/\* 6deg/);
+      expect(projectStyles.match(/transform: perspective\(/g)).toHaveLength(1);
+    });
+
+    it("never uses --color-accent for text on the dark band", () => {
+      // #2563eb fails 4.5:1 here; accents must use --color-accent-on-dark.
+      expect(projectStyles).not.toMatch(/(^|[^-])color:\s*var\(--color-accent\)/m);
     });
   });
 });
