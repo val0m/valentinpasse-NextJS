@@ -58,6 +58,7 @@ describe("getPortfolioContent", () => {
       ["projects", "contextLabel"],
       ["projects", "contributionLabel"],
       ["projects", "outcomeLabel"],
+      ["projects", "disclosureLabel"],
       ["projects", "tagsAriaLabel"],
       ["projects", "externalLinkAriaTemplate"],
       ["projects", "externalLinkLabel"],
