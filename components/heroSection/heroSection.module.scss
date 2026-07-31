@@ -10,9 +10,41 @@
 	}
 }
 
+/*
+  Two slow, offset drifts. Only `transform` is animated, so both blooms stay on
+  the compositor and never trigger layout or paint.
+*/
+@keyframes heroBloomDriftA {
+	0%,
+	100% {
+		transform: translate3d(-5%, -3%, 0) scale(1);
+	}
+
+	50% {
+		transform: translate3d(6%, 5%, 0) scale(1.18);
+	}
+}
+
+@keyframes heroBloomDriftB {
+	0%,
+	100% {
+		transform: translate3d(4%, 6%, 0) scale(1.12);
+	}
+
+	50% {
+		transform: translate3d(-6%, -4%, 0) scale(0.94);
+	}
+}
+
 .hero {
 	position: relative;
-	min-height: 100vh;
+	/* Fallback first for browsers without small-viewport units. */
+	min-height: clamp(560px, 82vh, 900px);
+	/*
+	  Deliberately under a full viewport, and in `svh` so mobile browser chrome
+	  cannot inflate it: the projects band must already peek above the fold.
+	*/
+	min-height: clamp(560px, 82svh, 900px);
 	display: flex;
 	align-items: center;
 	color: var(--color-on-dark);
@@ -20,46 +52,85 @@
 	background: linear-gradient(180deg, var(--color-dark) 0%, var(--color-dark-2) 100%);
 }
 
-/* ---- 3D background ------------------------------------------------------- */
-
-.background {
-	position: absolute;
-	inset: 0;
-	z-index: 0;
-	/* Let pointer events reach the Spline canvas so the 3D scene stays
-	   interactive; the overlay copy re-enables events only on its buttons. */
-	pointer-events: auto;
-}
-
-.splineHost {
-	position: absolute;
-	inset: 0;
-}
-
-.spline {
-	width: 100% !important;
-	height: 100% !important;
-}
+/* ---- CSS-only backdrop --------------------------------------------------- */
 
 .backdrop {
 	position: absolute;
 	inset: 0;
+	z-index: 0;
 	pointer-events: none;
-	background:
+}
+
+.blooms {
+	position: absolute;
+	inset: 0;
+	/* Isolates the two blooms' overflow from the section's own stacking. */
+	overflow: hidden;
+}
+
+.blooms::before,
+.blooms::after {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+	will-change: transform;
+}
+
+.blooms::before {
+	top: -22%;
+	left: -12%;
+	width: 68%;
+	height: 92%;
+	background: radial-gradient(
+		circle,
+		color-mix(in srgb, var(--color-accent) 34%, transparent) 0%,
+		transparent 68%
+	);
+	animation: heroBloomDriftA 28s ease-in-out infinite;
+}
+
+.blooms::after {
+	right: -18%;
+	bottom: -30%;
+	width: 62%;
+	height: 88%;
+	background: radial-gradient(
+		circle,
+		color-mix(in srgb, var(--color-accent-strong) 26%, transparent) 0%,
+		transparent 70%
+	);
+	animation: heroBloomDriftB 34s ease-in-out infinite;
+}
+
+/* Static hairline grid, faded toward the horizon. */
+.gridLines {
+	position: absolute;
+	inset: 0;
+	background-image:
 		linear-gradient(
 			to right,
-			color-mix(in srgb, var(--color-dark-2) 82%, transparent),
-			transparent 28%,
-			transparent 72%,
-			color-mix(in srgb, var(--color-dark-2) 82%, transparent)
+			color-mix(in srgb, var(--color-on-dark) 5%, transparent) 1px,
+			transparent 1px
 		),
 		linear-gradient(
 			to bottom,
-			color-mix(in srgb, var(--color-dark-2) 35%, transparent) 0%,
-			transparent 42%,
-			var(--color-dark-2) 100%
-		),
-		radial-gradient(circle at 18% 16%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 34%);
+			color-mix(in srgb, var(--color-on-dark) 5%, transparent) 1px,
+			transparent 1px
+		);
+	background-size: 76px 76px;
+	-webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 108%, #000 0%, transparent 72%);
+	mask-image: radial-gradient(ellipse 90% 65% at 50% 108%, #000 0%, transparent 72%);
+}
+
+/*
+  Static SVG grain. Data URIs are covered by the existing `img-src 'self' data:`
+  directive, so this introduces no CSP allowance.
+*/
+.grain {
+	position: absolute;
+	inset: 0;
+	opacity: 0.05;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 }
 
 /* ---- Overlay content ----------------------------------------------------- */
@@ -68,13 +139,12 @@
 	position: relative;
 	z-index: 1;
 	width: 100%;
-	/* Clicks fall through to the 3D scene; interactive children opt back in. */
-	pointer-events: none;
-	animation: fadeInUp 0.7s ease both;
-
-	@media (prefers-reduced-motion: reduce) {
-		animation: none;
-	}
+	/*
+	  No animation here on purpose: this block holds the <h1>, the LCP candidate.
+	  The previous `animation: fadeInUp .7s ease both` held it at opacity 0 until
+	  the animation started, delaying the largest paint. Only the secondary
+	  elements below fade in.
+	*/
 }
 
 .inner {
@@ -83,13 +153,13 @@
 	margin: 0 auto;
 	/* Fluid side padding so the hero breathes edge-to-edge on large/fullscreen
 	   displays instead of staying boxed in a narrow centred column. */
-	padding: 9rem clamp(1.5rem, 6vw, 7rem) 5rem;
+	padding: 8rem clamp(1.5rem, 6vw, 7rem) 4.5rem;
 	display: flex;
 	flex-direction: column;
 	gap: 2.6rem;
 
 	@media (max-width: 768px) {
-		padding: 8rem 6% 4rem;
+		padding: 7rem 6% 3.5rem;
 		gap: 2rem;
 	}
 }
@@ -108,9 +178,6 @@
 
 .headline {
 	max-width: 620px;
-	/* Re-enable selection/interaction on the copy over the pass-through overlay;
-	   the open areas around it still let the 3D scene receive pointer events. */
-	pointer-events: auto;
 }
 
 .eyebrow {
@@ -146,11 +213,15 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.9rem;
-	/* Re-enable interaction over the pointer-events:none overlay. */
-	pointer-events: auto;
+	/* Secondary content: safe to fade in, unlike the headline above. */
+	animation: fadeInUp 0.6s ease both;
 
 	@media (max-width: 520px) {
 		width: 100%;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
 	}
 }
 
@@ -208,7 +279,7 @@
 
 .btnOutline {
 	/* A denser translucent fill (no backdrop-filter) keeps the label readable
-	   over the moving 3D scene without the per-frame GPU re-blur cost. */
+	   over the backdrop without the per-frame GPU re-blur cost. */
 	background-color: color-mix(in srgb, var(--color-dark-2) 46%, transparent);
 	color: var(--color-on-dark);
 	border: 2px solid var(--color-on-dark-border);
@@ -226,10 +297,15 @@
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 0.9rem;
 	width: 100%;
-	pointer-events: auto;
+	/* Secondary content, fading in just behind the actions. */
+	animation: fadeInUp 0.6s ease 0.08s both;
 
 	@media (max-width: 768px) {
 		grid-template-columns: 1fr;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
 	}
 }
 
@@ -238,8 +314,8 @@
 	border-radius: 20px;
 	border: 1px solid var(--color-on-dark-border);
 	/* Opaque-enough dark fill replaces backdrop-filter: blur(): the metrics stay
-	   legible over the animated Spline canvas without forcing a GPU re-blur of
-	   the moving backdrop on every frame (a major scroll-jank source in the hero). */
+	   legible over the backdrop without forcing a GPU re-blur on every frame
+	   (a major scroll-jank source in the previous hero). */
 	background: color-mix(in srgb, var(--color-dark-2) 82%, transparent);
 }
 
@@ -254,4 +330,11 @@
 	margin: 0.42rem 0 0;
 	color: var(--color-on-dark-muted);
 	line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.blooms::before,
+	.blooms::after {
+		animation: none;
+	}
 }
