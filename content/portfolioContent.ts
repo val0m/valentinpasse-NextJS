@@ -150,6 +150,8 @@ export type PortfolioContent = {
     contextLabel: string;
     contributionLabel: string;
     outcomeLabel: string;
+    /** Visible label of the per-card `<details>` control holding context + contribution. */
+    disclosureLabel: string;
     tagsAriaLabel: string;
     externalLinkAriaTemplate: string;
     externalLinkLabel: string;
@@ -506,6 +508,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       contextLabel: "Contexte",
       contributionLabel: "Contribution",
       outcomeLabel: "Résultat",
+      disclosureLabel: "Contexte et contribution",
       tagsAriaLabel: "Technologies et compétences projet",
       externalLinkAriaTemplate: "Voir le site de {title} (lien externe)",
       externalLinkLabel: "Voir un lien public",
@@ -927,6 +930,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       contextLabel: "Context",
       contributionLabel: "Contribution",
       outcomeLabel: "Outcome",
+      disclosureLabel: "Context and contribution",
       tagsAriaLabel: "Project technologies and skills",
       externalLinkAriaTemplate: "View the {title} website (external link)",
       externalLinkLabel: "View public link",

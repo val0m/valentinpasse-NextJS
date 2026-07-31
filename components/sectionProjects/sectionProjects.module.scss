@@ -1,116 +1,330 @@
+/*
+  Registering the angle is what makes it animatable — an unregistered custom
+  property can only be swapped discretely, never interpolated. Browsers without
+  `@property` (Firefox < 128, older Safari) leave `--hologram-angle` unset,
+  which makes the `conic-gradient` below invalid at computed-value time: the
+  `::after` simply paints nothing and the card keeps its real 1px border. Card
+  legibility never depends on this effect.
+*/
+@property --hologram-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+
+@keyframes hologramBorderSpin {
+	to {
+		--hologram-angle: 360deg;
+	}
+}
+
+/* ---- Dark band ----------------------------------------------------------- */
+
 .section {
 	width: 100%;
-	padding: 6rem 1.25rem;
+	padding: 7rem 1.25rem;
+	color: var(--color-on-dark);
+	/*
+	  Runs from `--color-dark-2` down to `--color-dark` so the band closes on the
+	  exact tone `SectionContact` opens with: the two dark sections read as one
+	  continuous close to the page, with a single crisp edge against the light
+	  sections above.
+	*/
 	background:
-		radial-gradient(circle at 14% 10%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 24%),
-		linear-gradient(180deg, var(--color-background) 0%, var(--color-card) 100%);
+		radial-gradient(circle at 12% 6%, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 38%),
+		radial-gradient(circle at 88% 88%, color-mix(in srgb, var(--color-accent-strong) 14%, transparent), transparent 42%),
+		linear-gradient(180deg, var(--color-dark-2) 0%, var(--color-dark) 100%);
 }
 
 .container {
-	max-width: 1140px;
+	max-width: 1240px;
 	margin: 0 auto;
 }
 
 .header {
 	max-width: 760px;
-	margin-bottom: 2rem;
+	margin-bottom: 2.4rem;
 }
 
 .title {
 	margin: 0;
-	color: var(--color-foreground);
+	color: var(--color-on-dark);
 	font-family: var(--font-display);
-	font-size: clamp(2.2rem, 3vw, 3.2rem);
+	font-size: clamp(2.2rem, 3.4vw, 3.4rem);
 	letter-spacing: -0.03em;
 }
 
 .subtitle {
 	margin: 0.85rem 0 0;
-	color: var(--color-text-muted);
-	line-height: 1.65;
+	color: var(--color-on-dark-muted);
+	line-height: 1.7;
 	font-size: 1.02rem;
 }
 
+/* ---- Bento grid ---------------------------------------------------------- */
+
 .grid {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 1.15rem;
+	grid-template-columns: 1fr;
+	gap: 1.1rem;
 }
 
 .card {
-	display: flex;
-	flex-direction: column;
-	gap: 0.6rem;
-	border: 1px solid var(--color-border);
-	border-radius: 24px;
-	background: var(--color-card);
-	box-shadow: 0 18px 44px color-mix(in srgb, var(--color-foreground) 6%, transparent);
-	padding: 1.2rem;
+	position: relative;
+	border-radius: var(--radius-xl);
+	border: 1px solid var(--color-on-dark-border);
+	background:
+		linear-gradient(
+			160deg,
+			color-mix(in srgb, var(--color-on-dark) 7%, transparent) 0%,
+			color-mix(in srgb, var(--color-on-dark) 3%, transparent) 100%
+		),
+		var(--color-dark-2);
+	box-shadow: 0 24px 60px color-mix(in srgb, var(--color-dark-2) 55%, transparent);
+	/*
+	  Capped at 6°: enough to register as a response, restrained enough to stay
+	  professional. `--tilt-x` / `--tilt-y` are written by usePointerHologram and
+	  default to 0, so the card is perfectly flat until a fine pointer enters it.
+	*/
+	transform: perspective(900px) rotateX(calc(var(--tilt-y, 0) * -6deg))
+		rotateY(calc(var(--tilt-x, 0) * 6deg));
+	transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
+/* Cursor spotlight. */
 .card::before {
 	content: "";
-	width: 72px;
-	height: 4px;
-	border-radius: 999px;
-	background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+	background: radial-gradient(
+		600px circle at var(--mx, 50%) var(--my, 50%),
+		color-mix(in srgb, var(--color-accent) 14%, transparent),
+		transparent 45%
+	);
+}
+
+/*
+  Animated accent edge: a conic gradient revealed as a 1px ring through a
+  padding-box / border-box mask sandwich.
+*/
+.card::after {
+	content: "";
+	position: absolute;
+	inset: -1px;
+	border-radius: inherit;
+	padding: 1px;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	background: conic-gradient(
+		from var(--hologram-angle),
+		transparent 0deg,
+		var(--color-accent-on-dark) 90deg,
+		transparent 180deg
+	);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+}
+
+/*
+  Both effects are gated on a hover-capable fine pointer, mirroring the binding
+  guard in usePointerHologram: on touch, `:hover` sticks after a tap and would
+  leave a card permanently lit.
+
+  The border spin is deliberately scoped to the hovered/focused card rather than
+  left running: animating a custom property inside a gradient repaints every
+  frame, so keeping three cards spinning permanently would trade the WebGL cost
+  this redesign removes for a cheaper — but still pointless — one.
+*/
+@media (hover: hover) and (pointer: fine) {
+	.card:hover::before,
+	.card:focus-within::before {
+		opacity: 1;
+	}
+
+	.card:hover::after,
+	.card:focus-within::after {
+		opacity: 1;
+		animation: hologramBorderSpin 6s linear infinite;
+	}
+
+	.card:hover,
+	.card:focus-within {
+		border-color: color-mix(in srgb, var(--color-accent-on-dark) 34%, transparent);
+	}
+}
+
+.cardContent {
+	position: relative;
+	/* Above the spotlight overlay. */
+	z-index: 1;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	padding: 1.6rem;
 }
 
 .cardTitle {
 	margin: 0;
-	color: var(--color-foreground);
-	font-size: 1.12rem;
+	color: var(--color-on-dark);
+	font-family: var(--font-display);
+	font-size: 1.2rem;
+	line-height: 1.25;
+	letter-spacing: -0.01em;
 }
 
 .summary {
 	margin: 0;
-	color: var(--color-text-muted);
-	line-height: 1.6;
+	color: var(--color-on-dark-muted);
+	line-height: 1.65;
 }
 
-.blockLabel {
-	margin: 0.35rem 0 0;
-	color: var(--color-foreground);
+/* ---- Outcome: the proof line, never behind an interaction ---------------- */
+
+.outcome {
+	margin: 0.2rem 0 0;
+	padding: 0.9rem 1rem;
+	border-radius: var(--radius-lg);
+	border: 1px solid color-mix(in srgb, var(--color-accent-on-dark) 22%, transparent);
+	background: color-mix(in srgb, var(--color-accent-on-dark) 7%, transparent);
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.outcomeLabel {
+	color: var(--color-accent-on-dark);
+	font-size: 0.76rem;
 	font-weight: 700;
-	font-size: 0.86rem;
+	letter-spacing: 0.14em;
 	text-transform: uppercase;
-	letter-spacing: 0.03em;
 }
 
-.blockText {
-	margin: 0;
-	color: var(--color-text-muted);
-	line-height: 1.58;
-	font-size: 0.92rem;
+.outcomeText {
+	color: var(--color-on-dark);
+	line-height: 1.6;
+	font-size: 0.95rem;
 }
+
+/* ---- Tags ---------------------------------------------------------------- */
 
 .tags {
-	margin: 0.45rem 0 0;
+	margin: 0.15rem 0 0;
 	padding: 0;
 	list-style: none;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.42rem;
+	gap: 0.4rem;
 }
 
 .tag {
 	border-radius: 999px;
-	border: 1px solid var(--color-border);
-	background: var(--color-background-alt);
-	color: var(--color-text);
-	padding: 0.24rem 0.58rem;
-	font-size: 0.81rem;
+	border: 1px solid var(--color-on-dark-border);
+	background: color-mix(in srgb, var(--color-on-dark) 8%, transparent);
+	color: var(--color-on-dark);
+	padding: 0.26rem 0.62rem;
+	font-size: 0.8rem;
+}
+
+/* ---- Disclosure ---------------------------------------------------------- */
+
+.details {
+	/* Pins the control to the bottom of the taller featured card. */
+	margin-top: auto;
+	padding-top: 0.5rem;
+}
+
+.disclosure {
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+	min-height: 44px;
+	cursor: pointer;
+	color: var(--color-accent-on-dark);
+	font-size: 0.92rem;
+	font-weight: 600;
+	/* Drop the default triangle in favour of the chevron below. */
+	list-style: none;
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&::after {
+		content: "";
+		width: 0.5rem;
+		height: 0.5rem;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: translateY(-2px) rotate(45deg);
+		transition: transform 0.2s ease;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-accent-on-dark);
+		outline-offset: 3px;
+		border-radius: 6px;
+	}
+}
+
+.details[open] .disclosure::after {
+	transform: translateY(1px) rotate(-135deg);
+}
+
+.detailsBody {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	padding-top: 0.4rem;
+}
+
+.blockLabel {
+	margin: 0.35rem 0 0;
+	color: var(--color-on-dark);
+	font-weight: 700;
+	font-size: 0.78rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+
+.blockText {
+	margin: 0;
+	color: var(--color-on-dark-muted);
+	line-height: 1.6;
+	font-size: 0.9rem;
 }
 
 .link {
-	margin-top: auto;
-	color: var(--color-foreground);
+	margin-top: 0.4rem;
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: var(--color-accent-on-dark);
 	font-weight: 600;
-	text-underline-offset: 2px;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+
+	&:focus-visible {
+		outline: 2px solid var(--color-accent-on-dark);
+		outline-offset: 3px;
+	}
 }
 
+/* ---- Section CTAs -------------------------------------------------------- */
+
 .ctaRow {
-	margin-top: 1.2rem;
+	margin-top: 2rem;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.75rem;
@@ -125,36 +339,119 @@
 	border-radius: 999px;
 	font-weight: 600;
 	text-decoration: none;
-	padding: 0.75rem 1rem;
+	padding: 0.8rem 1.4rem;
+	transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+
+	&:focus-visible {
+		outline: 2px solid var(--color-accent-on-dark);
+		outline-offset: 3px;
+	}
+
+	&:hover {
+		transform: translateY(-2px);
+	}
 }
 
 .primaryCta {
 	background: var(--color-accent);
 	color: var(--color-on-accent);
+
+	&:hover {
+		background: var(--color-accent-strong);
+	}
 }
 
 .secondaryCta {
-	background: var(--color-card);
-	color: var(--color-foreground);
-	border: 1px solid var(--color-border);
+	background-color: color-mix(in srgb, var(--color-on-dark) 8%, transparent);
+	color: var(--color-on-dark);
+	border: 1px solid var(--color-on-dark-border);
+
+	&:hover {
+		border-color: var(--color-on-dark);
+	}
 }
 
-@media (max-width: 1024px) {
+/* ---- Responsive ---------------------------------------------------------- */
+
+@media (min-width: 768px) {
 	.grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.cardFeatured {
+		grid-column: span 2;
+	}
+
+	.cardFeatured .cardTitle {
+		font-size: 1.6rem;
+	}
+
+	.cardFeatured .summary {
+		font-size: 1.06rem;
+	}
+
+	.cardContent {
+		padding: 1.8rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		/* Explicit rows: the track count never depends on content, so expanding a
+		   disclosure cannot re-flow the bento into a different shape. */
+		grid-template-rows: repeat(2, minmax(0, auto));
+	}
+
+	.cardFeatured {
+		grid-column: span 2;
+		grid-row: span 2;
+	}
+
+	.cardFeatured .cardContent {
+		padding: 2.2rem;
 	}
 }
 
 @media (max-width: 700px) {
 	.section {
-		padding: 3.5rem 1rem;
-	}
-
-	.grid {
-		grid-template-columns: 1fr;
+		padding: 4rem 1rem;
 	}
 
 	.ctaRow {
 		flex-direction: column;
+	}
+
+	.primaryCta,
+	.secondaryCta {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.card {
+		transform: none;
+		transition: none;
+	}
+
+	.card::before,
+	.card::after,
+	.card:hover::before,
+	.card:hover::after,
+	.card:focus-within::before,
+	.card:focus-within::after {
+		opacity: 0;
+		animation: none;
+	}
+
+	.disclosure::after,
+	.primaryCta,
+	.secondaryCta {
+		transition: none;
+	}
+
+	.primaryCta:hover,
+	.secondaryCta:hover {
+		transform: none;
 	}
 }
