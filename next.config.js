@@ -9,9 +9,12 @@
 // per-request script nonce is not practical — hence the pragmatic 'unsafe-inline'):
 //   - style-src 'unsafe-inline'  → next/font + next/image inject inline styles
 //   - script-src 'unsafe-inline' → Next.js bootstrap + the gtag config script
-//   - 'wasm-unsafe-eval'         → the Spline WebGL runtime uses WebAssembly
-//   - connect-src prod.spline.design → the 3D scene fetch; *.google-analytics /
-//     vercel-insights → GA4 + Vercel Analytics beacons
+//   - connect-src *.google-analytics / vercel-insights → GA4 + Vercel Analytics
+//     beacons
+//
+// The 3D hero is gone (#68), and with it the two allowances it required:
+// 'wasm-unsafe-eval' in script-src (the Spline WebAssembly runtime) and
+// https://prod.spline.design in connect-src (the remote scene fetch).
 const contentSecurityPolicyReportOnly = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -21,8 +24,8 @@ const contentSecurityPolicyReportOnly = [
   "img-src 'self' data:",
   "font-src 'self'",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://www.googletagmanager.com https://va.vercel-scripts.com https://www.google-analytics.com",
-  "connect-src 'self' https://prod.spline.design https://www.google-analytics.com https://*.google-analytics.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://va.vercel-scripts.com https://www.google-analytics.com",
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   // `upgrade-insecure-requests` is intentionally omitted here: it is a no-op
