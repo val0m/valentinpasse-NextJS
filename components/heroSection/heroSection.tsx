@@ -367,17 +367,27 @@ export function HeroSection({ locale = "fr" }: HeroSectionProps) {
 
     // Coalesce scroll events to a single pending frame so fast scrolling never
     // queues redundant layout work.
+    const PARALLAX_RANGE = 400;
     let ticking = false;
+    let lastTravel = -1;
     const update = () => {
       ticking = false;
       const el = contentRef.current;
       if (!el) {
         return;
       }
-      const scrollPosition = window.pageYOffset;
-      const opacity = 1 - Math.min(scrollPosition / 400, 1);
-      el.style.opacity = opacity.toString();
-      el.style.transform = `translateY(${scrollPosition * 0.15}px)`;
+      // The parallax only affects the hero's first PARALLAX_RANGE px of travel.
+      // Past that, nothing changes — so once the hero has scrolled out we stop
+      // writing styles every frame. Otherwise the compositor keeps updating the
+      // (already invisible) hero layer on every scroll event for the whole long
+      // page, which is what makes scrolling feel heavy.
+      const travel = Math.min(window.pageYOffset, PARALLAX_RANGE);
+      if (travel === lastTravel) {
+        return;
+      }
+      lastTravel = travel;
+      el.style.opacity = (1 - travel / PARALLAX_RANGE).toString();
+      el.style.transform = `translateY(${travel * 0.15}px)`;
     };
 
     const handleScroll = () => {

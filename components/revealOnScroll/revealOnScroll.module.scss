@@ -1,0 +1,33 @@
+// Pre-reveal (hidden) state — applied only once JS arms it and motion is on.
+// Only transform + opacity animate (both GPU-composited), so the reveal stays
+// cheap without pinning a permanent layer via will-change.
+.reveal {
+	opacity: 0;
+	transform: translateY(var(--motion-reveal-shift));
+	transition:
+		opacity var(--motion-duration) var(--motion-ease),
+		transform var(--motion-duration) var(--motion-ease);
+}
+
+.visible {
+	opacity: 1;
+	transform: none;
+}
+
+// Mobile: shorter, smaller motion per the spec's responsive guidance.
+@media (max-width: 768px) {
+	.reveal {
+		transform: translateY(14px);
+		transition-duration: var(--motion-duration-fast);
+	}
+}
+
+// Belt-and-suspenders alongside the global reduced-motion reset in globals.css:
+// guarantee the content is at rest (visible) even if it ever gets armed.
+@media (prefers-reduced-motion: reduce) {
+	.reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}
