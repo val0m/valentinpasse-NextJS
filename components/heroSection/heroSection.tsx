@@ -1,35 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
 import { prefersReducedMotion } from "../../lib/mediaPreferences";
+import { HeroNetworkBackground } from "./heroNetworkBackground";
 import styles from "./heroSection.module.scss";
 
 type HeroSectionProps = {
   locale?: PortfolioLocale;
 };
-
-/**
- * Decorative backdrop, CSS only — it replaces the Spline WebGL scene this hero
- * used to mount (~2 MB of runtime, a cross-origin scene fetch, a WebGL2
- * capability probe, an error boundary and a synthetic-pointer rAF loop).
- *
- * Three stacked layers over the section's own dark gradient:
- *   1. two slow radial blooms, animated on `transform` only, so the drift stays
- *      on the compositor and never repaints;
- *   2. a static hairline grid fading toward the horizon, for the technical
- *      register;
- *   3. a static SVG grain that breaks gradient banding on wide dark surfaces.
- *
- * Nothing here is interactive, nothing is fetched, and nothing can throw.
- */
-function HeroBackdrop() {
-  return (
-    <div className={styles.backdrop} aria-hidden="true">
-      <div className={styles.blooms} />
-      <div className={styles.gridLines} />
-      <div className={styles.grain} />
-    </div>
-  );
-}
 
 function HeroHeadline({ locale = "fr" }: HeroSectionProps) {
   const hero = getPortfolioContent(locale).hero;
@@ -130,7 +107,7 @@ export function HeroSection({ locale = "fr" }: HeroSectionProps) {
 
   return (
     <section id="hero" className={styles.hero} aria-label={hero.sectionAriaLabel}>
-      <HeroBackdrop />
+      <HeroNetworkBackground />
 
       <div ref={contentRef} className={styles.content}>
         <div className={styles.inner}>

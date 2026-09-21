@@ -99,9 +99,11 @@ describe("Spline removal regressions", () => {
     expect(hints).toHaveLength(0);
   });
 
-  it("mounts no canvas anywhere on the page", () => {
+  it("mounts no canvas outside the hero's network background", () => {
     const { container } = render(<HomePage locale="fr" />);
 
-    expect(container.querySelector("canvas")).toBeNull();
+    const canvases = container.querySelectorAll("canvas");
+    expect(canvases).toHaveLength(1);
+    expect(canvases[0].closest("#hero")).not.toBeNull();
   });
 });

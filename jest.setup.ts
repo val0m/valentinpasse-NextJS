@@ -63,3 +63,12 @@ Object.defineProperty(globalThis, "IntersectionObserver", {
   configurable: true,
   value: IntersectionObserverStub,
 });
+
+// jsdom implements no canvas and logs "Not implemented" on getContext(); report
+// no context instead, so decorative canvases bail out quietly. Tests that need
+// a drawing surface install their own fake context.
+Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+  writable: true,
+  configurable: true,
+  value: () => null,
+});

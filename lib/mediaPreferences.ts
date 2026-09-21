@@ -1,5 +1,5 @@
 /**
- * Media-query probes shared by the decorative motion of the hero backdrop and
+ * Media-query probes shared by the decorative motion of the hero network and
  * the projects grid.
  *
  * They are read imperatively rather than kept in React state on purpose: both
