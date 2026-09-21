@@ -12,11 +12,6 @@ import {
 
 const heroStyles = fs.readFileSync(path.join(__dirname, "heroSection.module.scss"), "utf8");
 
-/** Body of the file's single top-level reduced-motion block. */
-const reducedMotionBlock = heroStyles.match(
-  /^@media \(prefers-reduced-motion: reduce\) \{([\s\S]*?)^\}/m
-)?.[1];
-
 describe("HeroSection", () => {
   afterEach(() => {
     jest.restoreAllMocks();
@@ -62,11 +57,21 @@ describe("HeroSection", () => {
     });
   });
 
-  it("mounts no canvas and no WebGL surface", () => {
+  it("mounts a single decorative 2D network canvas and no WebGL surface", () => {
     const { container } = render(<HeroSection locale="fr" />);
 
-    expect(container.querySelector("canvas")).toBeNull();
+    const canvases = container.querySelectorAll("#hero canvas");
+    expect(canvases).toHaveLength(1);
+    expect(canvases[0]).toHaveAttribute("aria-hidden", "true");
     expect(container.querySelector("[class*='spline']")).toBeNull();
+  });
+
+  it("paints the network behind the copy, never over it", () => {
+    const { container } = render(<HeroSection locale="fr" />);
+    const section = container.querySelector("#hero") as HTMLElement;
+
+    // Source order backs up the z-index: the canvas comes before the copy block.
+    expect(section.firstElementChild?.tagName).toBe("CANVAS");
   });
 
   it("binds no scroll listener under prefers-reduced-motion", () => {
@@ -94,14 +99,32 @@ describe("HeroSection", () => {
       expect(heroStyles).toMatch(/min-height:\s*clamp\(560px,\s*82svh,\s*900px\)/);
     });
 
-    it("suppresses the backdrop drift inside the reduced-motion block itself", () => {
-      // Asserted against the extracted block, not the whole file: the file holds
-      // several nested reduced-motion blocks, and a loose match would stay green
-      // even if this rule drifted out of its media query.
-      expect(reducedMotionBlock).toBeDefined();
-      expect(reducedMotionBlock).toMatch(
-        /\.blooms::before,\s*\.blooms::after \{\s*animation: none;\s*\}/
-      );
+    it("keeps the network canvas out of the pointer's way", () => {
+      // The canvas lies over the whole section; it must never swallow clicks
+      // meant for the CTAs, nor sit above the copy.
+      const networkRule = heroStyles.match(/^\.network \{([\s\S]*?)^\}/m)?.[1];
+
+      expect(networkRule).toBeDefined();
+      expect(networkRule).toMatch(/pointer-events:\s*none;/);
+      expect(networkRule).toMatch(/z-index:\s*0;/);
+    });
+
+    it("fades both the hero surface and the network out over the same bottom band", () => {
+      // A hard bottom edge would cut the network lines and show a seam against
+      // the page background the next section emerges from.
+      const fade = /mask-image:\s*linear-gradient\(180deg, #000 calc\(100% - var\(--hero-fade\)\), transparent 100%\);/;
+      const surfaceRule = heroStyles.match(/^\.hero::before \{([\s\S]*?)^\}/m)?.[1];
+      const networkRule = heroStyles.match(/^\.network \{([\s\S]*?)^\}/m)?.[1];
+
+      expect(surfaceRule).toMatch(fade);
+      expect(networkRule).toMatch(fade);
+    });
+
+    it("leaves no trace of the former CSS backdrop", () => {
+      const rules = heroStyles.replace(/\/\*[\s\S]*?\*\//g, "");
+
+      expect(rules).not.toMatch(/\.(backdrop|blooms|gridLines|grain)\b/);
+      expect(rules).not.toMatch(/heroBloomDrift/);
     });
 
     it("never fades secondary blocks in from zero opacity", () => {
