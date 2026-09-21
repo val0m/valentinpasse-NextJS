@@ -22,17 +22,6 @@ jest.mock("next/link", () => ({
     React.createElement("a", { href, ...rest }, children),
 }));
 
-// next/dynamic resolves lazily and would pull in the heavy Spline WebGL runtime;
-// stub it to an inert component so hero tests stay fast and deterministic.
-jest.mock("next/dynamic", () => ({
-  __esModule: true,
-  default: () => {
-    const DynamicStub = () => null;
-    DynamicStub.displayName = "DynamicStub";
-    return DynamicStub;
-  },
-}));
-
 // jsdom does not implement matchMedia; default to "motion allowed".
 Object.defineProperty(window, "matchMedia", {
   writable: true,

@@ -40,10 +40,14 @@ export function HomePage({ locale }: HomePageProps) {
             <SectionWorkExperiences locale={locale} />
             <Hr />
             <SectionEducations locale={locale} />
-            <Hr />
-            <SectionProjects locale={locale} />
           </div>
         </div>
+        {/*
+          Projects and Contact both render outside the light container: they are
+          full-bleed dark bands that close the page. The <Hr /> that used to
+          precede Projects is gone — the surface change now carries the break.
+        */}
+        <SectionProjects locale={locale} />
         <SectionContact locale={locale} />
       </main>
     </Layout>
