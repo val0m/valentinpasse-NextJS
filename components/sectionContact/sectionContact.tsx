@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { PortfolioLocale, getPortfolioContent, portfolioEmail } from "../../content/portfolioContent";
+import { usePointerHologram } from "../sectionProjects/usePointerHologram";
 import styles from "./sectionContact.module.scss";
 
 type SectionContactProps = {
@@ -9,6 +10,10 @@ type SectionContactProps = {
 export function SectionContact({ locale = "fr" }: SectionContactProps) {
   const content = getPortfolioContent(locale).contact;
   const [feedback, setFeedback] = useState<string>("");
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Same hologram as the Projets and Réalisations cards, on the contact card.
+  usePointerHologram(sectionRef);
 
   const handleCopyEmail = async () => {
     if (typeof navigator === "undefined" || !navigator.clipboard) {
@@ -25,8 +30,13 @@ export function SectionContact({ locale = "fr" }: SectionContactProps) {
   };
 
   return (
-    <section id="contact" className={styles.section} aria-labelledby="contact-title">
-      <div className={styles.container}>
+    <section
+      ref={sectionRef}
+      id="contact"
+      className={styles.section}
+      aria-labelledby="contact-title"
+    >
+      <div className={styles.container} data-hologram-card="">
         <h2 id="contact-title" className={styles.title}>
           {content.title}
         </h2>

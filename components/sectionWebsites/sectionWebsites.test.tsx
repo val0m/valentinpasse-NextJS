@@ -134,20 +134,22 @@ describe("SectionWebsites", () => {
       });
     });
 
-    it("closes the stack with the reserved slot, which carries no hologram", () => {
+    it("closes the stack with a holographic next-project card linking to Contact", () => {
       render(<SectionWebsites locale="fr" />);
 
       const cards = stackCards();
       expect(cards).toHaveLength(frWebsites.items.length + 1);
 
       const last = cards[cards.length - 1];
-      expect(last).toHaveAccessibleName(frWebsites.placeholder.title);
-      expect(within(last).getByText(frWebsites.placeholder.label)).toBeVisible();
-      expect(within(last).getByText(frWebsites.placeholder.text)).toBeVisible();
-      expect(last).not.toHaveAttribute("data-hologram-card");
-      expect(document.querySelectorAll("[data-hologram-card]")).toHaveLength(
-        frWebsites.items.length
+      expect(last).toHaveAccessibleName(frWebsites.nextProject.title);
+      expect(within(last).getByText(frWebsites.nextProject.text)).toBeVisible();
+      expect(within(last).getByRole("link", { name: frWebsites.nextProject.ctaLabel })).toHaveAttribute(
+        "href",
+        "#contact"
       );
+      // Same hologram as the web works: every card of the stack opts in.
+      expect(last).toHaveAttribute("data-hologram-card");
+      expect(document.querySelectorAll("[data-hologram-card]")).toHaveLength(cards.length);
     });
 
     it.each(["fr", "en"] as const)("tags no version number on the '%s' route", (locale) => {
@@ -183,7 +185,7 @@ describe("SectionWebsites", () => {
         expect(screen.getByText(site.outcome)).toBeVisible();
         expect(screen.getByAltText(site.media.desktop.alt)).toBeInTheDocument();
       });
-      expect(screen.getByText(enWebsites.placeholder.title)).toBeVisible();
+      expect(screen.getByText(enWebsites.nextProject.title)).toBeVisible();
     });
   });
 
@@ -215,8 +217,8 @@ describe("SectionWebsites", () => {
 
         render(<SectionWebsites locale="fr" />);
 
-        expect(screen.getByRole("article", { name: site.title })).toBeInTheDocument();
-        expect(screen.queryByRole("link")).not.toBeInTheDocument();
+        const card = screen.getByRole("article", { name: site.title });
+        expect(within(card).queryByRole("link")).not.toBeInTheDocument();
       }
     );
   });
@@ -395,12 +397,6 @@ describe("SectionWebsites", () => {
       expect(websiteStyles).toMatch(/\.card:focus-within \{[^}]*z-index: 1;/);
       expect(websiteStyles).toMatch(
         /\.card\[data-depth\]:focus-within \{[^}]*scale: none;[^}]*filter: none;/
-      );
-    });
-
-    it("strips the hologram effects from the reserved slot", () => {
-      expect(websiteStyles).toMatch(
-        /\.cardPlaceholder::before,\s*\.cardPlaceholder::after \{[^}]*content: none;/
       );
     });
 

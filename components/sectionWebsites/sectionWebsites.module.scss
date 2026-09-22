@@ -347,26 +347,12 @@
 	@include card-copy.link;
 }
 
-/* ---- Reserved slot ------------------------------------------------------- */
+/* ---- Next project -------------------------------------------------------- */
 
-.cardPlaceholder {
-	border-style: dashed;
-}
-
-/*
-  The reserved slot shares the card surface but none of its hologram: no
-  spotlight, no spinning edge, no accent border on hover.
-*/
-.cardPlaceholder::before,
-.cardPlaceholder::after {
-	content: none;
-}
-
-.card.cardPlaceholder:hover {
-	border-color: var(--color-on-dark-border);
-}
-
-.placeholderContent {
+.nextContent {
+	position: relative;
+	/* Above the spotlight overlay. */
+	z-index: 1;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

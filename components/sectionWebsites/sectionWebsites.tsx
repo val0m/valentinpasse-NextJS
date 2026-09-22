@@ -149,22 +149,22 @@ export function SectionWebsites({ locale = "fr" }: SectionWebsitesProps) {
             );
           })}
 
-          {/*
-            Closes the stack: a card with copy but no hologram, so it reads as a
-            reserved slot rather than an interactive project.
-          */}
+          {/* Closes the stack on the visitor's own project, with the same hologram. */}
           <article
+            data-hologram-card=""
             data-stack-card=""
-            className={`${styles.card} ${styles.cardPlaceholder}`}
+            className={`${styles.card} ${styles.cardNext}`}
             style={stackStyle(content.items.length)}
-            aria-labelledby="website-placeholder-title"
+            aria-labelledby="website-next-title"
           >
-            <div className={styles.placeholderContent}>
-              <p className={styles.kind}>{content.placeholder.label}</p>
-              <h3 id="website-placeholder-title" className={styles.cardTitle}>
-                {content.placeholder.title}
+            <div className={styles.nextContent}>
+              <h3 id="website-next-title" className={styles.cardTitle}>
+                {content.nextProject.title}
               </h3>
-              <p className={styles.summary}>{content.placeholder.text}</p>
+              <p className={styles.summary}>{content.nextProject.text}</p>
+              <a href="#contact" className={styles.link}>
+                {content.nextProject.ctaLabel}
+              </a>
             </div>
           </article>
         </div>

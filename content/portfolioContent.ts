@@ -196,11 +196,12 @@ export type PortfolioContent = {
     tagsAriaLabel: string;
     externalLinkLabel: string;
     externalLinkAriaTemplate: string;
-    /** Closing card of the stack: it signals the stack is meant to grow. */
-    placeholder: {
-      label: string;
+    /** Closing card of the stack: the visitor's own project could be the next one. */
+    nextProject: {
       title: string;
       text: string;
+      /** Link to the Contact section. */
+      ctaLabel: string;
     };
   };
   contact: {
@@ -690,10 +691,10 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       tagsAriaLabel: "Technologies du site",
       externalLinkLabel: "Voir le site",
       externalLinkAriaTemplate: "Voir le site {title} (nouvel onglet)",
-      placeholder: {
-        label: "Emplacement réservé",
+      nextProject: {
         title: "Prochaine réalisation",
-        text: "Chaque nouveau site s'ajoute à la pile sans toucher à la mise en page.",
+        text: "Et si la prochaine carte de cette pile était votre futur site ?",
+        ctaLabel: "Parlons de votre projet",
       },
     },
     contact: {
@@ -1228,10 +1229,10 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       tagsAriaLabel: "Website technologies",
       externalLinkLabel: "Visit the site",
       externalLinkAriaTemplate: "Visit the {title} website (new tab)",
-      placeholder: {
-        label: "Reserved slot",
+      nextProject: {
         title: "Next project",
-        text: "Each new site joins the stack without touching the layout.",
+        text: "What if the next card in this stack were your future website?",
+        ctaLabel: "Let's talk about your project",
       },
     },
     contact: {
