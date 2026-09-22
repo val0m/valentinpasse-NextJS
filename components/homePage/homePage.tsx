@@ -9,6 +9,7 @@ import { SectionSkills } from "../sectionSkills";
 import { SectionWorkExperiences } from "../sectionWorkExperiences";
 import { SectionEducations } from "../sectionEducations";
 import { SectionProjects } from "../sectionProjects";
+import { SectionWebsites } from "../sectionWebsites";
 import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
 import styles from "../../styles/Home.module.css";
 
@@ -43,11 +44,13 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </div>
         {/*
-          Projects and Contact both render outside the light container: they are
-          full-bleed dark bands that close the page. The <Hr /> that used to
-          precede Projects is gone — the surface change now carries the break.
+          Projects, Web work and Contact render outside the light container:
+          they are full-bleed dark bands that close the page. The <Hr /> that
+          used to precede Projects is gone — the surface change now carries the
+          break.
         */}
         <SectionProjects locale={locale} />
+        <SectionWebsites locale={locale} />
         <SectionContact locale={locale} />
       </main>
     </Layout>

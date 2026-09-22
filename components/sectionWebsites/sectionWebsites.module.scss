@@ -1,0 +1,434 @@
+@use "../../styles/cardCopy" as card-copy;
+@use "../../styles/hologram";
+
+@include hologram.at-rules;
+
+/* ---- Dark band ----------------------------------------------------------- */
+
+.section {
+	width: 100%;
+	/*
+	  Continues the Projets band: flat `--color-dark` at both edges, which is the
+	  tone Projets closes on and Contact opens with, so the three sections read
+	  as one dark close to the page. The glow stays clear of the edges.
+	*/
+	padding: 3rem 1.25rem 7rem;
+	color: var(--color-on-dark);
+	background:
+		radial-gradient(
+			ellipse 60% 40% at 80% 45%,
+			color-mix(in srgb, var(--color-accent) 12%, transparent),
+			transparent 70%
+		),
+		var(--color-dark);
+}
+
+.container {
+	max-width: 1240px;
+	margin: 0 auto;
+}
+
+.header {
+	max-width: 760px;
+	margin-bottom: 2.4rem;
+}
+
+.title {
+	margin: 0;
+	color: var(--color-on-dark);
+	font-family: var(--font-display);
+	font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+	letter-spacing: -0.03em;
+}
+
+.subtitle {
+	margin: 0.85rem 0 0;
+	color: var(--color-on-dark-muted);
+	line-height: 1.7;
+	font-size: 1.02rem;
+}
+
+/* ---- Sticky stack -------------------------------------------------------- */
+
+/*
+  `--stack-top` / `--stack-step` are set inline from the constants useStackDepth
+  measures against, so the sticky offset has a single source of truth.
+*/
+.stack {
+	display: grid;
+	/* Scroll room for each card to settle before the next one covers it. */
+	gap: 9vh;
+}
+
+.card {
+	@include hologram.card;
+}
+
+/* Overrides of the shared card: a separate rule, declared after the include. */
+.card {
+	/* A full-width card swings its edges ~60px at 6°: capped at 2.5° here. */
+	--hologram-tilt-max: 2.5deg;
+	--hologram-perspective: 1400px;
+
+	position: sticky;
+	top: calc(var(--stack-top) + var(--i, 0) * var(--stack-step));
+	transform-origin: 50% 0;
+	/* The upward shadow separates a card from the one it slides over. */
+	box-shadow:
+		0 -14px 44px color-mix(in srgb, var(--color-dark-2) 70%, transparent),
+		0 24px 60px color-mix(in srgb, var(--color-dark-2) 55%, transparent);
+}
+
+/*
+  Stack depth, written by useStackDepth only while a card is being covered.
+  It lives on `scale` / `filter`, never `transform`, so it composes with the
+  tilt instead of overwriting it. Gated on the attribute so resting cards keep
+  no filter (and no extra compositing layer).
+*/
+.card[data-depth] {
+	scale: var(--s, 1);
+	filter: brightness(var(--b, 1));
+}
+
+/* Taller than the room under its sticky offset: back in the flow, fully readable. */
+.card[data-unstuck] {
+	position: relative;
+	top: auto;
+}
+
+/*
+  A card mostly hidden under the next one goes dark: no spotlight, no border
+  spin, no tilt, no phone parallax. Declared after the hologram include so it
+  wins at equal specificity.
+*/
+.card[data-covered] {
+	transform: none;
+	border-color: var(--color-on-dark-border);
+}
+
+.card[data-covered]::before,
+.card[data-covered]::after {
+	opacity: 0;
+	animation: none;
+}
+
+/*
+  Keyboard focus must never land under the next card (WCAG 2.4.11): Shift+Tab
+  into a stuck, covered card does not scroll, since the link is already in the
+  scrollport. The focused card rises above the stack, at full size and light.
+*/
+.card:focus-within {
+	z-index: 1;
+}
+
+.card[data-depth]:focus-within {
+	scale: none;
+	filter: none;
+}
+
+.cardContent {
+	position: relative;
+	/* Above the spotlight overlay. */
+	z-index: 1;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.6rem;
+	padding: 1.2rem;
+}
+
+/* ---- Device duo ---------------------------------------------------------- */
+
+.stage {
+	position: relative;
+	/* Room for the phone overlapping the browser's bottom corner. */
+	padding: 0 9% 9% 0;
+}
+
+.browser {
+	border-radius: 14px;
+	overflow: hidden;
+	border: 1px solid color-mix(in srgb, var(--color-on-dark) 24%, transparent);
+	background: #1c1c20;
+	box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+}
+
+.browserBar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 9px 14px;
+	background: #232328;
+	border-bottom: 1px solid var(--color-on-dark-border);
+}
+
+.dots {
+	display: flex;
+	flex: none;
+	gap: 6px;
+
+	i {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: #3f3f46;
+	}
+}
+
+.address {
+	flex: 1;
+	min-width: 0;
+	max-width: 300px;
+	margin-inline: auto 46px;
+	padding: 4px 10px;
+	border-radius: 7px;
+	background: color-mix(in srgb, var(--color-on-dark) 6%, transparent);
+	color: var(--color-on-dark-muted);
+	font-size: 0.74rem;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Fixed ratios: the frames reserve their box before the lazy capture lands (no CLS). */
+.screen {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	background: #f5f3ee;
+}
+
+.phone {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 25%;
+	aspect-ratio: 9 / 19.5;
+	border: 5px solid #0b0b0d;
+	border-radius: 16% / 7.4%;
+	background: #0b0b0d;
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, var(--color-on-dark) 16%, transparent),
+		0 26px 60px rgba(0, 0, 0, 0.65);
+
+	/* Camera island. */
+	&::before {
+		content: "";
+		position: absolute;
+		z-index: 2;
+		top: 2.4%;
+		left: 50%;
+		translate: -50% 0;
+		width: 30%;
+		height: 3.2%;
+		border-radius: 999px;
+		background: #000;
+	}
+}
+
+.phoneScreen {
+	position: relative;
+	height: 100%;
+	border-radius: 12% / 5.6%;
+	overflow: hidden;
+	background: #f5f3ee;
+}
+
+/* Full-page captures, cropped to their top until the page scrolls. */
+.shot {
+	object-fit: cover;
+	object-position: 50% 0;
+}
+
+.cardFlip .stage {
+	padding: 0 0 9% 9%;
+}
+
+.cardFlip .phone {
+	right: auto;
+	left: 0;
+}
+
+/* ---- Copy ---------------------------------------------------------------- */
+
+.copy {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	min-width: 0;
+}
+
+.kind {
+	margin: 0;
+	color: var(--color-accent-on-dark);
+	font-size: 0.76rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.cardTitle {
+	margin: 0;
+	color: var(--color-on-dark);
+	font-family: var(--font-display);
+	font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+	line-height: 1.2;
+	letter-spacing: -0.01em;
+	text-wrap: balance;
+}
+
+.summary {
+	margin: 0;
+	color: var(--color-on-dark-muted);
+	line-height: 1.65;
+}
+
+.outcome {
+	@include card-copy.outcome;
+}
+
+.outcomeLabel {
+	@include card-copy.outcome-label;
+}
+
+.outcomeText {
+	@include card-copy.outcome-text;
+}
+
+.tags {
+	@include card-copy.tags;
+}
+
+.tag {
+	@include card-copy.tag;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 0.25rem 1.25rem;
+}
+
+.disclosure {
+	@include card-copy.disclosure;
+}
+
+.details[open] .disclosure {
+	@include card-copy.disclosure-open;
+}
+
+.highlights {
+	margin: 0;
+	padding: 0.2rem 0 0;
+	list-style: none;
+	display: grid;
+	gap: 6px;
+	color: var(--color-on-dark-muted);
+	font-size: 0.9rem;
+
+	li {
+		position: relative;
+		padding-left: 18px;
+	}
+
+	li::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0.62em;
+		width: 8px;
+		height: 1px;
+		background: var(--color-accent-on-dark);
+	}
+}
+
+.link {
+	@include card-copy.link;
+}
+
+/* ---- Next project -------------------------------------------------------- */
+
+.nextContent {
+	position: relative;
+	/* Above the spotlight overlay. */
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6rem;
+	min-height: 220px;
+	padding: 1.6rem;
+	text-align: center;
+
+	.summary {
+		max-width: 48ch;
+	}
+}
+
+/* ---- Responsive ---------------------------------------------------------- */
+
+@media (min-width: 861px) {
+	.cardContent {
+		grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+		align-items: center;
+		gap: clamp(22px, 3.4vw, 48px);
+		padding: clamp(18px, 2.8vw, 34px);
+	}
+
+	.cardFlip .stage {
+		order: 2;
+	}
+}
+
+@media (max-width: 700px) {
+	.section {
+		padding: 2rem 1rem 4rem;
+	}
+}
+
+/* ---- Motion -------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+	.shot {
+		transition: object-position 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	/* Hover or keyboard focus scrolls the full-page captures top to bottom. */
+	.card:focus-within .shot {
+		object-position: 50% 100%;
+		transition-duration: 9s;
+		transition-timing-function: cubic-bezier(0.45, 0, 0.3, 1);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+	.card:hover .shot {
+		object-position: 50% 100%;
+		transition-duration: 9s;
+		transition-timing-function: cubic-bezier(0.45, 0, 0.3, 1);
+	}
+
+	/* Depth: the phone drifts against the tilt, as if floating above the browser. */
+	.phone {
+		translate: calc(var(--tilt-x, 0) * -18px) calc(var(--tilt-y, 0) * -14px);
+		transition: translate 0.25s ease;
+	}
+
+	.card[data-covered] .phone {
+		translate: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	/* The stack stays; its depth does not. */
+	.card[data-depth] {
+		scale: none;
+		filter: none;
+	}
+
+	.disclosure::after {
+		transition: none;
+	}
+}

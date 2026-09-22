@@ -44,7 +44,7 @@ type EducationEntry = {
   description: string;
 };
 
-type ProjectEntry = {
+export type ProjectEntry = {
   title: string;
   summary: string;
   context: string;
@@ -52,6 +52,36 @@ type ProjectEntry = {
   outcome: string;
   tags: string[];
   publicLink?: string;
+  /**
+   * Footprint in the bento grid. Omitted means a single cell; the layout is
+   * data, so reordering the list never silently changes a card's size.
+   */
+  size?: "featured" | "wide";
+};
+
+type WebsiteMedia = {
+  /** Full-page capture under /public: it scrolls inside its frame on hover or focus. */
+  src: string;
+  alt: string;
+};
+
+export type WebsiteEntry = {
+  title: string;
+  /** Type line shown above the title, completed by the year ("Site vitrine · 7 pages · 2026"). */
+  kind: string;
+  year: number;
+  /** Shown in the browser frame's address bar. */
+  host: string;
+  url: string;
+  summary: string;
+  outcome: string;
+  /** Technical choices, kept in a native <details> (still in the DOM, hence crawlable). */
+  highlights: string[];
+  stack: string[];
+  media: {
+    desktop: WebsiteMedia;
+    mobile: WebsiteMedia;
+  };
 };
 
 type FooterLink = {
@@ -156,6 +186,24 @@ export type PortfolioContent = {
     externalLinkAriaTemplate: string;
     externalLinkLabel: string;
   };
+  websites: {
+    title: string;
+    subtitle: string;
+    items: WebsiteEntry[];
+    outcomeLabel: string;
+    /** Visible label of the per-card `<details>` control holding the technical choices. */
+    disclosureLabel: string;
+    tagsAriaLabel: string;
+    externalLinkLabel: string;
+    externalLinkAriaTemplate: string;
+    /** Closing card of the stack: the visitor's own project could be the next one. */
+    nextProject: {
+      title: string;
+      text: string;
+      /** Link to the Contact section. */
+      ctaLabel: string;
+    };
+  };
   contact: {
     title: string;
     description: string;
@@ -185,7 +233,7 @@ export type PortfolioContent = {
 };
 
 // The `educations` section is intentionally excluded from NAV_IDS to keep the
-// nav bar at 7 items (avoids mobile overflow). The section is still reachable
+// nav bar at 8 items (the header folds into a menu below 1280px). The section is still reachable
 // via the "View education" CTA at the bottom of SectionWorkExperiences. As a
 // side-effect, the IntersectionObserver in HeaderCustom does not highlight any
 // nav item while the user is scrolled into the Education section - accepted
@@ -197,10 +245,29 @@ const NAV_IDS: Array<{ id: string; fr: string; en: string }> = [
   { id: "skills", fr: "Compétences", en: "Skills" },
   { id: "experience", fr: "Expérience", en: "Experience" },
   { id: "projects", fr: "Projets", en: "Projects" },
+  { id: "websites", fr: "Réalisations", en: "Work" },
   { id: "contact", fr: "Contact", en: "Contact" },
 ];
 
 const EMAIL = "passe.valentin@gmail.com";
+
+// Locale-independent facts of the web work, shared by both locales.
+const CABINET_PASSE = {
+  year: 2026,
+  host: "cabinet-passe.fr",
+  url: "https://www.cabinet-passe.fr/",
+  desktopSrc: "/images/realisations/cabinet-passe/home-desktop-full.webp",
+  mobileSrc: "/images/realisations/cabinet-passe/home-mobile-full.webp",
+};
+
+const WANDERUN = {
+  title: "WandeRun",
+  year: 2026,
+  host: "wanderun.fr",
+  url: "https://www.wanderun.fr/",
+  desktopSrc: "/images/realisations/wanderun/home-desktop-full.webp",
+  mobileSrc: "/images/realisations/wanderun/home-mobile-full.webp",
+};
 
 export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
   fr: {
@@ -468,6 +535,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       items: [
         {
           title: "Astreinte temps réel - bureau et mobile",
+          size: "featured",
           summary:
             "Pour SMEG (Monaco), une solution métier qui digitalise les appels d'astreinte, urgences et interventions, sur usages bureau et mobile MAUI, en environnement à forte exigence de disponibilité.",
           context:
@@ -476,7 +544,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
             "Architecture cible modulaire, template projet réutilisable, POC mobile MAUI pour valider le socle et formalisation des contraintes terrain.",
           outcome:
             "Processus d'astreinte digitalisés de bout en bout (bureau et mobile MAUI) et mis en service, avec une réactivité accrue des équipes sur les interventions critiques.",
-          tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
+          tags: [".NET", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
           title: "Nexio - Portail client particuliers et pros",
@@ -500,7 +568,55 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
             "Développement backend en .NET 7 sur framework ABP, structuration des flux techniques (RabbitMQ, Redis, MongoDB) et de la persistance.",
           outcome:
             "Fondation backend en production, durable et structurée (RabbitMQ, Redis, MongoDB), qui sécurise la montée en charge produit et la fiabilité des traitements IA.",
-          tags: [".NET 7", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
+          tags: [".NET", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
+        },
+        {
+          title: "Ubaldi - applications internes et migration Azure",
+          summary:
+            "Pour Ubaldi (Carros), conception et développement back-end de nombreux projets internes, et participation à la migration de plusieurs applications vers le Cloud Azure.",
+          context:
+            "La croissance de l'entreprise imposait de faire évoluer un parc d'applications internes et leur hébergement, sans freiner la livraison.",
+          contribution:
+            "Développement back-end des projets internes, migration d'applications vers Azure (applications, services, monitoring), mise en place d'une approche DDD, revues de code au sein d'une équipe Agile.",
+          outcome:
+            "Plusieurs applications migrées vers le Cloud Azure, une approche DDD adoptée par l'équipe et des livrables validés en revue de code.",
+          tags: [".NET", "C#", "Blazor", "Entity Framework", "Azure", "DDD", "Vue.js", "SQL Server", "Azure DevOps"],
+        },
+        {
+          title: "Régie Eau d'Azur - applications métier de bout en bout",
+          summary:
+            "Pour la Régie Eau d'Azur (Nice), de multiples solutions applicatives internes .NET à destination des collaborateurs, prises en charge du cahier des charges jusqu'aux démos.",
+          context:
+            "Des besoins métier variés chez les collaborateurs de la régie, à couvrir par des applications internes web et mobiles.",
+          contribution:
+            "Cahiers des charges, documentations techniques, estimations, conception des bases de données et des applications, recettes techniques et métiers, démos. Développement d'une bibliothèque JavaScript allégée pour améliorer l'ergonomie des applications.",
+          outcome:
+            "Un parc d'applications internes livrées et utilisées par les collaborateurs, et une bibliothèque JavaScript maison réutilisée d'une application à l'autre.",
+          tags: ["ASP.NET MVC", ".NET", "C#", "Xamarin Forms", "Entity Framework", "JavaScript", "Esri", "SSIS", "SQL Server"],
+        },
+        {
+          title: "Beyond IT (B-Network) - applications web sur le cycle complet",
+          summary:
+            "En alternance chez Beyond IT (B-Network, Cannes), conception de plusieurs applications web .NET WebForm, de l'analyse des besoins jusqu'à la démo.",
+          context:
+            "Année d'alternance (Licence professionnelle SIL - IDSE), avec des besoins applicatifs à couvrir en autonomie.",
+          contribution:
+            "Analyse des besoins, rédaction des cahiers des charges, développement, tests, déploiement et démonstrations.",
+          outcome:
+            "Plusieurs applications web conçues, déployées et présentées en démo, en autonomie sur l'ensemble du cycle.",
+          tags: ["ASP.NET WebForm", "C#", "Entity Framework", "JavaScript", "jQuery", "Bootstrap"],
+        },
+        {
+          title: "Pascal Coste (siège) - partage de statistiques en ligne",
+          summary:
+            "Au siège de Pascal Coste (Nice), conception du back-end d'un site web de partage de fichiers statistiques, et rédaction du cahier des charges fonctionnel d'une solution ERP.",
+          context:
+            "Stage de trois mois : les statistiques devaient être partagées en ligne, et le futur ERP devait être cadré.",
+          contribution:
+            "Développement back-end PHP (modèle MVC) du site de partage, rédaction du cahier des charges fonctionnel de l'ERP, participation à plusieurs audits.",
+          outcome:
+            "Un site de partage des statistiques conçu côté back-end et un cahier des charges fonctionnel ERP remis au siège.",
+          tags: ["PHP", "MVC", "JavaScript", "jQuery", "Bootstrap"],
         },
       ],
       primaryAction: { label: "Discuter de votre projet", href: "#contact" },
@@ -512,6 +628,72 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       tagsAriaLabel: "Technologies et compétences projet",
       externalLinkAriaTemplate: "Voir le site de {title} (lien externe)",
       externalLinkLabel: "Voir un lien public",
+    },
+    websites: {
+      title: "Réalisations web",
+      subtitle: "Des sites conçus et livrés de bout en bout, en ligne et consultables.",
+      items: [
+        {
+          title: "Cabinet dentaire Dr B. PASSE",
+          kind: "Site vitrine · 7 pages",
+          year: CABINET_PASSE.year,
+          host: CABINET_PASSE.host,
+          url: CABINET_PASSE.url,
+          summary:
+            "Site d'un cabinet dentaire au Cannet : trois domaines de soins, l'équipe, les urgences et une prise de rendez-vous renvoyée vers Doctolib, un lien par praticien.",
+          outcome:
+            "En ligne : sept pages prérendues, et le rendez-vous à un clic depuis n'importe quelle page.",
+          highlights: [
+            "Next.js (App Router), pages prérendues servies depuis le cache Vercel",
+            "CSS sur-mesure, Fraunces + Manrope via next/font",
+            "JSON-LD Dentist, horaires et adresse pour le SEO local",
+            "Cookies limités au strict nécessaire, aucun suivi publicitaire",
+          ],
+          stack: ["Next.js", "CSS sur-mesure", "Vercel", "SEO local"],
+          media: {
+            desktop: {
+              src: CABINET_PASSE.desktopSrc,
+              alt: "Cabinet dentaire Dr B. PASSE, page d'accueil sur ordinateur",
+            },
+            mobile: {
+              src: CABINET_PASSE.mobileSrc,
+              alt: "Cabinet dentaire Dr B. PASSE, page d'accueil sur téléphone",
+            },
+          },
+        },
+        {
+          title: WANDERUN.title,
+          kind: "Landing de pré-lancement · FR/EN",
+          year: WANDERUN.year,
+          host: WANDERUN.host,
+          url: WANDERUN.url,
+          summary:
+            "Tour-opérateur niçois de voyages marathon : la vision, les expériences sur place, six destinations à l'étude et une liste d'attente pour le lancement.",
+          outcome:
+            "En ligne : landing bilingue prête pour le lancement, inscriptions possibles avant même l'hydratation.",
+          highlights: [
+            "Next.js (App Router), Tailwind v4 + shadcn/ui",
+            "Bilingue FR/EN avec hreflang",
+            "Formulaire en POST natif, signature d'une Server Action",
+            "CSP en Report-Only avec endpoint de collecte, en-têtes durcis",
+          ],
+          stack: ["Next.js", "Tailwind CSS", "shadcn/ui", "CSP"],
+          media: {
+            desktop: { src: WANDERUN.desktopSrc, alt: "WandeRun, page d'accueil sur ordinateur" },
+            mobile: { src: WANDERUN.mobileSrc, alt: "WandeRun, page d'accueil sur téléphone" },
+          },
+        },
+      ],
+      outcomeLabel: "Livré",
+      disclosureLabel: "Choix techniques",
+      tagsAriaLabel: "Technologies du site",
+      externalLinkLabel: "Voir le site",
+      externalLinkAriaTemplate: "Voir le site {title} (nouvel onglet)",
+      nextProject: {
+        title: "Prochaine réalisation",
+        text: "Et si la prochaine carte de cette pile était votre futur site ?",
+        ctaLabel: "Parlons de votre projet",
+      },
     },
     contact: {
       title: "Contact",
@@ -890,6 +1072,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       items: [
         {
           title: "Real-time on-call - desktop and mobile",
+          size: "featured",
           summary:
             "For SMEG (Monaco), a business solution that digitizes on-call operations, emergencies, and interventions across desktop and MAUI mobile, in a high-availability operational environment.",
           context:
@@ -898,7 +1081,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
             "Modular target architecture, reusable project template, MAUI mobile POC to validate the foundation, and formalization of the field constraints.",
           outcome:
             "On-call processes digitized end to end (desktop and MAUI mobile) and put into service, with higher team responsiveness on critical interventions.",
-          tags: [".NET 10", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
+          tags: [".NET", "C#", "MAUI", "Clean Architecture", "DDD", "PostgreSQL"],
         },
         {
           title: "Nexio - customer portal for individuals and businesses",
@@ -922,7 +1105,55 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
             "Back-end development on .NET 7 with the ABP framework, structuring technical flows (RabbitMQ, Redis, MongoDB) and persistence.",
           outcome:
             "Durable, well-structured back-end foundation in production (RabbitMQ, Redis, MongoDB) that secures product scale-up and the reliability of AI processing.",
-          tags: [".NET 7", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
+          tags: [".NET", "ABP", "DDD", "Azure", "Docker", "RabbitMQ", "MongoDB"],
+        },
+        {
+          title: "Ubaldi - internal applications and Azure migration",
+          summary:
+            "For Ubaldi (Carros), back-end design and development of many internal projects, and a hand in migrating several applications to the Azure Cloud.",
+          context:
+            "The company's growth required its internal applications and their hosting to evolve, without slowing delivery down.",
+          contribution:
+            "Back-end development of internal projects, migration of applications to Azure (applications, services, monitoring), introduction of a DDD approach, and code reviews within an Agile team.",
+          outcome:
+            "Several applications migrated to the Azure Cloud, a DDD approach adopted by the team, and deliverables approved through code review.",
+          tags: [".NET", "C#", "Blazor", "Entity Framework", "Azure", "DDD", "Vue.js", "SQL Server", "Azure DevOps"],
+        },
+        {
+          title: "Régie Eau d'Azur - end-to-end business applications",
+          summary:
+            "For Régie Eau d'Azur (Nice), many internal .NET application solutions for employees, handled from the specification through to the demos.",
+          context:
+            "Varied business needs among the utility's employees, to be covered by internal web and mobile applications.",
+          contribution:
+            "Specifications, technical documentation, estimates, database and application design, technical and business acceptance testing, and demos. Development of a lightweight JavaScript library to improve the usability of the applications.",
+          outcome:
+            "A portfolio of internal applications delivered and used by employees, and an in-house JavaScript library reused from one application to the next.",
+          tags: ["ASP.NET MVC", ".NET", "C#", "Xamarin Forms", "Entity Framework", "JavaScript", "Esri", "SSIS", "SQL Server"],
+        },
+        {
+          title: "Beyond IT (B-Network) - web applications across the full cycle",
+          summary:
+            "As a work-study student at Beyond IT (B-Network, Cannes), design of several .NET WebForms web applications, from requirements analysis through to the demo.",
+          context:
+            "Work-study year (professional bachelor's degree SIL - IDSE), with application needs to cover autonomously.",
+          contribution:
+            "Requirements analysis, specification writing, development, testing, deployment, and demos.",
+          outcome:
+            "Several web applications designed, deployed, and demoed, working autonomously across the whole cycle.",
+          tags: ["ASP.NET WebForm", "C#", "Entity Framework", "JavaScript", "jQuery", "Bootstrap"],
+        },
+        {
+          title: "Pascal Coste (head office) - online statistics sharing",
+          summary:
+            "At the Pascal Coste head office (Nice), back-end design of a website for sharing statistics files, and the functional specification of an ERP solution.",
+          context:
+            "Three-month internship: statistics had to be shared online, and the future ERP had to be scoped.",
+          contribution:
+            "PHP back-end development (MVC pattern) of the sharing site, functional specification of the ERP, and participation in several audits.",
+          outcome:
+            "A statistics-sharing site built on the back end, and a functional ERP specification handed over to the head office.",
+          tags: ["PHP", "MVC", "JavaScript", "jQuery", "Bootstrap"],
         },
       ],
       primaryAction: { label: "Discuss your project", href: "#contact" },
@@ -934,6 +1165,71 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
       tagsAriaLabel: "Project technologies and skills",
       externalLinkAriaTemplate: "View the {title} website (external link)",
       externalLinkLabel: "View public link",
+    },
+    websites: {
+      title: "Web work",
+      subtitle: "Websites designed and shipped end to end, live and open to visit.",
+      items: [
+        {
+          title: "Dr B. PASSE Dental Practice",
+          kind: "Showcase website · 7 pages",
+          year: CABINET_PASSE.year,
+          host: CABINET_PASSE.host,
+          url: CABINET_PASSE.url,
+          summary:
+            "Website of a dental practice in Le Cannet: three areas of care, the team, emergencies, and appointment booking sent to Doctolib, one link per practitioner.",
+          outcome: "Live: seven prerendered pages, with booking one click away from any page.",
+          highlights: [
+            "Next.js (App Router), prerendered pages served from the Vercel cache",
+            "Custom CSS, Fraunces + Manrope via next/font",
+            "Dentist JSON-LD, opening hours and address for local SEO",
+            "Cookies limited to what is strictly necessary, no ad tracking",
+          ],
+          stack: ["Next.js", "Custom CSS", "Vercel", "Local SEO"],
+          media: {
+            desktop: {
+              src: CABINET_PASSE.desktopSrc,
+              alt: "Dr B. PASSE Dental Practice, home page on desktop",
+            },
+            mobile: {
+              src: CABINET_PASSE.mobileSrc,
+              alt: "Dr B. PASSE Dental Practice, home page on mobile",
+            },
+          },
+        },
+        {
+          title: WANDERUN.title,
+          kind: "Pre-launch landing page · FR/EN",
+          year: WANDERUN.year,
+          host: WANDERUN.host,
+          url: WANDERUN.url,
+          summary:
+            "Nice-based tour operator for marathon trips: the vision, the on-site experiences, six destinations under study, and a waiting list for the launch.",
+          outcome:
+            "Live: a bilingual landing page ready for launch, with sign-ups working even before hydration.",
+          highlights: [
+            "Next.js (App Router), Tailwind v4 + shadcn/ui",
+            "Bilingual FR/EN with hreflang",
+            "Native POST form, Server Action signature",
+            "Report-Only CSP with a collection endpoint, hardened headers",
+          ],
+          stack: ["Next.js", "Tailwind CSS", "shadcn/ui", "CSP"],
+          media: {
+            desktop: { src: WANDERUN.desktopSrc, alt: "WandeRun, home page on desktop" },
+            mobile: { src: WANDERUN.mobileSrc, alt: "WandeRun, home page on mobile" },
+          },
+        },
+      ],
+      outcomeLabel: "Shipped",
+      disclosureLabel: "Technical choices",
+      tagsAriaLabel: "Website technologies",
+      externalLinkLabel: "Visit the site",
+      externalLinkAriaTemplate: "Visit the {title} website (new tab)",
+      nextProject: {
+        title: "Next project",
+        text: "What if the next card in this stack were your future website?",
+        ctaLabel: "Let's talk about your project",
+      },
     },
     contact: {
       title: "Contact",

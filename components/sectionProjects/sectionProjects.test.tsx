@@ -28,6 +28,14 @@ const projectStyles = fs.readFileSync(
   path.join(__dirname, "sectionProjects.module.scss"),
   "utf8"
 );
+const hologramStyles = fs.readFileSync(
+  path.join(__dirname, "..", "..", "styles", "_hologram.scss"),
+  "utf8"
+);
+const cardCopyStyles = fs.readFileSync(
+  path.join(__dirname, "..", "..", "styles", "_cardCopy.scss"),
+  "utf8"
+);
 
 /** A hybrid machine: fine pointer available, but reduced motion requested. */
 const FINE_POINTER_REDUCED_MOTION = (query: string) =>
@@ -141,6 +149,69 @@ describe("SectionProjects", () => {
       expect(screen.getAllByText(enProjects.disclosureLabel)).toHaveLength(enProjects.items.length);
       enProjects.items.forEach((project) => {
         expect(screen.getByText(project.outcome)).toBeVisible();
+      });
+    });
+  });
+
+  describe("bento layout", () => {
+    beforeEach(() => mockMatchMedia(FINE_POINTER));
+
+    it.each(["fr", "en"] as const)("renders the seven projects on the '%s' route", (locale) => {
+      render(<SectionProjects locale={locale} />);
+
+      expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(7);
+      expect(document.querySelectorAll("[data-hologram-card]")).toHaveLength(7);
+    });
+
+    it("sizes the cards from their `size` field, a single featured one", () => {
+      render(<SectionProjects locale="fr" />);
+
+      const cards = Array.from(document.querySelectorAll("[data-hologram-card]"));
+      const sizes = cards.map((card) =>
+        card.classList.contains("cardFeatured")
+          ? "featured"
+          : card.classList.contains("cardWide")
+            ? "wide"
+            : undefined
+      );
+
+      expect(sizes).toEqual(frProjects.items.map((project) => project.size));
+      expect(sizes.filter((size) => size === "featured")).toHaveLength(1);
+      // Featured takes a full row: the six others must pair up with no hole.
+      expect(sizes.filter((size) => size === undefined).length % 2).toBe(0);
+    });
+
+    it("maps a `wide` project to the wide card class", () => {
+      const [, second, ...rest] = frProjects.items;
+      getPortfolioContentMock.mockReturnValue({
+        ...frContent,
+        projects: { ...frProjects, items: [{ ...second, size: "wide" }, ...rest] },
+      });
+
+      render(<SectionProjects locale="fr" />);
+
+      expect(document.querySelector("[data-hologram-card]")).toHaveClass("cardWide");
+    });
+
+    it("follows the data, not the position: a featured project keeps its size elsewhere in the list", () => {
+      const [featured, second, ...rest] = frProjects.items;
+      getPortfolioContentMock.mockReturnValue({
+        ...frContent,
+        projects: { ...frProjects, items: [second, featured, ...rest] },
+      });
+
+      render(<SectionProjects locale="fr" />);
+
+      const [firstCard, secondCard] = Array.from(
+        document.querySelectorAll("[data-hologram-card]")
+      );
+      expect(firstCard).not.toHaveClass("cardFeatured");
+      expect(secondCard).toHaveClass("cardFeatured");
+    });
+
+    it.each(["fr", "en"] as const)("tags no version number on the '%s' route", (locale) => {
+      getPortfolioContent(locale).projects.items.forEach((project) => {
+        project.tags.forEach((tag) => expect(tag).not.toMatch(/\d/));
       });
     });
   });
@@ -300,42 +371,49 @@ describe("SectionProjects", () => {
    * classes are mapped to their own name by identity-obj-proxy — so
    * getComputedStyle would report nothing. Asserting on the source is the only
    * lever available, and these rules are exactly the ones the issue calls
-   * non-negotiable.
+   * non-negotiable. The card treatment lives in the shared hologram partial.
    */
   describe("stylesheet guardrails", () => {
-    const reducedMotionBlock = projectStyles.match(
-      /^@media \(prefers-reduced-motion: reduce\) \{([\s\S]*?)^\}/m
+    const finePointerBlock = hologramStyles.match(
+      /^	@media \(hover: hover\) and \(pointer: fine\) \{([\s\S]*?)^	\}/m
     )?.[1];
+    const reducedMotionBlock = hologramStyles.match(
+      /^	@media \(prefers-reduced-motion: reduce\) \{([\s\S]*?)^	\}/m
+    )?.[1];
+
+    it("draws the project cards from the shared hologram partial", () => {
+      expect(projectStyles).toMatch(/\.card \{\s*@include hologram\.card;\s*\}/);
+      expect(projectStyles).toMatch(/@include hologram\.at-rules;/);
+      // Projets keeps the partial's defaults: no per-section tilt override.
+      expect(projectStyles).not.toMatch(/--hologram-tilt-max/);
+    });
 
     it("suppresses tilt, spotlight and border animation under prefers-reduced-motion", () => {
       expect(reducedMotionBlock).toBeDefined();
-      expect(reducedMotionBlock).toMatch(/\.card \{[^}]*transform: none;/);
+      expect(reducedMotionBlock).toMatch(/transform: none;/);
       expect(reducedMotionBlock).toMatch(/opacity: 0;/);
       expect(reducedMotionBlock).toMatch(/animation: none;/);
     });
 
     it("declares the reduced-motion override after the fine-pointer block, so it wins", () => {
       // Same specificity: source order decides.
-      expect(projectStyles.indexOf("@media (prefers-reduced-motion: reduce)")).toBeGreaterThan(
-        projectStyles.indexOf("@media (hover: hover) and (pointer: fine)")
+      expect(hologramStyles.indexOf("@media (prefers-reduced-motion: reduce)")).toBeGreaterThan(
+        hologramStyles.indexOf("@media (hover: hover) and (pointer: fine)")
       );
     });
 
-    it("binds tilt only inside the fine-pointer block", () => {
-      const finePointerBlock = projectStyles.match(
-        /^@media \(hover: hover\) and \(pointer: fine\) \{([\s\S]*?)^\}/m
-      )?.[1];
-
-      expect(finePointerBlock).toMatch(/transform: perspective\(900px\)/);
-      // Capped at 6°, per the issue.
-      expect(finePointerBlock).toMatch(/\* -6deg/);
-      expect(finePointerBlock).toMatch(/\* 6deg/);
-      expect(projectStyles.match(/transform: perspective\(/g)).toHaveLength(1);
+    it("binds tilt only inside the fine-pointer block, capped at 6° by default", () => {
+      expect(finePointerBlock).toMatch(/transform: perspective\(var\(--hologram-perspective, 900px\)\)/);
+      expect(finePointerBlock).toMatch(/\* -1 \* var\(--hologram-tilt-max, 6deg\)/);
+      expect(finePointerBlock).toMatch(/\* var\(--hologram-tilt-max, 6deg\)/);
+      expect(hologramStyles.match(/transform: perspective\(/g)).toHaveLength(1);
     });
 
     it("never uses --color-accent for text on the dark band", () => {
       // #2563eb fails 4.5:1 here; accents must use --color-accent-on-dark.
-      expect(projectStyles).not.toMatch(/(^|[^-])color:\s*var\(--color-accent\)/m);
+      [projectStyles, hologramStyles, cardCopyStyles].forEach((source) => {
+        expect(source).not.toMatch(/(^|[^-])color:\s*var\(--color-accent\)/m);
+      });
     });
   });
 });

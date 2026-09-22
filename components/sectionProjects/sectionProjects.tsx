@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
-import { PortfolioLocale, getPortfolioContent } from "../../content/portfolioContent";
+import { PortfolioLocale, ProjectEntry, getPortfolioContent } from "../../content/portfolioContent";
+import { isPublishableLink } from "../../lib/isPublishableLink";
 import { usePointerHologram } from "./usePointerHologram";
 import styles from "./sectionProjects.module.scss";
 
@@ -8,12 +9,16 @@ type SectionProjectsProps = {
 };
 
 /**
- * Only an absolute https URL may reach the markup: a relative one would resolve
- * against the portfolio itself, and an http one would downgrade the connection
- * on a link opened in a new tab.
+ * The bento footprint is content data, not a side effect of the order: moving
+ * a project in the list never silently promotes it to the featured slot.
  */
-function isPublishableLink(url: string | undefined): url is string {
-  return typeof url === "string" && /^https:\/\/\S+$/.test(url.trim());
+const SIZE_CLASS: Record<NonNullable<ProjectEntry["size"]>, string> = {
+  featured: styles.cardFeatured,
+  wide: styles.cardWide,
+};
+
+function cardClassName(size: ProjectEntry["size"]): string {
+  return size ? `${styles.card} ${SIZE_CLASS[size]}` : styles.card;
 }
 
 export function SectionProjects({ locale = "fr" }: SectionProjectsProps) {
@@ -39,63 +44,71 @@ export function SectionProjects({ locale = "fr" }: SectionProjectsProps) {
         </header>
 
         <div ref={gridRef} className={styles.grid}>
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <article
               key={project.title}
               // Read by usePointerHologram to resolve the hovered card without
               // depending on a hashed CSS-module class name.
               data-hologram-card=""
-              className={index === 0 ? `${styles.card} ${styles.cardFeatured}` : styles.card}
+              className={cardClassName(project.size)}
             >
               <div className={styles.cardContent}>
-                <h3 className={styles.cardTitle}>{project.title}</h3>
-                <p className={styles.summary}>{project.summary}</p>
-
                 {/*
-                  Summary and outcome stay out of any disclosure on purpose: #38
-                  added verifiable outcomes for search and AI-citation value, so
-                  they must never sit behind an interaction.
+                  Pitch and proof are grouped so a full-width card can lay them
+                  side by side instead of stretching lines past ~75 characters.
                 */}
-                <p className={styles.outcome}>
-                  <span className={styles.outcomeLabel}>{content.outcomeLabel}</span>
-                  <span className={styles.outcomeText}>{project.outcome}</span>
-                </p>
+                <div className={styles.cardLead}>
+                  <h3 className={styles.cardTitle}>{project.title}</h3>
+                  <p className={styles.summary}>{project.summary}</p>
+                </div>
 
-                <ul className={styles.tags} aria-label={content.tagsAriaLabel}>
-                  {project.tags.map((tag) => (
-                    <li key={`${project.title}-${tag}`} className={styles.tag}>
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
+                <div className={styles.cardProof}>
+                  {/*
+                    Summary and outcome stay out of any disclosure on purpose: #38
+                    added verifiable outcomes for search and AI-citation value, so
+                    they must never sit behind an interaction.
+                  */}
+                  <p className={styles.outcome}>
+                    <span className={styles.outcomeLabel}>{content.outcomeLabel}</span>
+                    <span className={styles.outcomeText}>{project.outcome}</span>
+                  </p>
 
-                {/*
-                  Native <details>: keyboard operation and expanded-state
-                  announcement come for free, and the collapsed copy stays in the
-                  DOM, hence crawlable.
-                */}
-                <details className={styles.details}>
-                  <summary className={styles.disclosure}>{content.disclosureLabel}</summary>
-                  <div className={styles.detailsBody}>
-                    <p className={styles.blockLabel}>{content.contextLabel}</p>
-                    <p className={styles.blockText}>{project.context}</p>
+                  <ul className={styles.tags} aria-label={content.tagsAriaLabel}>
+                    {project.tags.map((tag) => (
+                      <li key={`${project.title}-${tag}`} className={styles.tag}>
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
 
-                    <p className={styles.blockLabel}>{content.contributionLabel}</p>
-                    <p className={styles.blockText}>{project.contribution}</p>
-                  </div>
-                </details>
+                  {/*
+                    Native <details>: keyboard operation and expanded-state
+                    announcement come for free, and the collapsed copy stays in the
+                    DOM, hence crawlable.
+                  */}
+                  <details className={styles.details}>
+                    <summary className={styles.disclosure}>{content.disclosureLabel}</summary>
+                    <div className={styles.detailsBody}>
+                      <p className={styles.blockLabel}>{content.contextLabel}</p>
+                      <p className={styles.blockText}>{project.context}</p>
 
-                {isPublishableLink(project.publicLink) ? (
-                  <a
-                    href={project.publicLink}
-                    className={styles.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={content.externalLinkAriaTemplate.replace("{title}", project.title)}
-                  >
-                    {content.externalLinkLabel}
-                  </a>
-                ) : null}
+                      <p className={styles.blockLabel}>{content.contributionLabel}</p>
+                      <p className={styles.blockText}>{project.contribution}</p>
+                    </div>
+                  </details>
+
+                  {isPublishableLink(project.publicLink) ? (
+                    <a
+                      href={project.publicLink}
+                      className={styles.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={content.externalLinkAriaTemplate.replace("{title}", project.title)}
+                    >
+                      {content.externalLinkLabel}
+                    </a>
+                  ) : null}
+                </div>
               </div>
             </article>
           ))}

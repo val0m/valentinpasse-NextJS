@@ -23,6 +23,21 @@ Based in Nice (06200), Provence-Alpes-Côte d'Azur, France. Works remote, hybrid
 
 **AI digital-content management platform** — The back-end foundation of an innovative solution for organizing, classifying, and searching digital content with an AI component. Built on .NET 7 with the ABP framework, it structures technical flows (RabbitMQ, Redis, MongoDB) and persistence into a durable base that supports product scale-up and reliable AI processing.
 
+**Ubaldi — internal applications and Azure migration (Carros, 2021–2023)** — Back-end design and development of many internal projects, and a hand in migrating several applications to the Azure Cloud (applications, services, monitoring). Valentin introduced a DDD approach adopted by the team and took part in code reviews within an Agile team.
+
+**Régie Eau d'Azur — end-to-end business applications (Nice, 2015–2021)** — Many internal .NET web and mobile applications for the utility's employees, handled from the specification through to the demos: technical documentation, estimates, database and application design, and technical and business acceptance testing. Valentin also built a lightweight in-house JavaScript library reused from one application to the next.
+
+**Beyond IT (B-Network) — web applications across the full cycle (Cannes, 2014–2015)** — During a work-study year, design of several ASP.NET WebForms applications, from requirements analysis to specification, development, testing, deployment, and demos, working autonomously across the whole cycle.
+
+**Pascal Coste head office — online statistics sharing (Nice, 2014)** — During a three-month internship, back-end development in PHP (MVC pattern) of a website for sharing statistics files, and the functional specification of a future ERP solution.
+
+## Web work
+
+Public websites designed and developed end to end by Valentin in 2026, live and open to visit.
+
+- [Dr B. PASSE Dental Practice](https://www.cabinet-passe.fr/) (2026) — A seven-page showcase website for a dental practice in Le Cannet: three areas of care, the team, emergencies, and appointment booking sent to Doctolib, one link per practitioner. Built with Next.js (App Router) and custom CSS, prerendered and served from the Vercel cache, with Dentist JSON-LD for local SEO and cookies limited to what is strictly necessary.
+- [WandeRun](https://www.wanderun.fr/) (2026) — A bilingual (FR/EN) pre-launch landing page for a Nice-based tour operator of marathon trips, with a launch waiting list. Built with Next.js (App Router), Tailwind CSS v4 and shadcn/ui; the sign-up form is a native POST (it works before hydration), with a Report-Only Content-Security-Policy and hardened security headers.
+
 ## Contact
 
 - Email: passe.valentin@gmail.com

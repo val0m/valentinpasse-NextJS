@@ -134,6 +134,8 @@
 	padding: 0.55rem 0.82rem;
 	color: var(--color-on-dark-muted);
 	font-size: 0.9rem;
+	/* A two-word label (« À propos ») must never wrap inside its pill. */
+	white-space: nowrap;
 	text-decoration: none;
 	transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease;
 	border: 1px solid transparent;
@@ -200,7 +202,8 @@
 	outline-offset: 3px;
 }
 
-@media (max-width: 1100px) {
+/* Eight nav entries plus the CTA need the full 1240px bar: fold into the menu below 1280px. */
+@media (max-width: 1279px) {
 	.menuToggle {
 		display: inline-block;
 	}

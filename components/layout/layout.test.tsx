@@ -33,4 +33,28 @@ describe("Layout", () => {
 
     expect(screen.getByText("child-content")).toBeInTheDocument();
   });
+
+  it("credits each web work to the Person in the JSON-LD graph", () => {
+    const { container } = render(
+      <Layout locale="fr">
+        <p>contenu</p>
+      </Layout>
+    );
+
+    const script = container.querySelector('script[type="application/ld+json"]') as HTMLElement;
+    const graph = JSON.parse(script.innerHTML)["@graph"] as Array<Record<string, unknown>>;
+    const person = graph.find((node) => node["@type"] === "Person") as Record<string, unknown>;
+    const webWork = graph.filter(
+      (node) => node["@type"] === "WebSite" && node.creator !== undefined
+    );
+
+    expect(webWork.map((node) => node.url)).toEqual([
+      "https://www.cabinet-passe.fr/",
+      "https://www.wanderun.fr/",
+    ]);
+    webWork.forEach((node) => {
+      expect(node.dateCreated).toBe("2026");
+      expect(node.creator).toEqual({ "@id": person["@id"] });
+    });
+  });
 });

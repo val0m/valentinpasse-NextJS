@@ -1,0 +1,164 @@
+/*
+  Hologram card, shared by the Projets bento and the Réalisations web stack.
+
+  A card opts in with two things:
+    - `@include hologram.at-rules;` once at the root of its module, for the
+      animatable angle and its keyframes (CSS modules scope keyframe names per
+      file, so each module needs its own copy);
+    - `@include hologram.card;` inside the card rule.
+
+  `--mx` / `--my` (spotlight) and `--tilt-x` / `--tilt-y` (tilt) are written by
+  usePointerHologram onto `[data-hologram-card]` elements and default to a flat,
+  unlit card. Two custom properties tune the tilt per section:
+    - `--hologram-tilt-max` (default 6deg): the angle at the card's edge;
+    - `--hologram-perspective` (default 900px).
+*/
+
+@mixin at-rules {
+	/*
+	  Registering the angle is what makes it animatable — an unregistered custom
+	  property can only be swapped discretely, never interpolated. Browsers without
+	  `@property` (Firefox < 128, older Safari) leave `--hologram-angle` unset,
+	  which makes the `conic-gradient` below invalid at computed-value time: the
+	  `::after` simply paints nothing and the card keeps its real 1px border. Card
+	  legibility never depends on this effect.
+	*/
+	@property --hologram-angle {
+		syntax: "<angle>";
+		initial-value: 0deg;
+		inherits: false;
+	}
+
+	/*
+	  Both stops render an identical gradient, which matters for the fallback:
+	  without `@property` the custom property is unregistered, so this interpolates
+	  discretely — it flips straight from one stop to the other. Making the two
+	  endpoints visually equal turns that flip into a no-op instead of a border
+	  blinking in and out every few seconds.
+	*/
+	@keyframes hologramBorderSpin {
+		from {
+			--hologram-angle: 0deg;
+		}
+
+		to {
+			--hologram-angle: 360deg;
+		}
+	}
+}
+
+@mixin card {
+	position: relative;
+	border-radius: var(--radius-xl);
+	border: 1px solid var(--color-on-dark-border);
+	background:
+		linear-gradient(
+			160deg,
+			color-mix(in srgb, var(--color-on-dark) 7%, transparent) 0%,
+			color-mix(in srgb, var(--color-on-dark) 3%, transparent) 100%
+		),
+		var(--color-dark-2);
+	box-shadow: 0 24px 60px color-mix(in srgb, var(--color-dark-2) 55%, transparent);
+
+	/* Cursor spotlight. */
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.25s ease;
+		background: radial-gradient(
+			600px circle at var(--mx, 50%) var(--my, 50%),
+			color-mix(in srgb, var(--color-accent) 14%, transparent),
+			transparent 45%
+		);
+	}
+
+	/*
+	  Animated accent edge: a conic gradient revealed as a 1px ring through a
+	  padding-box / border-box mask sandwich.
+	*/
+	&::after {
+		content: "";
+		position: absolute;
+		inset: -1px;
+		border-radius: inherit;
+		padding: 1px;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		background: conic-gradient(
+			from var(--hologram-angle),
+			transparent 0deg,
+			var(--color-accent-on-dark) 90deg,
+			transparent 180deg
+		);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+	}
+
+	/*
+	  Both effects are gated on a hover-capable fine pointer, mirroring the binding
+	  guard in usePointerHologram: on touch, `:hover` sticks after a tap and would
+	  leave a card permanently lit.
+
+	  The border spin is deliberately scoped to the hovered/focused card rather than
+	  left running: animating a custom property inside a gradient repaints every
+	  frame, so keeping every card spinning permanently would be a pointless cost.
+	*/
+	@media (hover: hover) and (pointer: fine) {
+		/*
+		  Capped by `--hologram-tilt-max` (6° by default): enough to register as a
+		  response, restrained enough to stay professional. The card is flat until
+		  the pointer enters it.
+
+		  Declared here rather than on the card itself so coarse-pointer devices —
+		  where the tilt can never happen — never pay for a 3D rendering context and
+		  its per-card composited layer.
+		*/
+		transform: perspective(var(--hologram-perspective, 900px))
+			rotateX(calc(var(--tilt-y, 0) * -1 * var(--hologram-tilt-max, 6deg)))
+			rotateY(calc(var(--tilt-x, 0) * var(--hologram-tilt-max, 6deg)));
+		transition: transform 0.25s ease, border-color 0.25s ease;
+
+		&:hover::before,
+		&:focus-within::before {
+			opacity: 1;
+		}
+
+		&:hover::after,
+		&:focus-within::after {
+			opacity: 1;
+			animation: hologramBorderSpin 6s linear infinite;
+		}
+
+		&:hover,
+		&:focus-within {
+			border-color: color-mix(in srgb, var(--color-accent-on-dark) 34%, transparent);
+		}
+	}
+
+	/* Declared after the fine-pointer block: same specificity, so it wins. */
+	@media (prefers-reduced-motion: reduce) {
+		transform: none;
+		transition: none;
+
+		&::before,
+		&::after,
+		&:hover::before,
+		&:hover::after,
+		&:focus-within::before,
+		&:focus-within::after {
+			opacity: 0;
+			animation: none;
+		}
+	}
+}
