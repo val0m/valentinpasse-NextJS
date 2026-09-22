@@ -112,6 +112,20 @@
 	animation: none;
 }
 
+/*
+  Keyboard focus must never land under the next card (WCAG 2.4.11): Shift+Tab
+  into a stuck, covered card does not scroll, since the link is already in the
+  scrollport. The focused card rises above the stack, at full size and light.
+*/
+.card:focus-within {
+	z-index: 1;
+}
+
+.card[data-depth]:focus-within {
+	scale: none;
+	filter: none;
+}
+
 .cardContent {
 	position: relative;
 	/* Above the spotlight overlay. */
@@ -337,6 +351,19 @@
 
 .cardPlaceholder {
 	border-style: dashed;
+}
+
+/*
+  The reserved slot shares the card surface but none of its hologram: no
+  spotlight, no spinning edge, no accent border on hover.
+*/
+.cardPlaceholder::before,
+.cardPlaceholder::after {
+	content: none;
+}
+
+.card.cardPlaceholder:hover {
+	border-color: var(--color-on-dark-border);
 }
 
 .placeholderContent {

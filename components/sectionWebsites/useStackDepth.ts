@@ -62,7 +62,21 @@ export function useStackDepth(stackRef: RefObject<HTMLElement | null>): void {
       cards.forEach((card, index) => {
         const room =
           window.innerHeight - (STACK_TOP_PX + index * STACK_STEP_PX) - BOTTOM_MARGIN_PX;
-        card.toggleAttribute("data-unstuck", card.offsetHeight > room);
+        const unstuck = card.offsetHeight > room;
+        if (unstuck === card.hasAttribute("data-unstuck")) {
+          return;
+        }
+
+        // Switching between sticky and in-flow moves the card on screen — e.g.
+        // a stuck card whose <details> just opened would jump back to its flow
+        // position, above the viewport. Scroll by the same amount so it stays
+        // exactly where the reader left it.
+        const before = card.getBoundingClientRect().top;
+        card.toggleAttribute("data-unstuck", unstuck);
+        const shift = card.getBoundingClientRect().top - before;
+        if (shift !== 0) {
+          window.scrollBy({ top: shift, behavior: "instant" });
+        }
       });
     };
 
@@ -71,19 +85,20 @@ export function useStackDepth(stackRef: RefObject<HTMLElement | null>): void {
 
     const paint = () => {
       frame = null;
-      cards.forEach((card, index) => {
-        const next = cards[index + 1];
-        const height = card.offsetHeight;
-        if (!next || height === 0 || card.hasAttribute("data-unstuck")) {
-          clearDepth(card);
-          return;
-        }
 
-        const covered = clamp(
-          1 - (next.getBoundingClientRect().top - card.getBoundingClientRect().top) / height,
-          0,
-          1
-        );
+      // Every read first, then every write: interleaving them would force a
+      // style recalculation per card on each frame.
+      const tops = cards.map((card) => card.getBoundingClientRect().top);
+      const coverage = cards.map((card, index) => {
+        const height = card.offsetHeight;
+        if (index === cards.length - 1 || height === 0 || card.hasAttribute("data-unstuck")) {
+          return 0;
+        }
+        return clamp(1 - (tops[index + 1] - tops[index]) / height, 0, 1);
+      });
+
+      cards.forEach((card, index) => {
+        const covered = coverage[index];
         if (covered === 0) {
           clearDepth(card);
           return;

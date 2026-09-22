@@ -11,12 +11,12 @@ type SectionWebsitesProps = {
 };
 
 /*
-  Rendered widths of the two frames. From 860px the device duo takes ~56 % of a
-  1240px container (browser ≈ 91 % of it, phone ≈ 25 %); below, it spans the
-  column.
+  Rendered widths of the two frames. Below 861px the device duo spans the
+  column; above, it takes ~56 % of the container (browser ≈ 91 % of it, phone
+  ≈ 25 %), which tops out at 640px / 170px once the container reaches 1240px.
 */
-const DESKTOP_SIZES = "(max-width: 860px) 92vw, 640px";
-const MOBILE_SIZES = "(max-width: 860px) 24vw, 170px";
+const DESKTOP_SIZES = "(max-width: 860px) 92vw, (max-width: 1280px) 46vw, 640px";
+const MOBILE_SIZES = "(max-width: 860px) 24vw, (max-width: 1280px) 12vw, 170px";
 
 /** Rank in the stack, read by the stylesheet to offset each card's sticky top. */
 function stackStyle(rank: number): CSSProperties {

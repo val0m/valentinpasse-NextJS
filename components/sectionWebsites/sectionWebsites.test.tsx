@@ -150,6 +150,12 @@ describe("SectionWebsites", () => {
       );
     });
 
+    it.each(["fr", "en"] as const)("tags no version number on the '%s' route", (locale) => {
+      getPortfolioContent(locale).websites.items.forEach((site) => {
+        site.stack.forEach((tag) => expect(tag).not.toMatch(/\d/));
+      });
+    });
+
     it("shows no position counter on the cards", () => {
       const { container } = render(<SectionWebsites locale="fr" />);
 
@@ -333,6 +339,31 @@ describe("SectionWebsites", () => {
       fireEvent(window, new Event("resize"));
       expect(first).not.toHaveAttribute("data-unstuck");
     });
+
+    it("keeps a card in place on screen when it leaves the stack", () => {
+      mockMatchMedia(FINE_POINTER);
+      render(<SectionWebsites locale="fr" />);
+      const scrollBy = jest.spyOn(window, "scrollBy").mockImplementation(() => undefined);
+
+      window.innerHeight = 800;
+      const [first] = stackCards();
+      // Stuck at 104px; back in the flow it would sit 900px higher, off screen.
+      jest
+        .spyOn(first, "getBoundingClientRect")
+        .mockReturnValueOnce({ top: 104 } as DOMRect)
+        .mockReturnValueOnce({ top: -796 } as DOMRect);
+      setOffsetHeight(first, 700);
+
+      fireEvent(window, new Event("resize"));
+
+      expect(first).toHaveAttribute("data-unstuck");
+      expect(scrollBy).toHaveBeenCalledTimes(1);
+      expect(scrollBy).toHaveBeenCalledWith({ top: -900, behavior: "instant" });
+
+      // Nothing changes on the next measure: no further scroll.
+      fireEvent(window, new Event("resize"));
+      expect(scrollBy).toHaveBeenCalledTimes(1);
+    });
   });
 
   /*
@@ -358,6 +389,19 @@ describe("SectionWebsites", () => {
         /\.card\[data-covered\]::before,\s*\.card\[data-covered\]::after \{[^}]*opacity: 0;/
       );
       expect(websiteStyles).toMatch(/\.card\[data-unstuck\] \{[^}]*position: relative;/);
+    });
+
+    it("raises a focused card above the stack, at full size", () => {
+      expect(websiteStyles).toMatch(/\.card:focus-within \{[^}]*z-index: 1;/);
+      expect(websiteStyles).toMatch(
+        /\.card\[data-depth\]:focus-within \{[^}]*scale: none;[^}]*filter: none;/
+      );
+    });
+
+    it("strips the hologram effects from the reserved slot", () => {
+      expect(websiteStyles).toMatch(
+        /\.cardPlaceholder::before,\s*\.cardPlaceholder::after \{[^}]*content: none;/
+      );
     });
 
     it("scrolls the captures and moves the phone only when motion is allowed", () => {

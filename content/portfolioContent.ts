@@ -678,7 +678,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
             "Formulaire en POST natif, signature d'une Server Action",
             "CSP en Report-Only avec endpoint de collecte, en-têtes durcis",
           ],
-          stack: ["Next.js", "Tailwind v4", "shadcn/ui", "CSP"],
+          stack: ["Next.js", "Tailwind CSS", "shadcn/ui", "CSP"],
           media: {
             desktop: { src: WANDERUN.desktopSrc, alt: "WandeRun, page d'accueil sur ordinateur" },
             mobile: { src: WANDERUN.mobileSrc, alt: "WandeRun, page d'accueil sur téléphone" },
@@ -1216,7 +1216,7 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
             "Native POST form, Server Action signature",
             "Report-Only CSP with a collection endpoint, hardened headers",
           ],
-          stack: ["Next.js", "Tailwind v4", "shadcn/ui", "CSP"],
+          stack: ["Next.js", "Tailwind CSS", "shadcn/ui", "CSP"],
           media: {
             desktop: { src: WANDERUN.desktopSrc, alt: "WandeRun, home page on desktop" },
             mobile: { src: WANDERUN.mobileSrc, alt: "WandeRun, home page on mobile" },
