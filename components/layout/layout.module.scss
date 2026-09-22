@@ -1,7 +1,14 @@
 .mainContainer {
 	position: relative;
 	min-height: 100vh;
+	/*
+	  `clip` crops the decorative backgrounds like `hidden` did, without turning
+	  the container into a scroll container — which would silently disable every
+	  `position: sticky` below it (the Réalisations web stack). `hidden` stays as
+	  the fallback for browsers without `clip`.
+	*/
 	overflow: hidden;
+	overflow: clip;
 	background:
 		radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 32%),
 		linear-gradient(180deg, var(--color-dark) 0%, var(--color-dark-2) 20%, var(--color-background) 20.1%, var(--color-background-alt) 100%);
