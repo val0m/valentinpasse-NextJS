@@ -1,0 +1,115 @@
+/*
+  Copy vocabulary of the hologram cards on the dark band, shared by the Projets
+  bento and the Réalisations web stack: the proof block, the tag pills, the
+  native <details> control and the external link. Each section keeps its own
+  class names and layout; only the look of these pieces is shared.
+
+  Every accent is `--color-accent-on-dark`: `--color-accent` fails 4.5:1 here.
+*/
+
+/* ---- Outcome: the proof line, never behind an interaction ---------------- */
+
+@mixin outcome {
+	margin: 0.2rem 0 0;
+	padding: 0.9rem 1rem;
+	border-radius: var(--radius-lg);
+	border: 1px solid color-mix(in srgb, var(--color-accent-on-dark) 22%, transparent);
+	background: color-mix(in srgb, var(--color-accent-on-dark) 7%, transparent);
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+@mixin outcome-label {
+	color: var(--color-accent-on-dark);
+	font-size: 0.76rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+@mixin outcome-text {
+	color: var(--color-on-dark);
+	line-height: 1.6;
+	font-size: 0.95rem;
+}
+
+/* ---- Tags ---------------------------------------------------------------- */
+
+@mixin tags {
+	margin: 0.15rem 0 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+@mixin tag {
+	border-radius: 999px;
+	border: 1px solid var(--color-on-dark-border);
+	background: color-mix(in srgb, var(--color-on-dark) 8%, transparent);
+	color: var(--color-on-dark);
+	padding: 0.26rem 0.62rem;
+	font-size: 0.8rem;
+}
+
+/* ---- Disclosure ---------------------------------------------------------- */
+
+/* The `<summary>` of the card's native <details>. */
+@mixin disclosure {
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+	min-height: 44px;
+	cursor: pointer;
+	color: var(--color-accent-on-dark);
+	font-size: 0.92rem;
+	font-weight: 600;
+	/* Drop the default triangle in favour of the chevron below. */
+	list-style: none;
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&::after {
+		content: "";
+		width: 0.5rem;
+		height: 0.5rem;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: translateY(-2px) rotate(45deg);
+		transition: transform 0.2s ease;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-accent-on-dark);
+		outline-offset: 3px;
+		border-radius: 6px;
+	}
+}
+
+/* Applied to the disclosure of an open <details>: the chevron points up. */
+@mixin disclosure-open {
+	&::after {
+		transform: translateY(1px) rotate(-135deg);
+	}
+}
+
+/* ---- External link ------------------------------------------------------- */
+
+@mixin link {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	color: var(--color-accent-on-dark);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+
+	&:focus-visible {
+		outline: 2px solid var(--color-accent-on-dark);
+		outline-offset: 3px;
+	}
+}

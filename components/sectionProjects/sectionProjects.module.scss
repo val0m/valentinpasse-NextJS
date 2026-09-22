@@ -1,33 +1,7 @@
-/*
-  Registering the angle is what makes it animatable — an unregistered custom
-  property can only be swapped discretely, never interpolated. Browsers without
-  `@property` (Firefox < 128, older Safari) leave `--hologram-angle` unset,
-  which makes the `conic-gradient` below invalid at computed-value time: the
-  `::after` simply paints nothing and the card keeps its real 1px border. Card
-  legibility never depends on this effect.
-*/
-@property --hologram-angle {
-	syntax: "<angle>";
-	initial-value: 0deg;
-	inherits: false;
-}
+@use "../../styles/cardCopy" as card-copy;
+@use "../../styles/hologram";
 
-/*
-  Both stops render an identical gradient, which matters for the fallback:
-  without `@property` the custom property is unregistered, so this interpolates
-  discretely — it flips straight from one stop to the other. Making the two
-  endpoints visually equal turns that flip into a no-op instead of a border
-  blinking in and out every few seconds.
-*/
-@keyframes hologramBorderSpin {
-	from {
-		--hologram-angle: 0deg;
-	}
-
-	to {
-		--hologram-angle: 360deg;
-	}
-}
+@include hologram.at-rules;
 
 /* ---- Dark band ----------------------------------------------------------- */
 
@@ -81,105 +55,7 @@
 }
 
 .card {
-	position: relative;
-	border-radius: var(--radius-xl);
-	border: 1px solid var(--color-on-dark-border);
-	background:
-		linear-gradient(
-			160deg,
-			color-mix(in srgb, var(--color-on-dark) 7%, transparent) 0%,
-			color-mix(in srgb, var(--color-on-dark) 3%, transparent) 100%
-		),
-		var(--color-dark-2);
-	box-shadow: 0 24px 60px color-mix(in srgb, var(--color-dark-2) 55%, transparent);
-}
-
-/* Cursor spotlight. */
-.card::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	pointer-events: none;
-	opacity: 0;
-	transition: opacity 0.25s ease;
-	background: radial-gradient(
-		600px circle at var(--mx, 50%) var(--my, 50%),
-		color-mix(in srgb, var(--color-accent) 14%, transparent),
-		transparent 45%
-	);
-}
-
-/*
-  Animated accent edge: a conic gradient revealed as a 1px ring through a
-  padding-box / border-box mask sandwich.
-*/
-.card::after {
-	content: "";
-	position: absolute;
-	inset: -1px;
-	border-radius: inherit;
-	padding: 1px;
-	pointer-events: none;
-	opacity: 0;
-	transition: opacity 0.3s ease;
-	background: conic-gradient(
-		from var(--hologram-angle),
-		transparent 0deg,
-		var(--color-accent-on-dark) 90deg,
-		transparent 180deg
-	);
-	-webkit-mask:
-		linear-gradient(#000 0 0) content-box,
-		linear-gradient(#000 0 0);
-	mask:
-		linear-gradient(#000 0 0) content-box,
-		linear-gradient(#000 0 0);
-	-webkit-mask-composite: xor;
-	mask-composite: exclude;
-}
-
-/*
-  Both effects are gated on a hover-capable fine pointer, mirroring the binding
-  guard in usePointerHologram: on touch, `:hover` sticks after a tap and would
-  leave a card permanently lit.
-
-  The border spin is deliberately scoped to the hovered/focused card rather than
-  left running: animating a custom property inside a gradient repaints every
-  frame, so keeping three cards spinning permanently would trade the WebGL cost
-  this redesign removes for a cheaper — but still pointless — one.
-*/
-@media (hover: hover) and (pointer: fine) {
-	/*
-	  Capped at 6°: enough to register as a response, restrained enough to stay
-	  professional. `--tilt-x` / `--tilt-y` are written by usePointerHologram and
-	  default to 0, so the card is flat until the pointer enters it.
-
-	  Declared here rather than on `.card` so coarse-pointer devices — where the
-	  tilt can never happen — never pay for a 3D rendering context and its
-	  per-card composited layer.
-	*/
-	.card {
-		transform: perspective(900px) rotateX(calc(var(--tilt-y, 0) * -6deg))
-			rotateY(calc(var(--tilt-x, 0) * 6deg));
-		transition: transform 0.25s ease, border-color 0.25s ease;
-	}
-
-	.card:hover::before,
-	.card:focus-within::before {
-		opacity: 1;
-	}
-
-	.card:hover::after,
-	.card:focus-within::after {
-		opacity: 1;
-		animation: hologramBorderSpin 6s linear infinite;
-	}
-
-	.card:hover,
-	.card:focus-within {
-		border-color: color-mix(in srgb, var(--color-accent-on-dark) 34%, transparent);
-	}
+	@include hologram.card;
 }
 
 .cardContent {
@@ -208,54 +84,27 @@
 	line-height: 1.65;
 }
 
-/* ---- Outcome: the proof line, never behind an interaction ---------------- */
+/* ---- Card copy (shared look, see styles/_cardCopy.scss) ------------------ */
 
 .outcome {
-	margin: 0.2rem 0 0;
-	padding: 0.9rem 1rem;
-	border-radius: var(--radius-lg);
-	border: 1px solid color-mix(in srgb, var(--color-accent-on-dark) 22%, transparent);
-	background: color-mix(in srgb, var(--color-accent-on-dark) 7%, transparent);
-	display: flex;
-	flex-direction: column;
-	gap: 0.35rem;
+	@include card-copy.outcome;
 }
 
 .outcomeLabel {
-	color: var(--color-accent-on-dark);
-	font-size: 0.76rem;
-	font-weight: 700;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
+	@include card-copy.outcome-label;
 }
 
 .outcomeText {
-	color: var(--color-on-dark);
-	line-height: 1.6;
-	font-size: 0.95rem;
+	@include card-copy.outcome-text;
 }
 
-/* ---- Tags ---------------------------------------------------------------- */
-
 .tags {
-	margin: 0.15rem 0 0;
-	padding: 0;
-	list-style: none;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.4rem;
+	@include card-copy.tags;
 }
 
 .tag {
-	border-radius: 999px;
-	border: 1px solid var(--color-on-dark-border);
-	background: color-mix(in srgb, var(--color-on-dark) 8%, transparent);
-	color: var(--color-on-dark);
-	padding: 0.26rem 0.62rem;
-	font-size: 0.8rem;
+	@include card-copy.tag;
 }
-
-/* ---- Disclosure ---------------------------------------------------------- */
 
 .details {
 	/* Pins the control to the bottom of the taller featured card. */
@@ -264,40 +113,11 @@
 }
 
 .disclosure {
-	display: flex;
-	align-items: center;
-	gap: 0.55rem;
-	min-height: 44px;
-	cursor: pointer;
-	color: var(--color-accent-on-dark);
-	font-size: 0.92rem;
-	font-weight: 600;
-	/* Drop the default triangle in favour of the chevron below. */
-	list-style: none;
-
-	&::-webkit-details-marker {
-		display: none;
-	}
-
-	&::after {
-		content: "";
-		width: 0.5rem;
-		height: 0.5rem;
-		border-right: 2px solid currentColor;
-		border-bottom: 2px solid currentColor;
-		transform: translateY(-2px) rotate(45deg);
-		transition: transform 0.2s ease;
-	}
-
-	&:focus-visible {
-		outline: 2px solid var(--color-accent-on-dark);
-		outline-offset: 3px;
-		border-radius: 6px;
-	}
+	@include card-copy.disclosure;
 }
 
-.details[open] .disclosure::after {
-	transform: translateY(1px) rotate(-135deg);
+.details[open] .disclosure {
+	@include card-copy.disclosure-open;
 }
 
 .detailsBody {
@@ -324,19 +144,8 @@
 }
 
 .link {
+	@include card-copy.link;
 	margin-top: 0.4rem;
-	display: inline-flex;
-	align-items: center;
-	min-height: 44px;
-	color: var(--color-accent-on-dark);
-	font-weight: 600;
-	text-decoration: underline;
-	text-underline-offset: 3px;
-
-	&:focus-visible {
-		outline: 2px solid var(--color-accent-on-dark);
-		outline-offset: 3px;
-	}
 }
 
 /* ---- Section CTAs -------------------------------------------------------- */
@@ -422,13 +231,27 @@
 		  content — expanding a disclosure grows its row and pushes what sits below
 		  down, exactly as any native <details> does. Cards sharing a row keep their
 		  position.
+
+		  Four rows for seven cards, filled by auto-placement in content order:
+		    featured (2×2) | two cards stacked on its right
+		    one card       | wide
+		    wide           | one card
+		  so no row is left with an orphan card or a hole.
 		*/
-		grid-template-rows: repeat(2, minmax(0, auto));
+		grid-template-rows: repeat(4, minmax(0, auto));
 	}
 
 	.cardFeatured {
 		grid-column: span 2;
 		grid-row: span 2;
+	}
+
+	/*
+	  Wide only from three columns up: at two columns a wide card would take a
+	  full row and leave its neighbour orphaned.
+	*/
+	.cardWide {
+		grid-column: span 2;
 	}
 
 	.cardFeatured .cardContent {
@@ -452,21 +275,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.card {
-		transform: none;
-		transition: none;
-	}
-
-	.card::before,
-	.card::after,
-	.card:hover::before,
-	.card:hover::after,
-	.card:focus-within::before,
-	.card:focus-within::after {
-		opacity: 0;
-		animation: none;
-	}
-
 	.disclosure::after,
 	.primaryCta,
 	.secondaryCta {

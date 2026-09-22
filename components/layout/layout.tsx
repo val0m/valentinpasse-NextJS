@@ -2,7 +2,12 @@ import Head from "next/head";
 import React, { ReactNode } from "react";
 import { HeaderCustom } from "../headerCustom";
 import { FooterCustom } from "../footerCustom";
-import { PortfolioLocale, portfolioEmail, portfolioSocialLinks } from "../../content/portfolioContent";
+import {
+    PortfolioLocale,
+    getPortfolioContent,
+    portfolioEmail,
+    portfolioSocialLinks,
+} from "../../content/portfolioContent";
 import styles from "./layout.module.scss";
 
 type LocaleAlternates = {
@@ -103,6 +108,19 @@ export function Layout({
     const personId = `${SITE_URL}/#person`;
     const websiteId = `${SITE_URL}/#website`;
 
+    // The public websites shown in « Réalisations web », credited to the Person.
+    // Ids stay under this site: these nodes describe the work, not the client sites.
+    const webWorkNodes = getPortfolioContent(locale).websites.items.map((site) => ({
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#work-${site.host}`,
+        url: site.url,
+        name: site.title,
+        description: site.summary,
+        dateCreated: String(site.year),
+        image: `${SITE_URL}${site.media.desktop.src}`,
+        creator: { "@id": personId },
+    }));
+
     const jsonLdGraph = {
         "@context": "https://schema.org",
         "@graph": [
@@ -157,6 +175,7 @@ export function Layout({
                 },
                 sameAs: portfolioSocialLinks.map((link) => link.url),
             },
+            ...webWorkNodes,
         ],
     };
 

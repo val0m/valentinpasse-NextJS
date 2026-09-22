@@ -26,6 +26,23 @@ describe("HomePage composition", () => {
     expect(main.querySelector(":scope > #projects")).not.toBeNull();
   });
 
+  it("renders the web work band right after Projects, before Contact", () => {
+    const { container } = render(<HomePage locale="fr" />);
+
+    const main = container.querySelector("#main-content") as HTMLElement;
+    const bands = Array.from(main.children).map((child) => child.id);
+    expect(bands.indexOf("websites")).toBe(bands.indexOf("projects") + 1);
+    expect(bands.indexOf("contact")).toBe(bands.indexOf("websites") + 1);
+
+    const navigation = screen.getByRole("navigation", {
+      name: getPortfolioContent("fr").navigation.mainNavAriaLabel,
+    });
+    expect(within(navigation).getByRole("link", { name: "Réalisations" })).toHaveAttribute(
+      "href",
+      "#websites"
+    );
+  });
+
   it("keeps the hero and projects navigation anchors resolvable", () => {
     const { container } = render(<HomePage locale="fr" />);
 
