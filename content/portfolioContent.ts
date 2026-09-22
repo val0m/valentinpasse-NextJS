@@ -584,7 +584,6 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         },
         {
           title: "Régie Eau d'Azur - applications métier de bout en bout",
-          size: "wide",
           summary:
             "Pour la Régie Eau d'Azur (Nice), de multiples solutions applicatives internes .NET à destination des collaborateurs, prises en charge du cahier des charges jusqu'aux démos.",
           context:
@@ -597,7 +596,6 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         },
         {
           title: "Beyond IT (B-Network) - applications web sur le cycle complet",
-          size: "wide",
           summary:
             "En alternance chez Beyond IT (B-Network, Cannes), conception de plusieurs applications web .NET WebForm, de l'analyse des besoins jusqu'à la démo.",
           context:
@@ -1123,7 +1121,6 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         },
         {
           title: "Régie Eau d'Azur - end-to-end business applications",
-          size: "wide",
           summary:
             "For Régie Eau d'Azur (Nice), many internal .NET application solutions for employees, handled from the specification through to the demos.",
           context:
@@ -1136,7 +1133,6 @@ export const portfolioContent: Record<PortfolioLocale, PortfolioContent> = {
         },
         {
           title: "Beyond IT (B-Network) - web applications across the full cycle",
-          size: "wide",
           summary:
             "As a work-study student at Beyond IT (B-Network, Cannes), design of several .NET WebForms web applications, from requirements analysis through to the demo.",
           context:

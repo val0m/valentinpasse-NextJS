@@ -163,7 +163,7 @@ describe("SectionProjects", () => {
       expect(document.querySelectorAll("[data-hologram-card]")).toHaveLength(7);
     });
 
-    it("sizes the cards from their `size` field, one featured and two wide", () => {
+    it("sizes the cards from their `size` field, a single featured one", () => {
       render(<SectionProjects locale="fr" />);
 
       const cards = Array.from(document.querySelectorAll("[data-hologram-card]"));
@@ -177,7 +177,20 @@ describe("SectionProjects", () => {
 
       expect(sizes).toEqual(frProjects.items.map((project) => project.size));
       expect(sizes.filter((size) => size === "featured")).toHaveLength(1);
-      expect(sizes.filter((size) => size === "wide")).toHaveLength(2);
+      // Featured takes a full row: the six others must pair up with no hole.
+      expect(sizes.filter((size) => size === undefined).length % 2).toBe(0);
+    });
+
+    it("maps a `wide` project to the wide card class", () => {
+      const [, second, ...rest] = frProjects.items;
+      getPortfolioContentMock.mockReturnValue({
+        ...frContent,
+        projects: { ...frProjects, items: [{ ...second, size: "wide" }, ...rest] },
+      });
+
+      render(<SectionProjects locale="fr" />);
+
+      expect(document.querySelector("[data-hologram-card]")).toHaveClass("cardWide");
     });
 
     it("follows the data, not the position: a featured project keeps its size elsewhere in the list", () => {

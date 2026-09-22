@@ -69,6 +69,18 @@
 	padding: 1.6rem;
 }
 
+.cardLead,
+.cardProof {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+/* Takes the remaining height, so the disclosure stays pinned to the bottom. */
+.cardProof {
+	flex: 1;
+}
+
 .cardTitle {
 	margin: 0;
 	color: var(--color-on-dark);
@@ -200,13 +212,21 @@
 
 /* ---- Responsive ---------------------------------------------------------- */
 
+/*
+  Two columns from tablet up, never three: at three, a single card fell to
+  ~32 characters per line (1024px) and a spanning one climbed past 90, while
+  the featured card, spanning two rows, grew taller than the viewport. Two
+  columns keep every card around 50–65 characters per line and within a screen.
+*/
 @media (min-width: 768px) {
 	.grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
-	.cardFeatured {
-		grid-column: span 2;
+	/* Featured / wide cards take a full row, so the pairs below never leave a hole. */
+	.cardFeatured,
+	.cardWide {
+		grid-column: 1 / -1;
 	}
 
 	.cardFeatured .cardTitle {
@@ -215,43 +235,34 @@
 
 	.cardFeatured .summary {
 		font-size: 1.06rem;
+		/*
+		  The featured card spans the row: keep its pitch around 65 characters.
+		  In rem, not ch — Space Grotesk's wide "0" makes 1ch ≈ 1.3 average glyphs.
+		*/
+		max-width: 34rem;
 	}
 
+	/* Paired cards are narrow on tablets: a lighter padding widens their lines. */
 	.cardContent {
-		padding: 1.8rem;
+		padding: 1.4rem;
 	}
 }
 
 @media (min-width: 1024px) {
-	.grid {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		/*
-		  Explicit rows: the track *count* never depends on content, so the bento
-		  keeps its shape whatever the cards contain. Track *height* still follows
-		  content — expanding a disclosure grows its row and pushes what sits below
-		  down, exactly as any native <details> does. Cards sharing a row keep their
-		  position.
-
-		  Four rows for seven cards, filled by auto-placement in content order:
-		    featured (2×2) | two cards stacked on its right
-		    one card       | wide
-		    wide           | one card
-		  so no row is left with an orphan card or a hole.
-		*/
-		grid-template-rows: repeat(4, minmax(0, auto));
-	}
-
-	.cardFeatured {
-		grid-column: span 2;
-		grid-row: span 2;
-	}
-
 	/*
-	  Wide only from three columns up: at two columns a wide card would take a
-	  full row and leave its neighbour orphaned.
+	  A full-row card splits into pitch | proof: two ~60-character columns rather
+	  than one line running across the whole container.
 	*/
-	.cardWide {
-		grid-column: span 2;
+	.cardFeatured .cardContent,
+	.cardWide .cardContent {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		align-items: start;
+		gap: 0.75rem 2.6rem;
+	}
+
+	.cardContent {
+		padding: 1.8rem;
 	}
 
 	.cardFeatured .cardContent {
