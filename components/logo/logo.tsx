@@ -29,7 +29,6 @@ export function Logo({ size = 32, className, decorative = false }: LogoProps) {
       role={decorative ? undefined : "img"}
       aria-label={decorative ? undefined : "Valentin Passe"}
       aria-hidden={decorative || undefined}
-      focusable="false"
     >
       <path d="M18 10 C12 10 10 13 10 18 V25 C10 29 8 32 5 32 C8 32 10 35 10 39 V46 C10 51 12 54 18 54" stroke="#8b5cf6" />
       <path d="M46 10 C52 10 54 13 54 18 V25 C54 29 56 32 59 32 C56 32 54 35 54 39 V46 C54 51 52 54 46 54" stroke="#8b5cf6" />

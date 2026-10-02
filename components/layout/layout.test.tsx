@@ -43,13 +43,13 @@ describe("Layout", () => {
 
     // React 19 hoists <link> elements into document.head.
     const icons = Array.from(document.head.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]')).map(
-      (link) => [link.getAttribute("rel"), link.getAttribute("href"), link.getAttribute("type")]
+      (link) => ["rel", "href", "type", "sizes"].map((attribute) => link.getAttribute(attribute))
     );
 
     expect(icons).toEqual([
-      ["icon", "/favicon.ico", null],
-      ["icon", "/icon.svg", "image/svg+xml"],
-      ["apple-touch-icon", "/apple-touch-icon.png", null],
+      ["icon", "/favicon.ico", null, "32x32"],
+      ["icon", "/icon.svg", "image/svg+xml", null],
+      ["apple-touch-icon", "/apple-touch-icon.png", null, null],
     ]);
   });
 

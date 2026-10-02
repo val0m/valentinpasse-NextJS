@@ -1,9 +1,17 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { FooterCustom } from "./footerCustom";
 import { portfolioSocialLinks } from "../../content/portfolioContent";
 
 describe("FooterCustom", () => {
+  it("keeps the brand logo decorative next to the written brand name", () => {
+    render(<FooterCustom locale="fr" />);
+
+    const brandLink = screen.getByText("Valentin Passe").closest("a") as HTMLAnchorElement;
+    expect(brandLink.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+    expect(within(brandLink).queryByRole("img")).not.toBeInTheDocument();
+  });
+
   it("renders visible, crawlable social links matching the JSON-LD sameAs URLs", () => {
     render(<FooterCustom locale="fr" />);
 
