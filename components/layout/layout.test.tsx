@@ -34,6 +34,25 @@ describe("Layout", () => {
     expect(screen.getByText("child-content")).toBeInTheDocument();
   });
 
+  it("declares the SVG favicon with the .ico fallback and the Apple touch icon", () => {
+    render(
+      <Layout locale="fr">
+        <p>contenu</p>
+      </Layout>
+    );
+
+    // React 19 hoists <link> elements into document.head.
+    const icons = Array.from(document.head.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]')).map(
+      (link) => [link.getAttribute("rel"), link.getAttribute("href"), link.getAttribute("type")]
+    );
+
+    expect(icons).toEqual([
+      ["icon", "/favicon.ico", null],
+      ["icon", "/icon.svg", "image/svg+xml"],
+      ["apple-touch-icon", "/apple-touch-icon.png", null],
+    ]);
+  });
+
   it("credits each web work to the Person in the JSON-LD graph", () => {
     const { container } = render(
       <Layout locale="fr">
