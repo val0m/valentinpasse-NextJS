@@ -1,0 +1,4 @@
+/* A logo keeps its size: never squeezed by a flex parent on narrow screens. */
+.logo {
+	flex-shrink: 0;
+}

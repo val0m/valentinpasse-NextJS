@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import LogoHeader from "../../public/images/header/logo.webp";
+import { Logo } from "../logo";
 import {
   PortfolioLocale,
   getPortfolioContent,
@@ -23,7 +22,7 @@ export function FooterCustom({ locale }: FooterCustomProps) {
       <div className={styles.container}>
         <div className={styles.brandColumn}>
           <Link href={homePath(locale)} className={styles.brandLink}>
-            <Image src={LogoHeader} width={56} height={66} alt="Logo du portfolio de Valentin PASSE" />
+            <Logo size={56} decorative />
             <div>
               <p className={styles.brandTitle}>Valentin Passe</p>
               <p className={styles.brandBaseline}>{content.baseline}</p>

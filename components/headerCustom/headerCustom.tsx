@@ -1,6 +1,5 @@
 import React from "react";
-import Image from "next/image";
-import Logo from "../../public/images/header/logo.webp";
+import { Logo } from "../logo";
 import { PortfolioLocale, getPortfolioContent, homePath } from "../../content/portfolioContent";
 import styles from "./headerCustom.module.scss";
 
@@ -129,7 +128,7 @@ export function HeaderCustom({ locale, secondary = false, localeSwitchHref }: He
           className={styles.brand}
           onClick={secondary ? undefined : (event) => handleAnchorNavigation(event, "#hero", "hero")}
         >
-          <Image src={Logo} width={44} height={52} alt="Logo Valentin PASSE" priority />
+          <Logo size={44} decorative />
           <span className={styles.brandText}>
             <span className={styles.brandTitle}>Valentin Passe</span>
             <span className={styles.brandSubtitle}>Fullstack .NET</span>
