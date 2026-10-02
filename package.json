@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "optimize:portrait": "node scripts/optimize-portrait.mjs",
-    "build:og": "node scripts/build-og-image.mjs"
+    "build:og": "node scripts/build-og-image.mjs",
+    "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { HeaderCustom } from "./headerCustom";
 import { getPortfolioContent } from "../../content/portfolioContent";
 
@@ -11,6 +11,14 @@ describe("HeaderCustom", () => {
     navItems.forEach((item) => {
       expect(screen.getByRole("link", { name: item.label })).toBeInTheDocument();
     });
+  });
+
+  it("keeps the brand logo decorative next to the written brand name", () => {
+    render(<HeaderCustom locale="fr" />);
+
+    const brandLink = screen.getByText("Valentin Passe").closest("a") as HTMLAnchorElement;
+    expect(brandLink.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+    expect(within(brandLink).queryByRole("img")).not.toBeInTheDocument();
   });
 
   it("renders the locale switcher link pointing to the other locale root", () => {
